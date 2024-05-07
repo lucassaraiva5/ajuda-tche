@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'raw.html.twig' %}
 
 {% block title %}Hello LoginController!{% endblock %}
 
@@ -8,18 +8,20 @@
     {% endif %}
 
     <form action="{{ path('app_login') }}" method="post">
-
+        <br>
+        <br>
+        <br>
+        <br>
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
         
         <label for="username">Email:</label>
-        <input type="text" id="username" name="_username" value="{{ last_username }}">
+        <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}">
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="_password">
+        <label for="password">Senha:</label>
+        <input class="form-control" type="password" id="password" name="_password">
 
-        {# If you want to control the URL the user is redirected to on success
-        <input type="hidden" name="_target_path" value="/account"> #}
+        <br>
 
-        <button type="submit">login</button>
+        <button type="submit" class="btn btn-dark">Entrar</button>
     </form>
 {% endblock %}
