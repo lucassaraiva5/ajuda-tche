@@ -45,7 +45,7 @@ class RegistrationController extends AbstractController
                 (new TemplatedEmail())
                     ->from(new Address('suporte@ajudatche.com', 'Suporte'))
                     ->to($user->getEmail())
-                    ->subject('Please Confirm your Email')
+                    ->subject('Verifique seu e-mail')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
 
