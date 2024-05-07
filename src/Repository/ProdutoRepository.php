@@ -17,10 +17,10 @@ class ProdutoRepository extends ServiceEntityRepository
         parent::__construct($registry, Produto::class);
     }
 
-    // public function createProdutoQueryBuilder(string $Descrição = null): QueryBuilder
+    // public function createProdutoQueryBuilder(string $descricao = null): QueryBuilder
     // {
     //     $queryBuilder = $this->addOrderByDescriçãoQueryBuilder();
-    //     if ($Descrição) {
+    //     if ($descricao) {
     //         $queryBuilder->andWhere('mix.genre = :genre')
     //             ->setParameter('genre', $genre);
     //     }

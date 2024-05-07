@@ -24,7 +24,7 @@ class ProdutoController extends AbstractController
 
         if(!empty($search) && !is_null($search)) {
             $queryBuilder->where(
-                $queryBuilder->expr()->like('a.Descrição', ':search')
+                $queryBuilder->expr()->like('a.descricao', ':search')
             )
             ->setParameter('search', '%' . $search . '%');
         }

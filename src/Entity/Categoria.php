@@ -16,7 +16,7 @@ class Categoria
     private ?int $id = null;
 
     #[ORM\Column(length: 200)]
-    private ?string $Descrição = null;
+    private ?string $descricao = null;
 
     /**
      * @var Collection<int, Produto>
@@ -34,14 +34,14 @@ class Categoria
         return $this->id;
     }
 
-    public function getDescrição(): ?string
+    public function getDescricao(): ?string
     {
-        return $this->Descrição;
+        return $this->descricao;
     }
 
-    public function setDescrição(string $Descrição): static
+    public function setDescricao(string $descricao): static
     {
-        $this->Descrição = $Descrição;
+        $this->descricao = $descricao;
 
         return $this;
     }
@@ -77,6 +77,6 @@ class Categoria
     }
 
     public function __toString() {
-        return $this->Descrição;
+        return $this->descricao;
     }
 }

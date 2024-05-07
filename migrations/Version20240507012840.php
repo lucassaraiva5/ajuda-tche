@@ -142,12 +142,12 @@ final class Version20240507012840 extends AbstractMigration implements Container
 
         foreach ($categorias as $categoriaDescrição => $itens) {
             $categoria = new Categoria();
-            $categoria->setDescrição($categoriaDescrição);
+            $categoria->setDescricao($categoriaDescrição);
             $this->em->persist($categoria);
 
             foreach ($itens as $item) {
                 $produto = new Produto();
-                $produto->setDescrição($item);
+                $produto->setDescricao($item);
                 $produto->setCategoria($categoria);
                 $this->em->persist($produto);
             }
