@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit PostoColeta{% endblock %}
+{% block title %}Editar Posto de Coleta{% endblock %}
 
 {% block body %}
-    <h1>Edit PostoColeta</h1>
-
-    {{ include('posto_coleta/_form.html.twig', {'button_label': 'Atualizar'}) }}
+    <h1>Editar Posto de Coleta</h1>
 
     <a href="{{ path('app_posto_coleta_index') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i></a>
+
+    {{ include('posto_coleta/_form.html.twig', {'button_label': 'Atualizar'}) }}
 
     {{ include('posto_coleta/_delete_form.html.twig') }}
 {% endblock %}

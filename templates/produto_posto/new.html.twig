@@ -3,9 +3,10 @@
 {% block title %}New ProdutoPosto{% endblock %}
 
 {% block body %}
-    <h1>Novo ProdutoPosto</h1>
+    <h1>Novo Produto Posto</h1>
+
+    <a href="{{ path('app_produto_posto_index') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i></a>
 
     {{ include('produto_posto/_form.html.twig') }}
 
-    <a href="{{ path('app_produto_posto_index') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i></a>
 {% endblock %}

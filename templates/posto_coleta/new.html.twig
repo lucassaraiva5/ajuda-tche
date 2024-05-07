@@ -1,11 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New PostoColeta{% endblock %}
+{% block title %}Novo Posto de Coleta{% endblock %}
 
 {% block body %}
-    <h1>Novo PostoColeta</h1>
+    <h1>Novo Posto de Coleta</h1>
+
+    <a href="{{ path('app_posto_coleta_index') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i></a>
 
     {{ include('posto_coleta/_form.html.twig') }}
 
-    <a href="{{ path('app_posto_coleta_index') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i></a>
 {% endblock %}
