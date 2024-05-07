@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ProdutoNecessario{% endblock %}
+
+{% block body %}
+    <h1>ProdutoNecessario</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ produto_necessario.id }}</td>
+            </tr>
+            <tr>
+                <th>Quantidade</th>
+                <td>{{ produto_necessario.quantidade }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_produto_necessario_index') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i></a>
+
+    <a href="{{ path('app_produto_necessario_edit', {'id': produto_necessario.id}) }}" class="btn btn-secondary"><i class="fas fa-pencil"></i></a>
+
+    {{ include('produto_necessario/_delete_form.html.twig') }}
+{% endblock %}

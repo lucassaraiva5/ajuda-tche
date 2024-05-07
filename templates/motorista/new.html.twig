@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Novo Motorista{% endblock %}
+
+{% block body %}
+    <h1>Cadastrar Motorista</h1>
+
+    <a href="{{ path('app_motorista_index') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i></a>
+
+    {{ include('motorista/_form.html.twig') }}
+
+    
+{% endblock %}

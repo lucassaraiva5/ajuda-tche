@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Estoque Posto de coleta{% endblock %}
+
+{% block body %}
+    <h1>Estoque Posto de coleta</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Quantidade</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for produto_posto in produto_postos %}
+            <tr>
+                <td>{{ produto_posto.id }}</td>
+                <td>{{ produto_posto.quantidade }}</td>
+                <td>
+                    <a href="{{ path('app_produto_posto_show', {'id': produto_posto.id}) }}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
+                    <a href="{{ path('app_produto_posto_edit', {'id': produto_posto.id}) }}" class="btn btn-secondary"><i class="fas fa-pencil"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_produto_posto_new') }}" class="btn btn-success">Adicionar</a>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Entregas{% endblock %}
+
+{% block body %}
+    <h1>Entregas</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entrega in entregas %}
+            <tr>
+                <td>{{ entrega.id }}</td>
+                <td>
+                    <a href="{{ path('app_entrega_show', {'id': entrega.id}) }}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
+                    <a href="{{ path('app_entrega_edit', {'id': entrega.id}) }}" class="btn btn-secondary"><i class="fas fa-pencil"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="2">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_entrega_new') }}" class="btn btn-success">Adicionar</a>
+{% endblock %}

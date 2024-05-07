@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  database:
+    image: mysql:8.0
+    environment:
+        - MYSQL_ROOT_PASSWORD=rootpassword
+        - MYSQL_PASSWORD=password
+        - MYSQL_DATABASE=gerenciador-recursos
+        - MYSQL_USER=user
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+volumes:
+###> doctrine/doctrine-bundle ###
+  database_data:
+###< doctrine/doctrine-bundle ###

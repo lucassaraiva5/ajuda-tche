@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Entrega{% endblock %}
+
+{% block body %}
+    <h1>Create new Entrega</h1>
+
+    {{ include('entrega/_form.html.twig') }}
+
+    <a href="{{ path('app_entrega_index') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i></a>
+{% endblock %}

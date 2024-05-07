@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New CentroDistribuicao{% endblock %}
+
+{% block body %}
+    <h1>Create new CentroDistribuicao</h1>
+
+    {{ include('centro_distribuicao/_form.html.twig') }}
+
+    <a href="{{ path('app_centro_distribuicao_index') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i></a>
+{% endblock %}

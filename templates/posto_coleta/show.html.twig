@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PostoColeta{% endblock %}
+
+{% block body %}
+    <h1>PostoColeta</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ posto_coletum.id }}</td>
+            </tr>
+            <tr>
+                <th>Descricao</th>
+                <td>{{ posto_coletum.descricao }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_posto_coleta_index') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i></a>
+
+    <a href="{{ path('app_posto_coleta_edit', {'id': posto_coletum.id}) }}" class="btn btn-secondary"><i class="fas fa-pencil"></i></a>
+
+    {{ include('posto_coleta/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Motorista{% endblock %}
+
+{% block body %}
+    <h1>Edit Motorista</h1>
+
+    <a href="{{ path('app_motorista_index') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i></a>
+
+    {{ include('motorista/_form.html.twig', {'button_label': 'Atualizar'}) }}
+
+
+    {{ include('motorista/_delete_form.html.twig') }}
+{% endblock %}

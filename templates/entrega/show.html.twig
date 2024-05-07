@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Entrega{% endblock %}
+
+{% block body %}
+    <h1>Entrega</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entrega.id }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_entrega_index') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i></a>
+
+    <a href="{{ path('app_entrega_edit', {'id': entrega.id}) }}" class="btn btn-secondary"><i class="fas fa-pencil"></i></a>
+
+    {{ include('entrega/_delete_form.html.twig') }}
+{% endblock %}

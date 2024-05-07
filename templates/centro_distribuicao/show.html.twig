@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CentroDistribuicao{% endblock %}
+
+{% block body %}
+    <h1>CentroDistribuicao</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ centro_distribuicao.id }}</td>
+            </tr>
+            <tr>
+                <th>Descricao</th>
+                <td>{{ centro_distribuicao.descricao }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_centro_distribuicao_index') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i></a>
+
+    <a href="{{ path('app_centro_distribuicao_edit', {'id': centro_distribuicao.id}) }}" class="btn btn-secondary"><i class="fas fa-pencil"></i></a>
+
+    {{ include('centro_distribuicao/_delete_form.html.twig') }}
+{% endblock %}
