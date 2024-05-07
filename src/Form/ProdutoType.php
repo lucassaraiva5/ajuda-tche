@@ -17,7 +17,7 @@ class ProdutoType extends AbstractType
             ->add('descricao')
             ->add('categoria', EntityType::class, [
                 'class' => Categoria::class,
-                'choice_label' => 'id',
+                'choice_label' => 'descricao',
             ])
         ;
     }

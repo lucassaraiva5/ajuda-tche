@@ -16,7 +16,7 @@ class EntregaType extends AbstractType
         $builder
             ->add('motorista', EntityType::class, [
                 'class' => Motorista::class,
-                'choice_label' => 'id',
+                'choice_label' => 'nome',
             ])
         ;
     }

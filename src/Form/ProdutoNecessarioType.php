@@ -18,11 +18,11 @@ class ProdutoNecessarioType extends AbstractType
             ->add('quantidade')
             ->add('produto', EntityType::class, [
                 'class' => Produto::class,
-                'choice_label' => 'id',
+                'choice_label' => 'descricao',
             ])
             ->add('centroDistribuicao', EntityType::class, [
                 'class' => CentroDistribuicao::class,
-                'choice_label' => 'id',
+                'choice_label' => 'descricao',
             ])
         ;
     }
