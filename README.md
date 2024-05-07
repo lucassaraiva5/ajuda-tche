@@ -5,6 +5,9 @@
 - Docker (https://docs.docker.com/desktop/install/windows-install/)
 - Composer (https://getcomposer.org/download/)
 
+## Video de como instalar isso na sua maquina
+Como instalar o composer + PHP (Windows) - https://youtu.be/L87PtpSF4gU
+Como instalar o docker (Windows) - https://youtu.be/H3yP3jz3dZU
 
 ## Como iniciar o projeto
 
