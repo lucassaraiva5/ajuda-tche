@@ -9,7 +9,7 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Descricao</th>
+                <th>Descrição</th>
                 <th>Ações</th>
             </tr>
         </thead>
@@ -17,7 +17,7 @@
         {% for posto_coletum in posto_coletas %}
             <tr>
                 <td>{{ posto_coletum.id }}</td>
-                <td>{{ posto_coletum.descricao }}</td>
+                <td>{{ posto_coletum.Descrição }}</td>
                 <td>
                     <a href="{{ path('app_posto_coleta_show', {'id': posto_coletum.id}) }}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
                     <a href="{{ path('app_posto_coleta_edit', {'id': posto_coletum.id}) }}" class="btn btn-secondary"><i class="fas fa-pencil"></i></a>

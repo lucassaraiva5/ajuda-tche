@@ -14,7 +14,7 @@ class Produto
     private ?int $id = null;
 
     #[ORM\Column(length: 200)]
-    private ?string $descricao = null;
+    private ?string $Descrição = null;
 
     #[ORM\ManyToOne(inversedBy: 'produtos')]
     private ?Categoria $categoria = null;
@@ -24,14 +24,14 @@ class Produto
         return $this->id;
     }
 
-    public function getDescricao(): ?string
+    public function getDescrição(): ?string
     {
-        return $this->descricao;
+        return $this->Descrição;
     }
 
-    public function setDescricao(string $descricao): static
+    public function setDescrição(string $Descrição): static
     {
-        $this->descricao = $descricao;
+        $this->Descrição = $Descrição;
 
         return $this;
     }
