@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Produto{% endblock %}
+{% block title %}Novo Produto{% endblock %}
 
 {% block body %}
-    <h1>Create new Produto</h1>
+    <h1>Novo Produto</h1>
+    <a href="{{ path('app_produto_index') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i></a>
 
     {{ include('produto/_form.html.twig') }}
 
-    <a href="{{ path('app_produto_index') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i></a>
 {% endblock %}

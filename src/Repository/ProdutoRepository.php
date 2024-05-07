@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Produto;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -15,6 +16,16 @@ class ProdutoRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Produto::class);
     }
+
+    // public function createProdutoQueryBuilder(string $descricao = null): QueryBuilder
+    // {
+    //     $queryBuilder = $this->addOrderByDescricaoQueryBuilder();
+    //     if ($descricao) {
+    //         $queryBuilder->andWhere('mix.genre = :genre')
+    //             ->setParameter('genre', $genre);
+    //     }
+    //     return $queryBuilder;
+    // }
 
     //    /**
     //     * @return Produto[] Returns an array of Produto objects
