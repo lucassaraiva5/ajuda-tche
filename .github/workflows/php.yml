@@ -70,6 +70,7 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }} # Chave SSH privada
         script: |
           cd /var/www/ajuda-tche/
+          php bin/console doctrine:migrations:migrate --no-interaction
           php bin/console cache:clear
           sudo chmod 777 -Rf var
         

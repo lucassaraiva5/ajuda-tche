@@ -16,6 +16,9 @@ class Motorista
     #[ORM\Column(length: 200)]
     private ?string $nome = null;
 
+    #[ORM\Column(length: 20)]
+    private ?string $telefone = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -29,6 +32,18 @@ class Motorista
     public function setNome(string $nome): static
     {
         $this->nome = $nome;
+
+        return $this;
+    }
+
+    public function getTelefone(): ?string
+    {
+        return $this->telefone;
+    }
+
+    public function setTelefone(string $telefone): static
+    {
+        $this->telefone = $telefone;
 
         return $this;
     }

@@ -12,7 +12,12 @@ class MotoristaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nome')
+            ->add('nome', null, [
+                'label' => "Nome completo"
+            ])
+            ->add('telefone', null, [
+                'label' => "Telefone"
+            ])
         ;
     }
 
