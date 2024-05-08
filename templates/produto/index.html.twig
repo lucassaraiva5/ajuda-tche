@@ -4,7 +4,7 @@
 
 {% block body %}
     <h1>Produtos</h1>
-
+    <a href="{{ path('app_produto_new') }}" class="btn btn-success">Adicionar</a>
     <table class="table">
         <thead>
             <tr>
@@ -14,10 +14,6 @@
             </tr>
         </thead>
         <tbody>
-
-
-            {{ pagerfanta(pager) }}
-
             {% for produto in pager %}
                 <tr>
                     <td>{{ produto.id }}</td>
@@ -32,8 +28,12 @@
                     <td colspan="3">Nenhum registro encontrado</td>
                 </tr>
             {% endfor %}
+
+            
         </tbody>
     </table>
 
-    <a href="{{ path('app_produto_new') }}" class="btn btn-success">Adicionar</a>
+    <div class="container d-flex justify-content-center align-items-center">
+        {{ pagerfanta(pager) }}
+    </div>
 {% endblock %}
