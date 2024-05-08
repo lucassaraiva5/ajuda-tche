@@ -34,6 +34,12 @@ jobs:
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
 
+    - name: 'Create env file'
+      run: |
+        touch .env.local
+        echo DATABASE_URL=${{ secrets.DATABASE_URL }} >> .env.local
+        echo MAILER_DSN=${{ secrets.MAILER_DSN }} >> .env.local
+
     - name: Transferir HTML para a VM
       uses: appleboy/scp-action@master
       with:
