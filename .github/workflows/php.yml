@@ -37,7 +37,7 @@ jobs:
     - name: Make envfile
       uses: SpicyPizza/create-envfile@v1
       with:
-        envkey_APP_ENV: prod
+        envkey_APP_ENV: dev
         envkey_DATABASE_URL: ${{ secrets.DATABASE_URL }}
         envkey_MAILER_DSN: ${{ secrets.MAILER_DSN }}
         file_name: .env.local
