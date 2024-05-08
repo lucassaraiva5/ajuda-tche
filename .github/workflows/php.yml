@@ -49,5 +49,16 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }} # Chave SSH privada
         source: "*" # Caminho relativo do arquivo HTML (se estiver no diretório de trabalho)
         target: "/var/www/ajuda-tche/" # Caminho na sua VM onde você deseja que o arquivo seja transferido
-
+    
+    - name: Move environment file
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.IP }} # Endereço IP da sua VM
+        username: ubuntu # Nome de usuário da sua VM
+        key: ${{ secrets.SSH_PRIVATE_KEY }} # Chave SSH privada
+        source: "/github/workspace/.env.local" # Caminho relativo do arquivo HTML (se estiver no diretório de trabalho)
+        target: "/var/www/ajuda-tche/" # Caminho na sua VM onde você deseja que o arquivo seja transferido
+  
    
+
+        
