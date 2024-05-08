@@ -2,22 +2,22 @@
 
 namespace App\Entity;
 
-use App\Repository\MotoristaRepository;
+use App\Repository\EstadoRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: MotoristaRepository::class)]
-class Motorista
+#[ORM\Entity(repositoryClass: EstadoRepository::class)]
+class Estado
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 200)]
+    #[ORM\Column(length: 255)]
     private ?string $nome = null;
 
-    #[ORM\Column(length: 20)]
-    private ?string $telefone = null;
+    #[ORM\Column(length: 2)]
+    private ?string $uf = null;
 
     public function getId(): ?int
     {
@@ -36,14 +36,14 @@ class Motorista
         return $this;
     }
 
-    public function getTelefone(): ?string
+    public function getUf(): ?string
     {
-        return $this->telefone;
+        return $this->uf;
     }
 
-    public function setTelefone(string $telefone): static
+    public function setUf(string $uf): static
     {
-        $this->telefone = $telefone;
+        $this->uf = $uf;
 
         return $this;
     }
