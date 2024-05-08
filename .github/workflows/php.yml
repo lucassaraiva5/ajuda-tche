@@ -34,12 +34,13 @@ jobs:
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
 
-    - name: 'Create env file'
-      run: |
-        touch .env.local
-        echo DATABASE_URL=${{ secrets.DATABASE_URL }} >> .env.local
-        echo MAILER_DSN=${{ secrets.MAILER_DSN }} >> .env.local
-
+    - name: Make envfile
+      uses: SpicyPizza/create-envfile@v1
+      with:
+        envkey_APP_ENV: false
+        envkey_DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        envkey_MAILER_DSN: ${{ secrets.MAILER_DSN }}
+        file_name: .env.local
     - name: Transferir HTML para a VM
       uses: appleboy/scp-action@master
       with:
