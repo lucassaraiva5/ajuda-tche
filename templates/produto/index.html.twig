@@ -1,39 +1,52 @@
-{% extends 'base.html.twig' %}
+{% extends 'base.html.twig' %} {% block title %}Produtos{% endblock %} {% block
+body %}
+<div class="container mt-5">
+  <h1 class="mb-3 font-weight-bold">Produtos</h1>
 
-{% block title %}Produtos{% endblock %}
+  <div class="table-responsive shadow-lg">
+    <table class="table table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th>Id</th>
+          <th>Descrição</th>
+          <th class="text-end">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for produto in pager %}
+        <tr class="align-middle">
+          <td>{{ produto.id }}</td>
+          <td>{{ produto.descricao }}</td>
+          <td class="d-flex justify-content-end">
+            <a
+              href="{{ path('app_produto_show', { id: produto.id }) }}"
+              class="btn btn-primary shadow-sm me-2"
+              ><i class="fas fa-eye"></i> Visualizar</a
+            >
+            <a
+              href="{{ path('app_produto_edit', { id: produto.id }) }}"
+              class="btn btn-secondary shadow-sm"
+              ><i class="fas fa-pencil"></i> Editar</a
+            >
+          </td>
+        </tr>
 
-{% block body %}
-    <h1>Produtos</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Descrição</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-
-
-            {{ pagerfanta(pager) }}
-
-            {% for produto in pager %}
-                <tr>
-                    <td>{{ produto.id }}</td>
-                    <td>{{ produto.descricao }}</td>
-                    <td>
-                        <a href="{{ path('app_produto_show', {'id': produto.id}) }}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
-                        <a href="{{ path('app_produto_edit', {'id': produto.id}) }}" class="btn btn-secondary"><i class="fas fa-pencil"></i></a>
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="3">Nenhum registro encontrado</td>
-                </tr>
-            {% endfor %}
-        </tbody>
+        {% else %}
+        <tr>
+          <td colspan="3" class="text-center text-muted">
+            Nenhum registro encontrado
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
     </table>
+  </div>
 
-    <a href="{{ path('app_produto_new') }}" class="btn btn-success">Adicionar</a>
+  <div class="d-flex justify-content-between align-items-center mt-3 mb-5">
+    <a href="{{ path('app_produto_new') }}" class="btn btn-success shadow-sm"
+      ><i class="fas fa-plus"></i> Adicionar</a
+    >
+    <div>{{ pagerfanta(pager) }}</div>
+  </div>
+</div>
 {% endblock %}
