@@ -1,11 +1,16 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Novo Produto{% endblock %}
-
-{% block body %}
-    <h1>Novo Produto</h1>
-    <a href="{{ path('app_produto_index') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i></a>
-
-    {{ include('produto/_form.html.twig') }}
-
+{% extends 'base.html.twig' %} {% block title %}Novo Produto{% endblock %} {%
+block body %}
+<div class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <h1 class="font-weight-bold">Novo Produto</h1>
+    <a href="{{ path('app_produto_index') }}" class="btn btn-primary shadow"
+      ><i class="fa fa-arrow-left"></i> Voltar</a
+    >
+  </div>
+  <div class="card shadow-lg">
+    <div class="card-body">
+      {{ include("produto/_form.html.twig") }}
+    </div>
+  </div>
+</div>
 {% endblock %}
