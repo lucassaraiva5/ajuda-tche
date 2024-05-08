@@ -1,27 +1,61 @@
-{% extends 'raw.html.twig' %}
-
-{% block title %}Hello LoginController!{% endblock %}
-
+{% extends 'raw.html.twig' %} {% block title %}Ajuda Tche - Login{% endblock %}
 {% block body %}
-    {% if error %}
-        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
-
-    <form action="{{ path('app_login') }}" method="post">
-        <br>
-        <br>
-        <br>
-        <br>
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-        
-        <label for="username">Email:</label>
-        <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}">
-
-        <label for="password">Senha:</label>
-        <input class="form-control" type="password" id="password" name="_password">
-
-        <br>
-
-        <button type="submit" class="btn btn-dark">Entrar</button>
-    </form>
+<div class="d-flex">
+  <div class="m-auto mt-5">
+    <div class="card border-0 mt-5 p-5 shadow">
+      <div class="card-header bg-transparent text-center">
+        <h2>Ajuda Tche</h2>
+        <p class="text-muted">
+          Software para o gerenciamento de produtos da enchente
+        </p>
+      </div>
+      <div class="card-body">
+        {% if error %}
+        <div class="alert alert-danger">
+          {{ error.messageKey|trans(error.messageData, 'security') }}
+        </div>
+        {% endif %}
+        <form action="{{ path('app_login') }}" method="post">
+          <input
+            type="hidden"
+            name="_csrf_token"
+            value="{{ csrf_token('authenticate') }}"
+          />
+          <div class="form-group mb-3">
+            <label for="username">Email:</label>
+            <input
+              type="text"
+              id="username"
+              name="_username"
+              value="{{ last_username }}"
+              required
+              placeholder="exemplo@gmail.com"
+              autofocus
+              class="form-control shadow-sm shadow-dark"
+            />
+          </div>
+          <div class="form-group mb-3">
+            <label for="password">Senha:</label>
+            <input
+              type="password"
+              id="password"
+              name="_password"
+              required
+              placeholder="**"
+              class="form-control shadow-sm shadow-dark"
+            />
+          </div>
+          <div class="form-group">
+            <button
+              type="submit"
+              class="btn btn-outline-dark btn-block shadow-sm shadow-dark"
+            >
+              Entrar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
