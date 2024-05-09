@@ -2,12 +2,14 @@
 {% block body %}
 <div class="d-flex">
   <div class="m-auto mt-5">
-    <div class="card border-0 mt-5 p-5 shadow">
+    <div class="card border-0 mt-5 p-4 shadow">
       <div class="card-header bg-transparent text-center">
-        <h2>Ajuda Tche</h2>
-        <p class="text-muted">
-          Software para o gerenciamento de produtos da enchente
-        </p>
+        <h1>Ajuda Tche</h1>
+        <h4 class="fw-semibold">Conectando o Rio Grande do Sul</h4>
+        <h6 class="text-muted display-9">
+          Faça o login e junte-se a nós nessa jornada de auxílio e
+          solidariedade.
+        </h6>
       </div>
       <div class="card-body">
         {% if error %}
@@ -41,7 +43,7 @@
               id="password"
               name="_password"
               required
-              placeholder="*********"
+              placeholder="senha"
               class="form-control shadow-sm shadow-dark"
             />
           </div>
