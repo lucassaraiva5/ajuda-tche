@@ -17,6 +17,9 @@ use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 class RegistrationController extends AbstractController
 {
+    const TYPE_POSTO_COLETA = 1;
+    const TYPE_CENTRO_DISTRIBUICAO = 2;
+
     public function __construct(private EmailVerifier $emailVerifier)
     {
     }
@@ -36,6 +39,16 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
+
+            switch ($form->get('type')->getData()) {
+                case self::TYPE_POSTO_COLETA:
+                    //dd("Posto Coleta");
+                    break;
+                
+                case self::TYPE_CENTRO_DISTRIBUICAO:
+                    //dd("Centro Distribuicao");
+                    break;
+            }
 
             $entityManager->persist($user);
             $entityManager->flush();
