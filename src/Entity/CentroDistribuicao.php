@@ -16,6 +16,12 @@ class CentroDistribuicao
     #[ORM\Column(length: 200)]
     private ?string $descricao = null;
 
+    #[ORM\ManyToOne]
+    private ?Cidade $cidade = null;
+
+    #[ORM\ManyToOne]
+    private ?Estado $estado = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -29,6 +35,30 @@ class CentroDistribuicao
     public function setDescricao(string $descricao): static
     {
         $this->descricao = $descricao;
+
+        return $this;
+    }
+
+    public function getCidade(): ?Cidade
+    {
+        return $this->cidade;
+    }
+
+    public function setCidade(?Cidade $cidade): static
+    {
+        $this->cidade = $cidade;
+
+        return $this;
+    }
+
+    public function getEstado(): ?Estado
+    {
+        return $this->estado;
+    }
+
+    public function setEstado(?Estado $estado): static
+    {
+        $this->estado = $estado;
 
         return $this;
     }
