@@ -1,6 +1,17 @@
 version: '3'
 
 services:
+
+  www:
+    build: .
+    container_name: 'www'
+    ports: 
+        - "8081:80"
+        - "8005:8005"
+    volumes:
+        - .:/var/www/html/
+    networks:
+        - default
   database:
     image: mysql:8.0
     environment:
@@ -8,13 +19,26 @@ services:
         - MYSQL_PASSWORD=password
         - MYSQL_DATABASE=gerenciador-recursos
         - MYSQL_USER=user
+    volumes:
+        - ./database/mysql:/var/lib/mysql
+        - ./database/logs:/var/log/mysql
+        - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - default
   adminer:
     image: adminer
     restart: always
     ports:
       - 8080:8080
+    networks:
+      - default
 
 volumes:
 ###> doctrine/doctrine-bundle ###
   database_data:
 ###< doctrine/doctrine-bundle ###
+
+networks:
+  default:
+    driver: bridge
+
