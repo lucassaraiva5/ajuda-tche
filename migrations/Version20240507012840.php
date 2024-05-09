@@ -27,6 +27,7 @@ final class Version20240507012840 extends AbstractMigration implements Container
 
     public function up(Schema $schema): void
     {
+        try {
         $this->em = $this->container->get('doctrine.orm.entity_manager');
 
         $categorias = [
@@ -140,19 +141,25 @@ final class Version20240507012840 extends AbstractMigration implements Container
             ]
         ];
 
-        foreach ($categorias as $categoriaDescrição => $itens) {
-            $categoria = new Categoria();
-            $categoria->setDescricao($categoriaDescrição);
-            $this->em->persist($categoria);
-
-            foreach ($itens as $item) {
-                $produto = new Produto();
-                $produto->setDescricao($item);
-                $produto->setCategoria($categoria);
-                $this->em->persist($produto);
+       
+            foreach ($categorias as $categoriaDescrição => $itens) {
+                $categoria = new Categoria();
+                $categoria->setDescricao($categoriaDescrição);
+                $this->em->persist($categoria);
+    
+                foreach ($itens as $item) {
+                    $produto = new Produto();
+                    $produto->setDescricao($item);
+                    $produto->setCategoria($categoria);
+                    $this->em->persist($produto);
+                }
+                
             }
-            
+        }catch (\Throwable $error) {
+            dd($error->getMessage() . $error->getFile() . $error->getLine());
         }
+
+       
 
         
         $this->em->flush();
