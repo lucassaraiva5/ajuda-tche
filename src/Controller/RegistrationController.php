@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
+use Symfony\Component\Security\Http\Authenticator\FormLoginAuthenticator;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 class RegistrationController extends AbstractController
@@ -25,7 +27,7 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, UserAuthenticatorInterface $userAuthenticator, FormLoginAuthenticator $formAuthenticator): Response
     {
         $user = new Usuario();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -40,13 +42,17 @@ class RegistrationController extends AbstractController
                 )
             );
 
+            if($form->get('type')->getData() !== self::TYPE_POSTO_COLETA && $form->get('type')->getData() !== self::TYPE_CENTRO_DISTRIBUICAO)
+            {
+                $this->addFlash('error', 'Tipo inválido');
+                return $this->redirectToRoute('app_register');
+            }
+
             switch ($form->get('type')->getData()) {
                 case self::TYPE_POSTO_COLETA:
-                    //dd("Posto Coleta");
-                    break;
-                
+                    $user->setRoles(['ROLE_POSTO_COLETA']);
                 case self::TYPE_CENTRO_DISTRIBUICAO:
-                    //dd("Centro Distribuicao");
+                    $user->setRoles(['ROLE_CENTRO_DISTRIBUICAO']);
                     break;
             }
 
@@ -62,9 +68,11 @@ class RegistrationController extends AbstractController
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
 
-            // do anything else you need here, like send an email
-
-            return $this->redirectToRoute('app_login');
+            return $userAuthenticator->authenticateUser(
+                $user,
+                $formAuthenticator,
+                $request
+            );
         }
 
         return $this->render('registration/register.html.twig', [

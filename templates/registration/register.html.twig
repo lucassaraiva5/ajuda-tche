@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'raw.html.twig' %}
 
 {% block title %}Cadastro{% endblock %}
 
@@ -7,17 +7,26 @@
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
 
-    <h1>Cadastro</h1>
+    <div class="d-flex">
+        <div class="m-auto mt-5">
+            <div class="card border-0 mt-5 p-5 shadow">
+                <div class="card-header bg-transparent text-center">
+                  <h2>Cadastre-se</h2>
+                </div>
+                <div class="card-body">
+                    {{ form_errors(registrationForm) }}
 
-    {{ form_errors(registrationForm) }}
+                    {{ form_start(registrationForm) }}
+                        {{ form_row(registrationForm.email) }}
+                        {{ form_row(registrationForm.plainPassword, {
+                            label: 'Senha'
+                        }) }}
+                        {{ form_row(registrationForm.type) }}
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Senha'
-        }) }}
-        {{ form_row(registrationForm.type) }}
-
-        <button type="submit" class="btn btn-success">Cadastrar</button>
-    {{ form_end(registrationForm) }}
+                        <button type="submit" class="btn btn-success">Cadastrar</button>
+                    {{ form_end(registrationForm) }}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
