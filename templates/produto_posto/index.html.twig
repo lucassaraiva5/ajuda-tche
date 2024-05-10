@@ -14,7 +14,7 @@
             </tr>
         </thead>
         <tbody>
-        {% for produto_posto in produto_postos %}
+        {% for produto_posto in pager %}
             <tr>
                 <td>{{ produto_posto.id }}</td>
                 <td>{{ produto_posto.quantidade }}</td>
@@ -31,5 +31,10 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_produto_posto_new') }}" class="btn btn-success">Adicionar</a>
+    <div class="d-flex justify-content-between align-items-center mt-3 mb-5">
+        <a href="{{ path('app_produto_posto_new') }}" class="btn btn-success shadow-sm">
+            <i class="fas fa-plus"></i> Adicionar
+        </a>
+        <div>{{ pagerfanta(pager) }}</div>
+    </div>
 {% endblock %}

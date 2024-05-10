@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/posto-coleta')]
+#[Route('/admin/posto-coleta')]
 class PostoColetaController extends AbstractController
 {
     #[Route('/', name: 'app_posto_coleta_index', methods: ['GET'])]

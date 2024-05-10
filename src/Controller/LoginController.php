@@ -41,28 +41,28 @@ class LoginController extends AbstractController
     {
         $user = $security->getUser();
         $role = $user->getRoles();
-        
-        switch ($role[self::FIRST_INDEX_ARRAY]) {
-            case Usuario::ROLE_POSTO_COLETA:
-                $posto = $postoColetaRepository->findOneByUsuario($user);
-                if(empty($posto)) {
-                    return $this->redirectToRoute("user_register_posto_coleta");
-                }
-                break;
-            
-            case Usuario::ROLE_CENTRO_DISTRIBUICAO:
-                $centroDistribuicao = $centroDistribuicaoRepository->findOneByUsuario($user);
-                if(empty($centroDistribuicao)) {
-                    return $this->redirectToRoute("user_register_centro_distribuicao");
-                }
-                break;
-            
-            case Usuario::ROLE_ADMIN:
-                # code...
-                break;
+
+        if($user->hasRole(Usuario::ROLE_ADMIN)){
+            return $this->redirectToRoute("app_produto_necessario_index");
         }
 
-        return $this->redirectToRoute("user_redirect");
+        if($user->hasRole(Usuario::ROLE_POSTO_COLETA)) {
+            $posto = $postoColetaRepository->findOneByUsuario($user);
+            if(empty($posto)) {
+                return $this->redirectToRoute("user_register_posto_coleta");
+            }
+            return $this->redirectToRoute("app_produto_posto_index");
+        }
+
+        if($user->hasRole(Usuario::ROLE_CENTRO_DISTRIBUICAO)) {
+            $centroDistribuicao = $centroDistribuicaoRepository->findOneByUsuario($user);
+            if(empty($centroDistribuicao)) {
+                return $this->redirectToRoute("user_register_centro_distribuicao");
+            }
+            return $this->redirectToRoute("app_produto_necessario_index");
+        }
+
+        return $this->redirectToRoute("app_login");
 
     }
 }

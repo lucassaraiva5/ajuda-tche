@@ -16,14 +16,14 @@
                 </tr>
             </thead>
             <tbody>
-                {% for categorium in categorias %}
+                {% for categoria in pager %}
                 <tr>
-                    <td>{{ categorium.id }}</td>
-                    <td>{{ categorium.descricao }}</td>
+                    <td>{{ categoria.id }}</td>
+                    <td>{{ categoria.descricao }}</td>
                     <td class="d-flex justify-content-end gap-2">
-                        <a href="{{ path('app_categoria_show', {'id': categorium.id}) }}" class="btn btn-primary"><i
+                        <a href="{{ path('app_categoria_show', {'id': categoria.id}) }}" class="btn btn-primary"><i
                                 class="fas fa-eye"></i> Visualizar</a>
-                        <a href="{{ path('app_categoria_edit', {'id': categorium.id}) }}" class="btn btn-secondary"><i
+                        <a href="{{ path('app_categoria_edit', {'id': categoria.id}) }}" class="btn btn-secondary"><i
                                 class="fas fa-pencil"></i> Editar</a>
                     </td>
                 </tr>
@@ -36,7 +36,11 @@
         </table>
     </div>
 
-    <a href="{{ path('app_categoria_new') }}" class="btn btn-success mb-3">Adicionar</a>
-    {# <div>{{ pagerfanta(categorias) }}</div> #}
+    <div class="d-flex justify-content-between align-items-center mt-3 mb-5">
+        <a href="{{ path('app_categoria_new') }}" class="btn btn-success shadow-sm">
+            <i class="fas fa-plus"></i> Adicionar
+        </a>
+        <div>{{ pagerfanta(pager) }}</div>
+    </div>
 </div>
 {% endblock %}
