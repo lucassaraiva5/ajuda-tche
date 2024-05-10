@@ -3,36 +3,42 @@
 {% block title %}Postos de Coleta{% endblock %}
 
 {% block body %}
-    <h1>Postos de Coleta</h1>
+<div class="container mt-5 p-5">
+    <h2 class="mb-3">Postos de Coleta</h2>
+    <div class="table-responsive">
+        <table class="table shadow">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Descrição</th>
+                    <th class="text-end">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for posto_coletum in posto_coletas %}
+                <tr class="align-middle">
+                    <td>{{ posto_coletum.id }}</td>
+                    <td>{{ posto_coletum.descricao }}</td>
+                    <td class="d-flex justify-content-end gap-2">
+                        <a href="{{ path('app_posto_coleta_show', {'id': posto_coletum.id}) }}"
+                            class="btn btn-primary"><i class="fas fa-eye"></i></a>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Descrição</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for posto_coletum in posto_coletas %}
-            <tr>
-                <td>{{ posto_coletum.id }}</td>
-                <td>{{ posto_coletum.descricao }}</td>
-                <td>
-                    <a href="{{ path('app_posto_coleta_show', {'id': posto_coletum.id}) }}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
+                        {% if is_granted('POSTO_COLETA_EDIT', posto_coletum) %}
+                        <a href="{{ path('app_posto_coleta_edit', {'id': posto_coletum.id}) }}"
+                            class="btn btn-secondary"><i class="fas fa-pencil"></i></a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="3">Nenhum registro encontrado</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ path('app_posto_coleta_new') }}" class="btn btn-success">Adicionar</a>
+    </div>
+</div>
 
-                    {% if is_granted('POSTO_COLETA_EDIT', posto_coletum) %}
-                        <a href="{{ path('app_posto_coleta_edit', {'id': posto_coletum.id}) }}" class="btn btn-secondary"><i class="fas fa-pencil"></i></a>
-                    {% endif %}
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">Nenhum registro encontrado</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_posto_coleta_new') }}" class="btn btn-success">Adicionar</a>
+</div>
 {% endblock %}
