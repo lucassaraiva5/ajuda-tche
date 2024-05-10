@@ -72,8 +72,8 @@
             </form>
           </div>
         </div>
-      </nav>
-    <body>
+    </nav>
+    <body class="bg-secondary">
         {% for message in app.flashes('success') %}
             <div class="alert alert-success">
                 {{ message }}
@@ -88,5 +88,8 @@
         <div class="container">
             {% block body %}{% endblock %}
         </div>
+        <footer class="bg-dark text-white text-center p-2 fixed-bottom">
+          <p>&copy; Desenvolvido por Lucas Saraiva</p>
+        </footer>
     </body>
 </html>
