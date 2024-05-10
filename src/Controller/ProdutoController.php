@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/produto')]
+#[Route('/admin/produto')]
 class ProdutoController extends AbstractController
 {
     #[Route('/', name: 'app_produto_index', methods: ['GET'])]

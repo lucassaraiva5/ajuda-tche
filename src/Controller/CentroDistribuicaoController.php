@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/centro-distribuicao')]
+#[Route('/admin/centro-distribuicao')]
 class CentroDistribuicaoController extends AbstractController
 {
     #[Route('/', name: 'app_centro_distribuicao_index', methods: ['GET'])]

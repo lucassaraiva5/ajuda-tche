@@ -26,6 +26,5 @@ class DefaultController extends AbstractController
             $arrayCidades[] = ['name' => $cidade->getNome(), 'id' => $cidade->getId()];
         }
         return new JsonResponse($arrayCidades);
-    }
-    
+    }    
 }

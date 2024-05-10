@@ -20,10 +20,6 @@ class ProdutoPostoType extends AbstractType
                 'class' => Produto::class,
                 'choice_label' => 'descricao',
             ])
-            ->add('posto', EntityType::class, [
-                'class' => PostoColeta::class,
-                'choice_label' => 'descricao',
-            ])
         ;
     }
 

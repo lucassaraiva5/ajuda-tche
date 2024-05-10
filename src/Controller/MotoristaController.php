@@ -10,15 +10,36 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
+use Pagerfanta\Pagerfanta;
 
-#[Route('/motorista')]
+#[Route('/admin/motorista')]
 class MotoristaController extends AbstractController
 {
     #[Route('/', name: 'app_motorista_index', methods: ['GET'])]
-    public function index(MotoristaRepository $motoristaRepository): Response
+    public function index(MotoristaRepository $motoristaRepository, #[MapQueryParameter] ?int $page = 0, #[MapQueryParameter] ?string $search): Response
     {
+        $queryBuilder = $motoristaRepository->createQueryBuilder('a')->select('a');
+
+        if(!empty($search) && !is_null($search)) {
+            $queryBuilder->where(
+                $queryBuilder->expr()->like('a.nome', ':search')
+            )
+            ->setParameter('search', '%' . $search . '%');
+        }
+
+        $pagerfanta = new Pagerfanta(
+            new QueryAdapter($queryBuilder)
+        );
+
+        if(is_null($page)) {
+            $page = 1;
+        }
+        $pagerfanta->setCurrentPage($page);
+
         return $this->render('motorista/index.html.twig', [
-            'motoristas' => $motoristaRepository->findAll(),
+            'pager' => $pagerfanta,
         ]);
     }
 

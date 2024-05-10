@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/entrega')]
+#[Route('/admin/entrega')]
 class EntregaController extends AbstractController
 {
     #[Route('/', name: 'app_entrega_index', methods: ['GET'])]
