@@ -46,7 +46,7 @@ class MenuVoter extends Voter
             return true;
         }
 
-        if ($user->hasRole(Usuario::ROLE_POSTO_COLETA) && in_array($attribute, [self::VIEW_MENU_CATEGORIAS, self::VIEW_MENU_PRODUTOS, self::VIEW_MENU_PRODUTO_POSTO, self::VIEW_MENU_ENTREGAS, self::VIEW_MENU_MOTORISTAS])) {
+        if ($user->hasRole(Usuario::ROLE_POSTO_COLETA) && in_array($attribute, [self::VIEW_MENU_CATEGORIAS, self::VIEW_MENU_PRODUTOS, self::VIEW_MENU_PRODUTO_POSTO, self::VIEW_MENU_ENTREGAS, self::VIEW_MENU_MOTORISTAS, self::VIEW_MENU_POSTO_COLETA])) {
             return true;
         }
 
