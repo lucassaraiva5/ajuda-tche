@@ -1,0 +1,37 @@
+{% extends 'raw.html.twig' %}
+
+{% block title %}CentroDistribuicao{% endblock %}
+
+{% block body %}
+
+<div class="d-flex">
+    <div class="m-auto mt-5">
+        <div class="card border-0 mt-5 p-5 shadow">
+            <div class="card-header bg-transparent text-center">
+              <h2>Novo Centro de Distribuicao</h2>
+            </div>
+            <div class="card-body">
+                {{ include('centro_distribuicao/_form.html.twig') }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('centro_distribuicao_estado').addEventListener('change', function() {
+    var stateId = this.value;
+    fetch('/cities/' + stateId)
+        .then(response => response.json())
+        .then(data => {
+            var citySelect = document.getElementById('centro_distribuicao_cidade');
+            citySelect.innerHTML = '';
+            console.log(data);
+            data.forEach(function(city) {
+                var option = new Option(city.name, city.id);
+                citySelect.add(option);
+            });
+        });
+});
+</script>
+
+{% endblock %}

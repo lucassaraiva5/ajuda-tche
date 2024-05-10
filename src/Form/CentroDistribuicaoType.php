@@ -19,12 +19,12 @@ class CentroDistribuicaoType extends AbstractType
             ->add('estado', EntityType::class, [
                 'label' => 'Estado',
                 'class' => Estado::class,
-                'choice_label' => 'descricao',
+                'choice_label' => 'nome',
             ])
             ->add('cidade', EntityType::class, [
                 'label' => 'Cidade',
                 'class' => Cidade::class,
-                'choice_label' => 'descricao',
+                'choice_label' => 'nome',
             ])
         ;
     }

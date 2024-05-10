@@ -13,6 +13,13 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
 {
+
+    const ROLE_POSTO_COLETA = 'ROLE_POSTO_COLETA';
+
+    const ROLE_CENTRO_DISTRIBUICAO = 'ROLE_CENTRO_DISTRIBUICAO';
+
+    const ROLE_ADMIN = 'ROLE_ADMIN';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

@@ -1,0 +1,20 @@
+{% extends 'raw.html.twig' %}
+
+{% block title %}Posto de Coleta{% endblock %}
+
+{% block body %}
+
+<div class="d-flex">
+    <div class="m-auto mt-5">
+        <div class="card border-0 mt-5 p-5 shadow">
+            <div class="card-header bg-transparent text-center">
+              <h2>Novo Posto de Coleta</h2>
+            </div>
+            <div class="card-body">
+                {{ include('posto_coleta/_form.html.twig') }}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

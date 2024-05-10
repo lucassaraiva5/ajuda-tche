@@ -22,6 +22,9 @@ class CentroDistribuicao
     #[ORM\ManyToOne]
     private ?Estado $estado = null;
 
+    #[ORM\ManyToOne]
+    private ?Usuario $usuario = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +62,18 @@ class CentroDistribuicao
     public function setEstado(?Estado $estado): static
     {
         $this->estado = $estado;
+
+        return $this;
+    }
+
+    public function getUsuario(): ?Usuario
+    {
+        return $this->usuario;
+    }
+
+    public function setUsuario(?Usuario $usuario): static
+    {
+        $this->usuario = $usuario;
 
         return $this;
     }

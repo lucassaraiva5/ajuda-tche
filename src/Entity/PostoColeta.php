@@ -19,6 +19,9 @@ class PostoColeta
     #[ORM\ManyToOne]
     private ?Cidade $cidade = null;
 
+    #[ORM\ManyToOne]
+    private ?Usuario $usuario = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,6 +47,18 @@ class PostoColeta
     public function setCidade(?Cidade $cidade): static
     {
         $this->cidade = $cidade;
+
+        return $this;
+    }
+
+    public function getUsuario(): ?Usuario
+    {
+        return $this->usuario;
+    }
+
+    public function setUsuario(?Usuario $usuario): static
+    {
+        $this->usuario = $usuario;
 
         return $this;
     }

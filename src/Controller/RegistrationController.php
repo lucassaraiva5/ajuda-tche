@@ -2,12 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\CentroDistribuicao;
+use App\Entity\PostoColeta;
 use App\Entity\Usuario;
+use App\Form\CentroDistribuicaoType;
+use App\Form\PostoColetaType;
 use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mime\Address;
@@ -50,9 +55,9 @@ class RegistrationController extends AbstractController
 
             switch ($form->get('type')->getData()) {
                 case self::TYPE_POSTO_COLETA:
-                    $user->setRoles(['ROLE_POSTO_COLETA']);
+                    $user->setRoles([Usuario::ROLE_POSTO_COLETA]);
                 case self::TYPE_CENTRO_DISTRIBUICAO:
-                    $user->setRoles(['ROLE_CENTRO_DISTRIBUICAO']);
+                    $user->setRoles([Usuario::ROLE_CENTRO_DISTRIBUICAO]);
                     break;
             }
 
@@ -99,4 +104,57 @@ class RegistrationController extends AbstractController
 
         return $this->redirectToRoute('index_route');
     }
+
+
+    
+    #[Route('/admin/register/centro-distribuicao', name: 'user_register_centro_distribuicao')]
+    public function registerCentroDistribuicao(Request $request, EntityManagerInterface $entityManager, Security $security): Response
+    {
+        $this->denyAccessUnlessGranted(Usuario::ROLE_CENTRO_DISTRIBUICAO);
+        $user = $security->getUser();
+
+        $centroDistribuicao = new CentroDistribuicao();
+        $form = $this->createForm(CentroDistribuicaoType::class, $centroDistribuicao);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $centroDistribuicao->setUsuario($user);
+            $entityManager->persist($centroDistribuicao);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_posto_coleta_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('centro_distribuicao/new-user.html.twig', [
+            'centro_distribuicao' => $centroDistribuicao,
+            'form' => $form,
+        ]);
+
+    }
+
+    #[Route('/admin/register/posto-coleta', name: 'user_register_posto_coleta')]
+    public function registerPostoColeta(Request $request, EntityManagerInterface $entityManager, Security $security): Response
+    {
+        $this->denyAccessUnlessGranted(Usuario::ROLE_POSTO_COLETA);
+
+        $user = $security->getUser();
+
+        $postoColeta = new PostoColeta();
+        $form = $this->createForm(PostoColetaType::class, $postoColeta);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $postoColeta->setUsuario($user);
+            $entityManager->persist($postoColeta);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_posto_coleta_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('posto_coleta/new-user.html.twig', [
+            'posto_coletum' => $postoColeta,
+            'form' => $form,
+        ]);
+    }
+
 }
