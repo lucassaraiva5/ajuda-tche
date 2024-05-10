@@ -39,3 +39,10 @@ composer install
 docker-compose up -d
 php bin/console doctrine:migrations:migrate
 ```
+
+Para colocar o projeto para rodar de maneira nativa:
+
+```
+php -S 0.0.0.0:8000 -t public
+```
+e basta acessar: http://localhost:8000
