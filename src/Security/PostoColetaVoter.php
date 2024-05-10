@@ -41,7 +41,7 @@ class PostoColetaVoter extends Voter
 
         if ($user->hasRole(Usuario::ROLE_POSTO_COLETA)) {
             if($subject instanceof PostoColeta) {
-                if($subject->getUsuario()->getId() === $user->getId()) {
+                if($subject->getUsuario() && $subject->getUsuario()->getId() === $user->getId()) {
                     return true;
                 }
             }
