@@ -3,11 +3,31 @@
 {% block title %}Editar Posto de Coleta{% endblock %}
 
 {% block body %}
-    <h1>Editar Posto de Coleta</h1>
+    {# <h1>Editar Posto de Coleta</h1> #}
 
-    <a href="{{ path('app_posto_coleta_index') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i></a>
+    {# <a href="{{ path('app_posto_coleta_index') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i></a> #}
 
-    {{ include('posto_coleta/_form.html.twig', {'button_label': 'Atualizar'}) }}
+    {# {{ include('posto_coleta/_form.html.twig', {'button_label': 'Atualizar'}) }} #}
 
-    {{ include('posto_coleta/_delete_form.html.twig') }}
+    {# {{ include('posto_coleta/_delete_form.html.twig') }} #}
+    <div class="container mt-5 p-5">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h2>Editar Posto de Coleta</h2>
+          <div class="d-flex align-items-center">
+            <a
+              href="{{ path('app_posto_coleta_index') }}"
+              class="btn btn-primary shadow m-1"
+              ><i class="fa fa-arrow-left"></i> Voltar</a
+            >
+            {{ include('posto_coleta/_delete_form.html.twig') }}
+
+          </div>
+        </div>
+      
+        <div class="card shadow-lg">
+          <div class="card-body">
+            {{ include('posto_coleta/_form.html.twig', {'button_label': 'Atualizar'}) }}
+          </div>
+        </div>
+      </div>
 {% endblock %}

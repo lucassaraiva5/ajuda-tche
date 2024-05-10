@@ -6,34 +6,35 @@
 <div class="container mt-5 p-5">
 
     <h2 class="mb-3">Categorias de produtos</h2>
-
-    <table class="table p-1 border shadow">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Descrição</th>
-                <th class="text-end">Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for categorium in categorias %}
-            <tr>
-                <td>{{ categorium.id }}</td>
-                <td>{{ categorium.descricao }}</td>
-                <td class="d-flex justify-content-end gap-2">
-                    <a href="{{ path('app_categoria_show', {'id': categorium.id}) }}" class="btn btn-primary"><i
-                            class="fas fa-eye"></i> Visualizar</a>
-                    <a href="{{ path('app_categoria_edit', {'id': categorium.id}) }}" class="btn btn-secondary"><i
-                            class="fas fa-pencil"></i> Editar</a>
-                </td>
-            </tr>
-            {% else %}
-            <tr>
-                <td colspan="3">Nenhum registro encontrado</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table p-1 border shadow">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Descrição</th>
+                    <th class="text-end">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for categorium in categorias %}
+                <tr>
+                    <td>{{ categorium.id }}</td>
+                    <td>{{ categorium.descricao }}</td>
+                    <td class="d-flex justify-content-end gap-2">
+                        <a href="{{ path('app_categoria_show', {'id': categorium.id}) }}" class="btn btn-primary"><i
+                                class="fas fa-eye"></i> Visualizar</a>
+                        <a href="{{ path('app_categoria_edit', {'id': categorium.id}) }}" class="btn btn-secondary"><i
+                                class="fas fa-pencil"></i> Editar</a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="3">Nenhum registro encontrado</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
     <a href="{{ path('app_categoria_new') }}" class="btn btn-success mb-3">Adicionar</a>
     {# <div>{{ pagerfanta(categorias) }}</div> #}
