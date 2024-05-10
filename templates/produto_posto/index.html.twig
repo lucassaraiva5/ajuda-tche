@@ -3,33 +3,79 @@
 {% block title %}Estoque Posto de coleta{% endblock %}
 
 {% block body %}
-    <h1>Estoque Posto de coleta</h1>
+{# <h1>Estoque Posto de coleta</h1> #}
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Quantidade</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
+{# <table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Quantidade</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
         {% for produto_posto in produto_postos %}
-            <tr>
-                <td>{{ produto_posto.id }}</td>
-                <td>{{ produto_posto.quantidade }}</td>
-                <td>
-                    <a href="{{ path('app_produto_posto_show', {'id': produto_posto.id}) }}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
-                    <a href="{{ path('app_produto_posto_edit', {'id': produto_posto.id}) }}" class="btn btn-secondary"><i class="fas fa-pencil"></i></a>
-                </td>
-            </tr>
+        <tr>
+            <td>{{ produto_posto.id }}</td>
+            <td>{{ produto_posto.quantidade }}</td>
+            <td>
+                <a href="{{ path('app_produto_posto_show', {'id': produto_posto.id}) }}" class="btn btn-primary"><i
+                        class="fas fa-eye"></i></a>
+                <a href="{{ path('app_produto_posto_edit', {'id': produto_posto.id}) }}" class="btn btn-secondary"><i
+                        class="fas fa-pencil"></i></a>
+            </td>
+        </tr>
         {% else %}
-            <tr>
-                <td colspan="3">Nenhum registro encontrado</td>
-            </tr>
+        <tr>
+            <td colspan="3">Nenhum registro encontrado</td>
+        </tr>
         {% endfor %}
-        </tbody>
-    </table>
+    </tbody>
+</table> #}
 
-    <a href="{{ path('app_produto_posto_new') }}" class="btn btn-success">Adicionar</a>
+{# <a href="{{ path('app_produto_posto_new') }}" class="btn btn-success">Adicionar</a> #}
+
+<div class="container mt-5 p-5">
+    <h2 class="mb-3 font-weight-bold">Estoque Posto de coleta</h2>
+
+    <div class="table-responsive shadow-lg">
+        <table class="table p-2 ">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Id</th>
+                    <th>Quantidade</th>
+                    <th class="text-end">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for produto_posto in produto_postos %}
+                <tr class="align-middle">
+                    <td>{{ produto_posto.id }}</td>
+                    <td>{{ produto_posto.quantidade }}</td>
+                    <td class="d-flex justify-content-end gap-2">
+                        <a href="{{ path('app_produto_posto_show', {'id': produto_posto.id}) }}" class="btn btn-primary"><i
+                            class="fas fa-eye"></i></a>
+                    <a href="{{ path('app_produto_posto_edit', {'id': produto_posto.id}) }}" class="btn btn-secondary"><i
+                            class="fas fa-pencil"></i></a>
+                    </td>
+                </tr>
+
+                {% else %}
+                <tr>
+                    <td colspan="3" class="text-center text-muted">
+                        Nenhum registro encontrado
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mt-3 mb-5">
+        <a href="{{ path('app_produto_posto_new') }}" class="btn btn-success">Adicionar</a>
+        {# <div>{{ pagerfanta(pager) }}</div> #}
+    </div>
+</div>
+
 {% endblock %}
