@@ -18,9 +18,24 @@
 </div>
 
 <script>
-    document.getElementById('posto_coleta_estado').addEventListener('change', function() {
-    var stateId = this.value;
-    fetch('/cities/' + stateId)
+    $(document).ready(function() {
+        $('#posto_coleta_estado').select2({
+            theme: 'bootstrap-5'
+        });
+
+        $('#posto_coleta_cidade').select2({
+            theme: 'bootstrap-5'
+        });
+
+        $('#posto_coleta_cidade')
+        .empty()
+        .append('<option selected="selected" value="">Escolha um estado</option>');
+    });
+
+
+    $('#posto_coleta_estado').on('select2:select', function (e) {
+        var data = e.params.data;
+        fetch('/cities/' + data.id)
         .then(response => response.json())
         .then(data => {
             var citySelect = document.getElementById('posto_coleta_cidade');
@@ -31,7 +46,7 @@
                 citySelect.add(option);
             });
         });
-});
+    });
 </script>
 
 {% endblock %}
