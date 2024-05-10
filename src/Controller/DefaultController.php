@@ -26,14 +26,5 @@ class DefaultController extends AbstractController
             $arrayCidades[] = ['name' => $cidade->getNome(), 'id' => $cidade->getId()];
         }
         return new JsonResponse($arrayCidades);
-    }
-
-    /**
-     * @Route("/logout", name="app_logout", methods={"GET"})
-     */
-    public function logout()
-    {
-        dd("aaaa");
-    }
-    
+    }    
 }

@@ -21,7 +21,7 @@ security:
                 check_path: app_login
                 default_target_path: user_redirect
             logout:
-                path: app_logout
+                path: /logout
                 target: app_login
 
             # activate different ways to authenticate
