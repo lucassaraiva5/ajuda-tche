@@ -19,6 +19,7 @@ class DefaultController extends AbstractController
     #[Route("/cities/{id}", name: 'get_cities', methods: ['GET'])]
     public function getCities(CidadeRepository $cidadeRepository, Estado $estado): JsonResponse
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $cidades = $cidadeRepository->findByEstado($estado);
         $arrayCidades = [];
         foreach($cidades as $cidade) {
@@ -26,6 +27,5 @@ class DefaultController extends AbstractController
         }
         return new JsonResponse($arrayCidades);
     }
-
     
 }

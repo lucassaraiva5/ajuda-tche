@@ -56,6 +56,7 @@ class RegistrationController extends AbstractController
             switch ($form->get('type')->getData()) {
                 case self::TYPE_POSTO_COLETA:
                     $user->setRoles([Usuario::ROLE_POSTO_COLETA]);
+                    break;
                 case self::TYPE_CENTRO_DISTRIBUICAO:
                     $user->setRoles([Usuario::ROLE_CENTRO_DISTRIBUICAO]);
                     break;

@@ -17,4 +17,21 @@
     </div>
 </div>
 
+<script>
+    document.getElementById('posto_coleta_estado').addEventListener('change', function() {
+    var stateId = this.value;
+    fetch('/cities/' + stateId)
+        .then(response => response.json())
+        .then(data => {
+            var citySelect = document.getElementById('posto_coleta_cidade');
+            citySelect.innerHTML = '';
+            console.log(data);
+            data.forEach(function(city) {
+                var option = new Option(city.name, city.id);
+                citySelect.add(option);
+            });
+        });
+});
+</script>
+
 {% endblock %}
