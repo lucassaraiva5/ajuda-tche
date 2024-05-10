@@ -17,7 +17,7 @@
         
 
     </head>
-    <nav class="navbar navbar-expand-lg bg-dark text-white" data-bs-theme="dark">
+    <nav class="navbar navbar-expand-lg bg-dark text-white fixed-top" data-bs-theme="dark">
         <div class="container-fluid text-white">
           <a class="navbar-brand" href="#">AjudaTche!</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,7 +73,7 @@
           </div>
         </div>
     </nav>
-    <body class="bg-secondary">
+    <body class="bg-light">
         {% for message in app.flashes('success') %}
             <div class="alert alert-success">
                 {{ message }}
