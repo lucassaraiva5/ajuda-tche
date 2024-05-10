@@ -3,33 +3,39 @@
 {% block title %}Categorias de produtos{% endblock %}
 
 {% block body %}
-    <h1>Categorias de produtos</h1>
+<div class="container mt-5 p-5">
 
-    <table class="table">
+    <h2 class="mb-3">Categorias de produtos</h2>
+
+    <table class="table p-1 border shadow">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Descrição</th>
-                <th>Ações</th>
+                <th class="text-end">Ações</th>
             </tr>
         </thead>
         <tbody>
-        {% for categorium in categorias %}
+            {% for categorium in categorias %}
             <tr>
                 <td>{{ categorium.id }}</td>
                 <td>{{ categorium.descricao }}</td>
-                <td>
-                    <a href="{{ path('app_categoria_show', {'id': categorium.id}) }}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
-                    <a href="{{ path('app_categoria_edit', {'id': categorium.id}) }}" class="btn btn-secondary"><i class="fas fa-pencil"></i></a>
+                <td class="d-flex justify-content-end gap-2">
+                    <a href="{{ path('app_categoria_show', {'id': categorium.id}) }}" class="btn btn-primary"><i
+                            class="fas fa-eye"></i> Visualizar</a>
+                    <a href="{{ path('app_categoria_edit', {'id': categorium.id}) }}" class="btn btn-secondary"><i
+                            class="fas fa-pencil"></i> Editar</a>
                 </td>
             </tr>
-        {% else %}
+            {% else %}
             <tr>
                 <td colspan="3">Nenhum registro encontrado</td>
             </tr>
-        {% endfor %}
+            {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_categoria_new') }}" class="btn btn-success">Adicionar</a>
+    <a href="{{ path('app_categoria_new') }}" class="btn btn-success mb-3">Adicionar</a>
+    {# <div>{{ pagerfanta(categorias) }}</div> #}
+</div>
 {% endblock %}

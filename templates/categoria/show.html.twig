@@ -3,24 +3,34 @@
 {% block title %}Categoria{% endblock %}
 
 {% block body %}
-    <h1>Categoria</h1>
+<div class="container mt-5 p-5">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <h1>Categoria</h1>
+        <div class="d-flex">
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ categorium.id }}</td>
-            </tr>
-            <tr>
-                <th>Descrição</th>
-                <td>{{ categorium.descricao }}</td>
-            </tr>
-        </tbody>
-    </table>
+            <a href="{{ path('app_categoria_index') }}" class="btn btn-primary shadow m-1"><i
+                    class="fa fa-arrow-left"></i> Voltar</a>
+            <a href="{{ path('app_categoria_edit', {'id': categorium.id}) }}" class="btn btn-secondary shadow m-1"><i
+                    class="fas fa-pencil"></i></a>
+        </div>
+    </div>
+    <div class="card shadow-lg">
+        <div class="card-body">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Id</th>
+                        <td>{{ categorium.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Descrição</th>
+                        <td>{{ categorium.descricao }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-    <a href="{{ path('app_categoria_index') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i></a>
+    {# {{ include('categoria/_delete_form.html.twig') }} #}
 
-    <a href="{{ path('app_categoria_edit', {'id': categorium.id}) }}" class="btn btn-secondary"><i class="fas fa-pencil"></i></a>
-
-    {{ include('categoria/_delete_form.html.twig') }}
-{% endblock %}
+    {% endblock %}
