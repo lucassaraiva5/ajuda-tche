@@ -16,7 +16,7 @@ use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\SecurityBundle\Security;
 
-#[Route('/produto-posto')]
+#[Route('/admin/produto-posto')]
 class ProdutoPostoController extends AbstractController
 {
     #[Route('/', name: 'app_produto_posto_index', methods: ['GET'])]

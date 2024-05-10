@@ -37,28 +37,28 @@
                 </a>
                 <ul class="dropdown-menu">
                   {% if is_granted('VIEW_MOTORISTAS') %}
-                    <li><a class="dropdown-item" href="/motorista/">Motoristas</a></li>
+                    <li><a class="dropdown-item" href="/admin/motorista/">Motoristas</a></li>
                   {% endif %}
                   {% if is_granted('VIEW_PRODUTOS') %}
-                    <li><a class="dropdown-item" href="/produto/">Produtos</a></li>
+                    <li><a class="dropdown-item" href="/admin/produto/">Produtos</a></li>
                   {% endif %}
                   {% if is_granted('VIEW_CATEGORIAS') %}
-                    <li><a class="dropdown-item" href="/categoria/">Categorias</a></li>
+                    <li><a class="dropdown-item" href="/admin/categoria/">Categorias</a></li>
                   {% endif %}
                   {% if is_granted('VIEW_POSTO_COLETA') %}
-                    <li><a class="dropdown-item" href="/posto-coleta/">Posto de Coleta</a></li>
+                    <li><a class="dropdown-item" href="/admin/posto-coleta/">Posto de Coleta</a></li>
                   {% endif %}
                   {% if is_granted('VIEW_PRODUTO_POSTO') %}
-                    <li><a class="dropdown-item" href="/produto-posto/">Produto Posto</a></li>
+                    <li><a class="dropdown-item" href="/admin/produto-posto/">Produto Posto</a></li>
                   {% endif %}
                   {% if is_granted('VIEW_CENTRO_DISTRIBUICAO') %}
-                    <li><a class="dropdown-item" href="/centro-distribuicao/">Centro de distribuição</a></li>
+                    <li><a class="dropdown-item" href="/admin/centro-distribuicao/">Centro de distribuição</a></li>
                   {% endif %}
                   {% if is_granted('VIEW_PRODUTOS_NECESSARIOS') %}
-                    <li><a class="dropdown-item" href="/produto-necessario/">Produto necessário (CD)</a></li>
+                    <li><a class="dropdown-item" href="/admin/produto-necessario/">Produto necessário (CD)</a></li>
                   {% endif %}
                   {% if is_granted('VIEW_ENTREGAS') %}
-                  <li><a class="dropdown-item" href="/entrega/">Entrega</a></li>
+                  <li><a class="dropdown-item" href="/admin/entrega/">Entrega</a></li>
                   {% endif %}
                 </ul>
               </li>
@@ -70,6 +70,19 @@
               <input class="form-control me-2" name="search" id="search" type="search" placeholder="Buscar" aria-label="Search">
               <button class="btn btn-outline-success" type="submit">Buscar</button>
             </form>
+
+            <div class="flex-shrink-0 dropdown">
+              <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+              </a>
+              <ul class="dropdown-menu text-small shadow" data-popper-placement="bottom-end" style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate(0px, 34px);">
+                <li><a class="dropdown-item" href="#">New project...</a></li>
+                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="/logout">Sair</a></li>
+              </ul>
+            </div>
           </div>
         </div>
       </nav>

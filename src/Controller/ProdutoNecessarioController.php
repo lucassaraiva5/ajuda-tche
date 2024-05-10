@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/produto-necessario')]
+#[Route('/admin/produto-necessario')]
 class ProdutoNecessarioController extends AbstractController
 {
     #[Route('/', name: 'app_produto_necessario_index', methods: ['GET'])]

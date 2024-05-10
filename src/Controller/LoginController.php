@@ -47,6 +47,8 @@ class LoginController extends AbstractController
                 $posto = $postoColetaRepository->findOneByUsuario($user);
                 if(empty($posto)) {
                     return $this->redirectToRoute("user_register_posto_coleta");
+                }else{
+                    return $this->redirectToRoute("app_produto_posto_index");
                 }
                 break;
             
@@ -54,6 +56,8 @@ class LoginController extends AbstractController
                 $centroDistribuicao = $centroDistribuicaoRepository->findOneByUsuario($user);
                 if(empty($centroDistribuicao)) {
                     return $this->redirectToRoute("user_register_centro_distribuicao");
+                }else {
+                    return $this->redirectToRoute("app_produto_necessario_index");
                 }
                 break;
             

@@ -15,7 +15,7 @@ use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
 
 
-#[Route('/categoria')]
+#[Route('/admin/categoria')]
 class CategoriaController extends AbstractController
 {
     #[Route('/', name: 'app_categoria_index', methods: ['GET'])]

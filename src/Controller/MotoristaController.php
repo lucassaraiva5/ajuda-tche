@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
 
-#[Route('/motorista')]
+#[Route('/admin/motorista')]
 class MotoristaController extends AbstractController
 {
     #[Route('/', name: 'app_motorista_index', methods: ['GET'])]
