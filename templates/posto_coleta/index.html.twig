@@ -20,7 +20,10 @@
                 <td>{{ posto_coletum.descricao }}</td>
                 <td>
                     <a href="{{ path('app_posto_coleta_show', {'id': posto_coletum.id}) }}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
-                    <a href="{{ path('app_posto_coleta_edit', {'id': posto_coletum.id}) }}" class="btn btn-secondary"><i class="fas fa-pencil"></i></a>
+
+                    {% if is_granted('POSTO_COLETA_EDIT', posto_coletum) %}
+                        <a href="{{ path('app_posto_coleta_edit', {'id': posto_coletum.id}) }}" class="btn btn-secondary"><i class="fas fa-pencil"></i></a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}

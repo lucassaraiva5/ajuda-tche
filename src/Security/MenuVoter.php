@@ -23,11 +23,10 @@ class MenuVoter extends Voter
     protected function supports(string $attribute, mixed $subject): bool
     {
         // if the attribute isn't one we support, return false
-        if (!in_array($attribute, [self::VIEW_MENU_CATEGORIAS, self::VIEW_MENU_PRODUTOS, self::VIEW_MENU_ENTREGAS, self::VIEW_MENU_MOTORISTAS, self::VIEW_MENU_PRODUTOS_NECESSARIO, self::VIEW_MENU_PRODUTO_POSTO, self::VIEW_MENU_POSTO_COLETA, self::VIEW_MENU_CENTRO_DISTRIBUICAO])) {
-            return false;
+        if (in_array($attribute, [self::VIEW_MENU_CATEGORIAS, self::VIEW_MENU_PRODUTOS, self::VIEW_MENU_ENTREGAS, self::VIEW_MENU_MOTORISTAS, self::VIEW_MENU_PRODUTOS_NECESSARIO, self::VIEW_MENU_PRODUTO_POSTO, self::VIEW_MENU_POSTO_COLETA, self::VIEW_MENU_CENTRO_DISTRIBUICAO])) {
+            return true;
         }
-
-        return true;
+        return false;
     }
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
