@@ -40,7 +40,6 @@
         .then(data => {
             var citySelect = document.getElementById('posto_coleta_cidade');
             citySelect.innerHTML = '';
-            console.log(data);
             data.forEach(function(city) {
                 var option = new Option(city.name, city.id);
                 citySelect.add(option);
