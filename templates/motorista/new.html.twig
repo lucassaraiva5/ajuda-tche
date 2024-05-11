@@ -3,11 +3,18 @@
 {% block title %}Novo Motorista{% endblock %}
 
 {% block body %}
-    <h1>Cadastrar Motorista</h1>
 
-    <a href="{{ path('app_motorista_index') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i></a>
-
-    {{ include('motorista/_form.html.twig') }}
-
-    
+    <div class="container mt-5 p-5">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h2>Novo Motorista</h2>
+          <a href="{{ path('app_motorista_index') }}" class="btn btn-primary shadow"
+            ><i class="fa fa-arrow-left"></i> Voltar</a
+          >
+        </div>
+        <div class="card shadow-lg">
+          <div class="card-body">
+            {{ include('motorista/_form.html.twig') }}
+          </div>
+        </div>
+      </div>
 {% endblock %}
