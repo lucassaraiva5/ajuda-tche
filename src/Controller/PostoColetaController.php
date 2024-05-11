@@ -10,15 +10,36 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
+use Pagerfanta\Pagerfanta;
 
 #[Route('/admin/posto-coleta')]
 class PostoColetaController extends AbstractController
 {
     #[Route('/', name: 'app_posto_coleta_index', methods: ['GET'])]
-    public function index(PostoColetaRepository $postoColetaRepository): Response
+    public function index(PostoColetaRepository $postoColetaRepository, #[MapQueryParameter] ?int $page = 0, #[MapQueryParameter] ?string $search): Response
     {
+        $queryBuilder = $postoColetaRepository->createQueryBuilder('a')->select('a');
+
+        if(!empty($search) && !is_null($search)) {
+            $queryBuilder->where(
+                $queryBuilder->expr()->like('a.descricao', ':search')
+            )
+            ->setParameter('search', '%' . $search . '%');
+        }
+
+        $pagerfanta = new Pagerfanta(
+            new QueryAdapter($queryBuilder)
+        );
+
+        if(is_null($page)) {
+            $page = 1;
+        }
+        $pagerfanta->setCurrentPage($page);
+
         return $this->render('posto_coleta/index.html.twig', [
-            'posto_coletas' => $postoColetaRepository->findAll(),
+            'pager' => $pagerfanta,
         ]);
     }
 
