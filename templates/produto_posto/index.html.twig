@@ -11,15 +11,17 @@
         <table class="table p-2 ">
             <thead class="thead-dark">
                 <tr>
-                    <th>Id</th>
+                    <th>Descrição</th>
+                    <th>Categoria</th>
                     <th>Quantidade</th>
-                    <th class="text-end">Ações</th>
+                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
                 {% for produto_posto in pager %}
                 <tr class="align-middle">
-                    <td>{{ produto_posto.id }}</td>
+                    <td>{{ produto_posto.produto.descricao }}</td>
+                    <td>{{ produto_posto.produto.categoria.descricao }}</td>
                     <td>{{ produto_posto.quantidade }}</td>
                     <td class="d-flex justify-content-end gap-2">
                         <a href="{{ path('app_produto_posto_show', {'id': produto_posto.id}) }}" class="btn btn-primary"><i
@@ -31,7 +33,7 @@
 
                 {% else %}
                 <tr>
-                    <td colspan="3" class="text-center text-muted">
+                    <td colspan="4" class="text-center text-muted">
                         Nenhum registro encontrado
                     </td>
                 </tr>
