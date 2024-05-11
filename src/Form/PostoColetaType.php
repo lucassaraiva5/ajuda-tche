@@ -20,11 +20,17 @@ class PostoColetaType extends AbstractType
                 'label' => 'Estado',
                 'class' => Estado::class,
                 'choice_label' => 'nome',
+                'attr' => [
+                    'class' => 'select2'
+                ]
             ])
             ->add('cidade', EntityType::class, [
                 'label' => 'Cidade',
                 'class' => Cidade::class,
                 'choice_label' => 'nome',
+                'attr' => [
+                    'class' => 'select2'
+                ]
             ])
         ;
     }

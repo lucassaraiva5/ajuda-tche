@@ -22,7 +22,9 @@
                 <td>{{ centro_distribuicao.usuario.email }}</td>
                 <td>
                     <a href="{{ path('app_centro_distribuicao_show', {'id': centro_distribuicao.id}) }}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
+                    {% if is_granted('CENTRO_DISTRIBUICAO_EDIT', centro_distribuicao) %}
                     <a href="{{ path('app_centro_distribuicao_edit', {'id': centro_distribuicao.id}) }}" class="btn btn-secondary"><i class="fas fa-pencil"></i></a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
