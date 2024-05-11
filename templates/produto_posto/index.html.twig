@@ -3,12 +3,16 @@
 {% block title %}Estoque Posto de coleta{% endblock %}
 
 {% block body %}
+    <br>
+    <br>
+    <br>
     <h1>Estoque Posto de coleta</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                <th>Descrição</th>
+                <th>Categoria</th>
                 <th>Quantidade</th>
                 <th>Ações</th>
             </tr>
@@ -16,7 +20,8 @@
         <tbody>
         {% for produto_posto in pager %}
             <tr>
-                <td>{{ produto_posto.id }}</td>
+                <td>{{ produto_posto.produto.descricao }}</td>
+                <td>{{ produto_posto.produto.categoria.descricao }}</td>
                 <td>{{ produto_posto.quantidade }}</td>
                 <td>
                     <a href="{{ path('app_produto_posto_show', {'id': produto_posto.id}) }}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
@@ -25,7 +30,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">Nenhum registro encontrado</td>
+                <td colspan="4">Nenhum registro encontrado</td>
             </tr>
         {% endfor %}
         </tbody>
