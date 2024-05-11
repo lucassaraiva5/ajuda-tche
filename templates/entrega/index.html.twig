@@ -3,31 +3,43 @@
 {% block title %}Entregas{% endblock %}
 
 {% block body %}
-    <h1>Entregas</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entrega in entregas %}
-            <tr>
-                <td>{{ entrega.id }}</td>
-                <td>
-                    <a href="{{ path('app_entrega_show', {'id': entrega.id}) }}" class="btn btn-primary"><i class="fas fa-eye"></i></a>
-                    <a href="{{ path('app_entrega_edit', {'id': entrega.id}) }}" class="btn btn-secondary"><i class="fas fa-pencil"></i></a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="2">Nenhum registro encontrado</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
 
-    <a href="{{ path('app_entrega_new') }}" class="btn btn-success">Adicionar</a>
+<div class="container mt-5 p-5">
+    <h2 class="mb-3">Entregas</h2>
+
+    <div class="table-responsive rounded shadow-lg">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Id</th>
+                    <th class="text-end">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entrega in entregas %}
+                <tr class="align-middle">
+                    <td>{{ entrega.id }}</td>
+                    <td class="d-flex justify-content-end gap-2">
+                        <a href="{{ path('app_entrega_show', {'id': entrega.id}) }}" class="btn btn-primary"><i
+                                class="fas fa-eye"></i></a>
+                        <a href="{{ path('app_entrega_edit', {'id': entrega.id}) }}" class="btn btn-secondary"><i
+                                class="fas fa-pencil"></i></a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="3">Nenhum registro encontrado</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="d-flex justify-content-between align-items-center mt-3 mb-5">
+        <a href="{{ path('app_entrega_new') }}" class="btn btn-success shadow-sm">
+            <i class="fas fa-plus"></i> Adicionar
+        </a>
+        {# <div>{{ pagerfanta(pager) }}</div> #}
+    </div>
+</div>
 {% endblock %}
