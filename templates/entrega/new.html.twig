@@ -3,9 +3,18 @@
 {% block title %}New Entrega{% endblock %}
 
 {% block body %}
-    <h1>Nova Entrega</h1>
 
-    <a href="{{ path('app_entrega_index') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i></a>
-    {{ include('entrega/_form.html.twig') }}
-
+    <div class="container mt-5 p-5">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h2>Nova Entrega</h2>
+          <a href="{{ path('app_entrega_index') }}" class="btn btn-primary shadow"
+            ><i class="fa fa-arrow-left"></i> Voltar</a
+          >
+        </div>
+        <div class="card shadow-lg">
+          <div class="card-body">
+            {{ include('entrega/_form.html.twig') }}
+          </div>
+        </div>
+      </div>
 {% endblock %}

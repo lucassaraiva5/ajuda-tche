@@ -1,11 +1,14 @@
 {% extends 'raw.html.twig' %} {% block title %}Ajuda Tche - Login{% endblock %}
 {% block body %}
-<div class="d-flex">
+
+
+
+<div class="d-flex bg-light">
   <div class="m-auto mt-5">
     <div class="card border-0 mt-5 p-5 shadow">
       <div class="card-header bg-transparent text-center">
         <h2>Ajuda Tche</h2>
-        <p class="text-muted">
+        <p class="text-muted mt-3">
           Software para o gerenciamento da entrega das doações.
         </p>
       </div>
@@ -43,10 +46,15 @@
           </div>
           <a href="{{ path('app_forgot_password_request') }}" class="">Esqueci minha senha</a>
           <div class="form-group">
-            <button type="submit" class="btn btn-outline-dark btn-block shadow-sm shadow-dark">Entrar</button>
+            <button type="submit" class="btn btn-primary w-100 btn-block shadow-sm shadow-dark">Entrar</button>
           </div>
         </form>
-        <a href="{{ path('app_register') }}" class="">Registrar-se</a>
+        <div class="text-center mt-3">
+          <span>
+            Não tem uma conta? <a href="{{ path('app_register') }}" class="">Registrar-se</a>
+          </span>
+        </div>
+        
       </div>
     </div>
   </div>
