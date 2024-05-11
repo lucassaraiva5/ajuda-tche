@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}E-mail de redefinição de senha enviado{% endblock %}
+
+{% block body %}
+    <p>
+        Se existir uma conta que corresponda ao seu e-mail, então foi enviado um e-mail contendo um link que você pode usar para redefinir sua senha.
+        Este link irá expirar em {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+    </p>
+    <p>Se você não receber um e-mail, verifique sua pasta de spam ou <a href="{{ path('app_forgot_password_request') }}">tente novamente</a>.</p>
+{% endblock %}
