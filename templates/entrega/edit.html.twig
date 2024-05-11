@@ -3,11 +3,24 @@
 {% block title %}Edit Entrega{% endblock %}
 
 {% block body %}
-    <h1>Edit Entrega</h1>
 
-    {{ include('entrega/_form.html.twig', {'button_label': 'Atualizar'}) }}
-
-    <a href="{{ path('app_entrega_index') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i></a>
-
-    {{ include('entrega/_delete_form.html.twig') }}
+    <div class="container mt-5 p-5">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h2 class="font-weight-bold">Editar Entrega</h2>
+          <div class="d-flex align-items-center">
+            <a
+              href="{{ path('app_entrega_index') }}"
+              class="btn btn-primary shadow m-1"
+              ><i class="fa fa-arrow-left"></i> Voltar</a
+            >
+            {{ include('entrega/_delete_form.html.twig') }}
+          </div>
+        </div>
+      
+        <div class="card shadow-lg">
+          <div class="card-body">
+            {{ include('entrega/_form.html.twig', {'button_label': 'Atualizar'}) }}
+          </div>
+        </div>
+      </div>
 {% endblock %}

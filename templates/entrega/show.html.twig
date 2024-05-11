@@ -3,20 +3,33 @@
 {% block title %}Entrega{% endblock %}
 
 {% block body %}
-    <h1>Entrega</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entrega.id }}</td>
-            </tr>
-        </tbody>
-    </table>
 
-    <a href="{{ path('app_entrega_index') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i></a>
 
-    <a href="{{ path('app_entrega_edit', {'id': entrega.id}) }}" class="btn btn-secondary"><i class="fas fa-pencil"></i></a>
-
-    {{ include('entrega/_delete_form.html.twig') }}
+    <div class="container mt-5 p-5">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <h2 class="font-weight-bold">Entrega</h2>
+            <div class="d-flex gap-2 align-items-center">
+                <a href="{{ path('app_entrega_index') }}" class="btn btn-primary shadow m-1"><i
+                        class="fa fa-arrow-left"></i> Voltar</a>
+                <a href="{{ path('app_entrega_edit', {'id': entrega.id}) }}" class="btn btn-secondary shadow m-1"><i
+                        class="fas fa-pencil"></i></a>
+                        {{ include('entrega/_delete_form.html.twig') }}
+    
+            </div>
+        </div>
+    
+        <div class="card shadow-lg">
+            <div class="card-body">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>Id</th>
+                            <td>{{ entrega.id }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 {% endblock %}
