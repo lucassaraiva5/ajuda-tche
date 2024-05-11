@@ -11,6 +11,7 @@
         <tr>
           <th>Id</th>
           <th>Descrição</th>
+          <th>Categoria</th>
           <th class="text-end">Ações</th>
         </tr>
       </thead>
@@ -19,6 +20,7 @@
         <tr class="align-middle">
           <td>{{ produto.id }}</td>
           <td>{{ produto.descricao }}</td>
+          <td>{{ produto.categoria.descricao }}</td>
           <td class="d-flex justify-content-end">
             <a href="{{ path('app_produto_show', { id: produto.id }) }}" class="btn btn-primary shadow-sm me-2"><i
                 class="fas fa-eye"></i> Visualizar</a>
@@ -29,7 +31,7 @@
 
         {% else %}
         <tr>
-          <td colspan="3" class="text-center text-muted">
+          <td colspan="4" class="text-center text-muted">
             Nenhum registro encontrado
           </td>
         </tr>
