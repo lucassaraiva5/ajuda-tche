@@ -1,0 +1,50 @@
+{% extends 'raw.html.twig' %}
+
+{% block title %}Dados do voluntário{% endblock %}
+
+{% block body %}
+
+    <div class="d-flex">
+        <div class="m-auto mt-5">
+            <div class="card border-0 mt-5 p-5 shadow">
+                <div class="card-header bg-transparent text-center">
+                <h2>Novo Voluntário</h2>
+                </div>
+                <div class="card-body">
+                    {{ include('voluntario/_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+    $(document).ready(function() {
+        $('#voluntario_postoColeta').select2({
+            theme: 'bootstrap-5'
+        });
+
+        $('#voluntario_funcoes').select2({
+            theme: 'bootstrap-5'
+        });
+
+        $('#voluntario_codigoArea').attr({ maxLength : 2 }).on('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
+
+        $('#voluntario_telefone').on('input', function() {
+            // Aplica a formatação e aceita apenas números e o hífen
+            var valor = $(this).val();
+            // Remove tudo que não for número ou hífen
+            valor = valor.replace(/[^0-9\-]/g, '');
+            // Certifica-se de que o hífen está na posição correta e não se repete
+            valor = valor.replace(/(\d{5})\-?(\d{4})/, '$1-$2');
+            // Limita o valor a no máximo 10 caracteres (9 números e 1 hífen)
+            valor = valor.substring(0, 10);
+            // Atualiza o valor do campo com o formato correto
+            $(this).val(valor);
+        });
+
+    
+    });
+</script>
+{% endblock %}

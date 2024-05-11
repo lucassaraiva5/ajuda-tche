@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Funcao index{% endblock %}
+
+{% block body %}
+    <h1>Funcao index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Descricao</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for funcao in funcaos %}
+            <tr>
+                <td>{{ funcao.id }}</td>
+                <td>{{ funcao.descricao }}</td>
+                <td>
+                    <a href="{{ path('app_funcao_show', {'id': funcao.id}) }}">show</a>
+                    <a href="{{ path('app_funcao_edit', {'id': funcao.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_funcao_new') }}">Create new</a>
+{% endblock %}

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PostoColetaRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PostoColetaRepository::class)]
@@ -24,6 +26,17 @@ class PostoColeta
 
     #[ORM\ManyToOne]
     private ?Estado $estado = null;
+
+    /**
+     * @var Collection<int, Voluntario>
+     */
+    #[ORM\OneToMany(targetEntity: Voluntario::class, mappedBy: 'postoColeta')]
+    private Collection $voluntarios;
+
+    public function __construct()
+    {
+        $this->voluntarios = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -74,6 +87,36 @@ class PostoColeta
     public function setEstado(?estado $estado): static
     {
         $this->estado = $estado;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Voluntario>
+     */
+    public function getVoluntarios(): Collection
+    {
+        return $this->voluntarios;
+    }
+
+    public function addVoluntario(Voluntario $voluntario): static
+    {
+        if (!$this->voluntarios->contains($voluntario)) {
+            $this->voluntarios->add($voluntario);
+            $voluntario->setPostoColeta($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVoluntario(Voluntario $voluntario): static
+    {
+        if ($this->voluntarios->removeElement($voluntario)) {
+            // set the owning side to null (unless already changed)
+            if ($voluntario->getPostoColeta() === $this) {
+                $voluntario->setPostoColeta(null);
+            }
+        }
 
         return $this;
     }

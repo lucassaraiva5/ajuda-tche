@@ -20,6 +20,8 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
 
     const ROLE_ADMIN = 'ROLE_ADMIN';
 
+    const ROLE_VOLUNTARIO = 'ROLE_VOLUNTARIO';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

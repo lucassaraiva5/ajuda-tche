@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Voluntario{% endblock %}
+
+{% block body %}
+    <h1>Edit Voluntario</h1>
+
+    {{ include('voluntario/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_voluntario_index') }}">back to list</a>
+
+    {{ include('voluntario/_delete_form.html.twig') }}
+{% endblock %}

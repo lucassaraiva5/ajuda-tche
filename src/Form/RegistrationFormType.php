@@ -2,14 +2,13 @@
 
 namespace App\Form;
 
+use App\Controller\RegistrationController;
 use App\Entity\Usuario;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -21,8 +20,9 @@ class RegistrationFormType extends AbstractType
             ->add('email')
             ->add('type', ChoiceType::class, [
                 'choices'  => [
-                    'Posto de coleta' => 1,
-                    'Abrigo/Centro de distribuição' => 2
+                    'Posto de coleta' => RegistrationController::TYPE_POSTO_COLETA,
+                    'Abrigo/Centro de distribuição' => RegistrationController::TYPE_CENTRO_DISTRIBUICAO,
+                    'Voluntário' => RegistrationController::TYPE_VOLUNTARIO
                 ],
                 'label' => 'Tipo',
                 'mapped' => false, 

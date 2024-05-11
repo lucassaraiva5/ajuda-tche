@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Usuario;
 use App\Repository\CentroDistribuicaoRepository;
 use App\Repository\PostoColetaRepository;
+use App\Repository\VoluntarioRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,7 +38,7 @@ class LoginController extends AbstractController
     }
 
     #[Route('/admin', name: 'user_redirect', methods: ['GET'])]
-    public function indexRouteAfterLogin(Security $security, PostoColetaRepository $postoColetaRepository, CentroDistribuicaoRepository $centroDistribuicaoRepository)
+    public function indexRouteAfterLogin(Security $security, PostoColetaRepository $postoColetaRepository, CentroDistribuicaoRepository $centroDistribuicaoRepository, VoluntarioRepository $voluntarioRepository)
     {
         $user = $security->getUser();
         $role = $user->getRoles();
@@ -60,6 +61,14 @@ class LoginController extends AbstractController
                 return $this->redirectToRoute("user_register_centro_distribuicao");
             }
             return $this->redirectToRoute("app_produto_necessario_index");
+        }
+
+        if($user->hasRole(Usuario::ROLE_VOLUNTARIO)) {
+            $voluntario = $voluntarioRepository->findOneByUsuario($user);
+            if(empty($voluntario)) {
+                return $this->redirectToRoute("user_register_voluntario");
+            }
+            return $this->redirectToRoute("app_login");
         }
 
         return $this->redirectToRoute("app_login");

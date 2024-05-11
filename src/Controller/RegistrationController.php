@@ -5,9 +5,11 @@ namespace App\Controller;
 use App\Entity\CentroDistribuicao;
 use App\Entity\PostoColeta;
 use App\Entity\Usuario;
+use App\Entity\Voluntario;
 use App\Form\CentroDistribuicaoType;
 use App\Form\PostoColetaType;
 use App\Form\RegistrationFormType;
+use App\Form\VoluntarioType;
 use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -26,6 +28,8 @@ class RegistrationController extends AbstractController
 {
     const TYPE_POSTO_COLETA = 1;
     const TYPE_CENTRO_DISTRIBUICAO = 2;
+
+    const TYPE_VOLUNTARIO = 3;
 
     public function __construct(private EmailVerifier $emailVerifier)
     {
@@ -47,7 +51,9 @@ class RegistrationController extends AbstractController
                 )
             );
 
-            if($form->get('type')->getData() !== self::TYPE_POSTO_COLETA && $form->get('type')->getData() !== self::TYPE_CENTRO_DISTRIBUICAO)
+            if($form->get('type')->getData() !== self::TYPE_POSTO_COLETA &&
+                $form->get('type')->getData() !== self::TYPE_CENTRO_DISTRIBUICAO &&
+                $form->get('type')->getData() !== self::TYPE_VOLUNTARIO)
             {
                 $this->addFlash('error', 'Tipo inválido');
                 return $this->redirectToRoute('app_register');
@@ -59,6 +65,9 @@ class RegistrationController extends AbstractController
                     break;
                 case self::TYPE_CENTRO_DISTRIBUICAO:
                     $user->setRoles([Usuario::ROLE_CENTRO_DISTRIBUICAO]);
+                    break;
+                case self::TYPE_VOLUNTARIO:
+                    $user->setRoles([Usuario::ROLE_VOLUNTARIO]);
                     break;
             }
 
@@ -154,6 +163,31 @@ class RegistrationController extends AbstractController
 
         return $this->render('posto_coleta/new-user.html.twig', [
             'posto_coletum' => $postoColeta,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/admin/register/voluntario', name: 'user_register_voluntario')]
+    public function registerVoluntario(Request $request, EntityManagerInterface $entityManager, Security $security): Response
+    {
+        $this->denyAccessUnlessGranted(Usuario::ROLE_VOLUNTARIO);
+
+        $user = $security->getUser();
+
+        $voluntario = new Voluntario();
+        $form = $this->createForm(VoluntarioType::class, $voluntario);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $voluntario->setUsuario($user);
+            $entityManager->persist($voluntario);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_posto_coleta_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('voluntario/new-user.html.twig', [
+            'voluntario' => $voluntario,
             'form' => $form,
         ]);
     }

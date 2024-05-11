@@ -86,6 +86,9 @@
             {% if is_granted('VIEW_ENTREGAS') %}
             <li><a class="dropdown-item" href="/admin/entrega/">Destinar Produtos</a></li>
             {% endif %}
+            {% if is_granted('VIEW_FUNCAO') %}
+            <li><a class="dropdown-item" href="/admin/funcao/">Funções</a></li>
+            {% endif %}
           </ul>
         </li>
       </ul>

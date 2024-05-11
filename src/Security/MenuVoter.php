@@ -18,12 +18,14 @@ class MenuVoter extends Voter
     const VIEW_MENU_POSTO_COLETA = 'VIEW_POSTO_COLETA';
     const VIEW_MENU_CENTRO_DISTRIBUICAO = 'VIEW_CENTRO_DISTRIBUICAO';
 
+    const VIEW_MENU_FUNCAO = 'VIEW_FUNCAO';
+
 
 
     protected function supports(string $attribute, mixed $subject): bool
     {
         // if the attribute isn't one we support, return false
-        if (in_array($attribute, [self::VIEW_MENU_CATEGORIAS, self::VIEW_MENU_PRODUTOS, self::VIEW_MENU_ENTREGAS, self::VIEW_MENU_MOTORISTAS, self::VIEW_MENU_PRODUTOS_NECESSARIO, self::VIEW_MENU_PRODUTO_POSTO, self::VIEW_MENU_POSTO_COLETA, self::VIEW_MENU_CENTRO_DISTRIBUICAO])) {
+        if (in_array($attribute, [self::VIEW_MENU_CATEGORIAS, self::VIEW_MENU_PRODUTOS, self::VIEW_MENU_ENTREGAS, self::VIEW_MENU_MOTORISTAS, self::VIEW_MENU_PRODUTOS_NECESSARIO, self::VIEW_MENU_PRODUTO_POSTO, self::VIEW_MENU_POSTO_COLETA, self::VIEW_MENU_CENTRO_DISTRIBUICAO, self::VIEW_MENU_FUNCAO])) {
             return true;
         }
         return false;
@@ -42,11 +44,11 @@ class MenuVoter extends Voter
             return true;
         }
 
-        if ($user->hasRole(Usuario::ROLE_CENTRO_DISTRIBUICAO) && in_array($attribute, [self::VIEW_MENU_CATEGORIAS, self::VIEW_MENU_PRODUTOS, self::VIEW_MENU_PRODUTOS_NECESSARIO, self::VIEW_MENU_CENTRO_DISTRIBUICAO])) {
+        if ($user->hasRole(Usuario::ROLE_CENTRO_DISTRIBUICAO) && in_array($attribute, [self::VIEW_MENU_CATEGORIAS, self::VIEW_MENU_PRODUTOS, self::VIEW_MENU_PRODUTOS_NECESSARIO, self::VIEW_MENU_CENTRO_DISTRIBUICAO, self::VIEW_MENU_FUNCAO])) {
             return true;
         }
 
-        if ($user->hasRole(Usuario::ROLE_POSTO_COLETA) && in_array($attribute, [self::VIEW_MENU_CATEGORIAS, self::VIEW_MENU_PRODUTOS, self::VIEW_MENU_PRODUTO_POSTO, self::VIEW_MENU_ENTREGAS, self::VIEW_MENU_MOTORISTAS, self::VIEW_MENU_POSTO_COLETA])) {
+        if ($user->hasRole(Usuario::ROLE_POSTO_COLETA) && in_array($attribute, [self::VIEW_MENU_CATEGORIAS, self::VIEW_MENU_PRODUTOS, self::VIEW_MENU_PRODUTO_POSTO, self::VIEW_MENU_ENTREGAS, self::VIEW_MENU_MOTORISTAS, self::VIEW_MENU_POSTO_COLETA, self::VIEW_MENU_FUNCAO])) {
             return true;
         }
 
