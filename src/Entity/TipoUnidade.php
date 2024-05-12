@@ -24,6 +24,9 @@ class TipoUnidade
     #[ORM\ManyToMany(targetEntity: Produto::class, mappedBy: 'tiposUnidade')]
     private Collection $produtos;
 
+    #[ORM\Column]
+    private ?int $valor = null;
+
     public function __construct()
     {
         $this->produtos = new ArrayCollection();
@@ -69,6 +72,18 @@ class TipoUnidade
         if ($this->produtos->removeElement($produto)) {
             $produto->removeTiposUnidade($this);
         }
+
+        return $this;
+    }
+
+    public function getValor(): ?int
+    {
+        return $this->valor;
+    }
+
+    public function setValor(int $valor): static
+    {
+        $this->valor = $valor;
 
         return $this;
     }

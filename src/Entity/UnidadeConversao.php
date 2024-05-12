@@ -27,6 +27,9 @@ class UnidadeConversao
     #[ORM\ManyToMany(targetEntity: Produto::class, mappedBy: 'unidadesConversao')]
     private Collection $produtos;
 
+    #[ORM\Column]
+    private ?float $valor = null;
+
     public function __construct()
     {
         $this->produtos = new ArrayCollection();
@@ -84,6 +87,18 @@ class UnidadeConversao
         if ($this->produtos->removeElement($produto)) {
             $produto->removeUnidadesConversao($this);
         }
+
+        return $this;
+    }
+
+    public function getValor(): ?float
+    {
+        return $this->valor;
+    }
+
+    public function setValor(float $valor): static
+    {
+        $this->valor = $valor;
 
         return $this;
     }
