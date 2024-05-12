@@ -18,10 +18,13 @@ class UnidadeConversao
     #[ORM\Column(length: 150)]
     private ?string $descricao = null;
 
+    #[ORM\ManyToOne(inversedBy: 'unidadesConversao')]
+    private ?UnidadeArmazenamento $unidadeArmazenamento = null;
+
     /**
      * @var Collection<int, Produto>
      */
-    #[ORM\OneToMany(targetEntity: Produto::class, mappedBy: 'unidadeConversao')]
+    #[ORM\ManyToMany(targetEntity: Produto::class, mappedBy: 'unidadesConversao')]
     private Collection $produtos;
 
     public function __construct()
@@ -46,6 +49,18 @@ class UnidadeConversao
         return $this;
     }
 
+    public function getUnidadeArmazenamento(): ?UnidadeArmazenamento
+    {
+        return $this->unidadeArmazenamento;
+    }
+
+    public function setUnidadeArmazenamento(?UnidadeArmazenamento $unidadeArmazenamento): static
+    {
+        $this->unidadeArmazenamento = $unidadeArmazenamento;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Produto>
      */
@@ -58,7 +73,7 @@ class UnidadeConversao
     {
         if (!$this->produtos->contains($produto)) {
             $this->produtos->add($produto);
-            $produto->setUnidadeConversao($this);
+            $produto->addUnidadesConversao($this);
         }
 
         return $this;
@@ -67,12 +82,10 @@ class UnidadeConversao
     public function removeProduto(Produto $produto): static
     {
         if ($this->produtos->removeElement($produto)) {
-            // set the owning side to null (unless already changed)
-            if ($produto->getUnidadeConversao() === $this) {
-                $produto->setUnidadeConversao(null);
-            }
+            $produto->removeUnidadesConversao($this);
         }
 
         return $this;
     }
+
 }

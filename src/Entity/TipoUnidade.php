@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TipoUnidadeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TipoUnidadeRepository::class)]
@@ -15,6 +17,17 @@ class TipoUnidade
 
     #[ORM\Column(length: 60)]
     private ?string $descricao = null;
+
+    /**
+     * @var Collection<int, Produto>
+     */
+    #[ORM\ManyToMany(targetEntity: Produto::class, mappedBy: 'tiposUnidade')]
+    private Collection $produtos;
+
+    public function __construct()
+    {
+        $this->produtos = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -29,6 +42,33 @@ class TipoUnidade
     public function setDescricao(string $descricao): static
     {
         $this->descricao = $descricao;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Produto>
+     */
+    public function getProdutos(): Collection
+    {
+        return $this->produtos;
+    }
+
+    public function addProduto(Produto $produto): static
+    {
+        if (!$this->produtos->contains($produto)) {
+            $this->produtos->add($produto);
+            $produto->addTiposUnidade($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduto(Produto $produto): static
+    {
+        if ($this->produtos->removeElement($produto)) {
+            $produto->removeTiposUnidade($this);
+        }
 
         return $this;
     }
