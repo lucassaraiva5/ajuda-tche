@@ -19,6 +19,9 @@ class Produto
     #[ORM\ManyToOne(inversedBy: 'produtos')]
     private ?Categoria $categoria = null;
 
+    #[ORM\ManyToOne(inversedBy: 'produtos')]
+    private ?UnidadeConversao $unidadeConversao = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,6 +47,18 @@ class Produto
     public function setCategoria(?Categoria $categoria): static
     {
         $this->categoria = $categoria;
+
+        return $this;
+    }
+
+    public function getUnidadeConversao(): ?UnidadeConversao
+    {
+        return $this->unidadeConversao;
+    }
+
+    public function setUnidadeConversao(?UnidadeConversao $unidadeConversao): static
+    {
+        $this->unidadeConversao = $unidadeConversao;
 
         return $this;
     }
