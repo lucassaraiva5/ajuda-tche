@@ -5,3 +5,19 @@
 </button>
 
 {{ form_end(form) }}
+<script>
+  $(document).ready(function() {
+    $('#produto_unidadeArmazenamento').select2({
+        theme: 'bootstrap-5'
+    });
+
+    $('#produto_tiposUnidade').select2({
+        theme: 'bootstrap-5'
+    });
+
+    $('#produto_unidadesConversao').select2({
+        theme: 'bootstrap-5'
+    });
+    
+  });
+</script>
