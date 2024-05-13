@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20240513003213 extends AbstractMigration
+final class Version20240513032312 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -19,10 +19,15 @@ final class Version20240513003213 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        $this->addSql("INSERT INTO tipo_posto_ajuda (descricao) VALUES
-            ('Posto de Coleta'),
-            ('Centro de Distribuição'),
-            ('Abrigo')");
+        $this->addSql("INSERT INTO categoria (descricao) VALUES
+            ('Higiene Pessoal'),
+            ('Cama/Mesa/Banho'),
+            ('Bebidas'),
+            ('Alimentos'),
+            ('Produtos de Limpeza'),
+            ('Medicamentos/Saude'),
+            ('Itens em geral'),
+            ('Materiais de construção')");
 
     }
 

@@ -17,7 +17,7 @@ class ProdutoPosto
     private ?Produto $produto = null;
 
     #[ORM\ManyToOne]
-    private ?PostoColeta $posto = null;
+    private ?PostoAjuda $posto = null;
 
     #[ORM\Column]
     private ?int $quantidade = null;
@@ -39,12 +39,12 @@ class ProdutoPosto
         return $this;
     }
 
-    public function getPosto(): ?PostoColeta
+    public function getPosto(): ?PostoAjuda
     {
         return $this->posto;
     }
 
-    public function setPosto(?PostoColeta $posto): static
+    public function setPosto(?PostoAjuda $posto): static
     {
         $this->posto = $posto;
 

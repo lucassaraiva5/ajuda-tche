@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\ProdutoPosto;
 use App\Form\ProdutoPostoType;
+use App\Repository\PostoAjudaRepository;
 use App\Repository\PostoColetaRepository;
 use App\Repository\ProdutoPostoRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -56,12 +57,12 @@ class ProdutoPostoController extends AbstractController
     }
 
     #[Route('/new', name: 'app_produto_posto_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, Security $security, PostoColetaRepository $postoColetaRepository): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, Security $security, PostoAjudaRepository $postoAjudaRepository): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $security->getUser();
 
-        $posto = $postoColetaRepository->findOneByUsuario($user);
+        $posto = $postoAjudaRepository->findOneByUsuario($user);
 
         $produtoPosto = new ProdutoPosto();
         $form = $this->createForm(ProdutoPostoType::class, $produtoPosto);
