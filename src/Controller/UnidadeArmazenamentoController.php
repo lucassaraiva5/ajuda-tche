@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/admin/unidade-armazenamento')]
 class UnidadeArmazenamentoController extends AbstractController
@@ -23,6 +24,7 @@ class UnidadeArmazenamentoController extends AbstractController
     }
 
     #[Route('/new', name: 'app_unidade_armazenamento_new', methods: ['GET', 'POST'])]
+    #[IsGranted('UNIDADE_ARMAZENAMENTO_ADD')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $unidadeArmazenamento = new UnidadeArmazenamento();
@@ -43,6 +45,7 @@ class UnidadeArmazenamentoController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_unidade_armazenamento_show', methods: ['GET'])]
+    #[IsGranted('UNIDADE_ARMAZENAMENTO_ADD')]
     public function show(UnidadeArmazenamento $unidadeArmazenamento): Response
     {
         return $this->render('unidade_armazenamento/show.html.twig', [
@@ -51,6 +54,7 @@ class UnidadeArmazenamentoController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_unidade_armazenamento_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('UNIDADE_ARMAZENAMENTO_EDIT')]
     public function edit(Request $request, UnidadeArmazenamento $unidadeArmazenamento, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(UnidadeArmazenamentoType::class, $unidadeArmazenamento);
@@ -69,6 +73,7 @@ class UnidadeArmazenamentoController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_unidade_armazenamento_delete', methods: ['POST'])]
+    #[IsGranted('UNIDADE_ARMAZENAMENTO_DELETE')]
     public function delete(Request $request, UnidadeArmazenamento $unidadeArmazenamento, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$unidadeArmazenamento->getId(), $request->getPayload()->get('_token'))) {
