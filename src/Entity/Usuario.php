@@ -14,9 +14,13 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
 {
 
+    const ROLE_ADMIN_POSTO_AJUDA = 'ROLE_ADMIN_POSTO_AJUDA';
+
     const ROLE_POSTO_COLETA = 'ROLE_POSTO_COLETA';
 
     const ROLE_CENTRO_DISTRIBUICAO = 'ROLE_CENTRO_DISTRIBUICAO';
+
+    const ROLE_ABRIGO = 'ROLE_ABRIGO';
 
     const ROLE_ADMIN = 'ROLE_ADMIN';
 
@@ -89,6 +93,14 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     public function hasRole(string $role): bool
     {
         return in_array($role, $this->getRoles(), true);
+    }
+
+    public function addRole(string $role) {
+        if (!in_array($role, $this->getRoles(), true)) {
+            $this->roles[] = $role;
+        }
+
+        return $this;
     }
 
     /**

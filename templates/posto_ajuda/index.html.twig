@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PostoAjuda index{% endblock %}
+
+{% block body %}
+    <h1>PostoAjuda index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Descricao</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for posto_ajuda in posto_ajudas %}
+            <tr>
+                <td>{{ posto_ajuda.id }}</td>
+                <td>{{ posto_ajuda.descricao }}</td>
+                <td>
+                    <a href="{{ path('app_posto_ajuda_show', {'id': posto_ajuda.id}) }}">show</a>
+                    <a href="{{ path('app_posto_ajuda_edit', {'id': posto_ajuda.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_posto_ajuda_new') }}">Create new</a>
+{% endblock %}

@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\CentroDistribuicao;
+use App\Entity\PostoAjuda;
 use App\Entity\PostoColeta;
 use App\Entity\Usuario;
 use App\Entity\Voluntario;
 use App\Form\CentroDistribuicaoType;
+use App\Form\PostoAjudaType;
 use App\Form\PostoColetaType;
 use App\Form\RegistrationFormType;
 use App\Form\VoluntarioType;
@@ -26,10 +28,14 @@ use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 class RegistrationController extends AbstractController
 {
-    const TYPE_POSTO_COLETA = 1;
-    const TYPE_CENTRO_DISTRIBUICAO = 2;
+    const TYPE_POSTO_COLETA_OU_CD = 1;
+    const TYPE_VOLUNTARIO = 2;
 
-    const TYPE_VOLUNTARIO = 3;
+    const POSTO_AJUDA_TIPO_ROLE = [
+        'Posto de Coleta' => Usuario::ROLE_POSTO_COLETA,
+        'Centro de Distribuição' => Usuario::ROLE_CENTRO_DISTRIBUICAO,
+        'Abrigo' => Usuario::ROLE_ABRIGO,
+    ];
 
     public function __construct(private EmailVerifier $emailVerifier)
     {
@@ -51,8 +57,7 @@ class RegistrationController extends AbstractController
                 )
             );
 
-            if($form->get('type')->getData() !== self::TYPE_POSTO_COLETA &&
-                $form->get('type')->getData() !== self::TYPE_CENTRO_DISTRIBUICAO &&
+            if($form->get('type')->getData() !== self::TYPE_POSTO_COLETA_OU_CD &&
                 $form->get('type')->getData() !== self::TYPE_VOLUNTARIO)
             {
                 $this->addFlash('error', 'Tipo inválido');
@@ -60,11 +65,8 @@ class RegistrationController extends AbstractController
             }
 
             switch ($form->get('type')->getData()) {
-                case self::TYPE_POSTO_COLETA:
-                    $user->setRoles([Usuario::ROLE_POSTO_COLETA]);
-                    break;
-                case self::TYPE_CENTRO_DISTRIBUICAO:
-                    $user->setRoles([Usuario::ROLE_CENTRO_DISTRIBUICAO]);
+                case self::TYPE_POSTO_COLETA_OU_CD:
+                    $user->setRoles([Usuario::ROLE_ADMIN_POSTO_AJUDA]);
                     break;
                 case self::TYPE_VOLUNTARIO:
                     $user->setRoles([Usuario::ROLE_VOLUNTARIO]);
@@ -109,7 +111,6 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('app_register');
         }
 
-        // @TODO Change the redirect on success and handle or remove the flash message in your templates
         $this->addFlash('success', 'Seu e-mail foi verificado com sucesso!');
 
         return $this->redirectToRoute('index_route');
@@ -117,54 +118,40 @@ class RegistrationController extends AbstractController
 
 
     
-    #[Route('/admin/register/centro-distribuicao', name: 'user_register_centro_distribuicao')]
-    public function registerCentroDistribuicao(Request $request, EntityManagerInterface $entityManager, Security $security): Response
+    #[Route('/admin/register/posto-ajuda', name: 'user_register_posto_ajuda')]
+    public function registerPostoAjuda(Request $request, EntityManagerInterface $entityManager, Security $security, UserAuthenticatorInterface $userAuthenticator, FormLoginAuthenticator $formAuthenticator): Response
     {
-        $this->denyAccessUnlessGranted(Usuario::ROLE_CENTRO_DISTRIBUICAO);
+        $this->denyAccessUnlessGranted(Usuario::ROLE_ADMIN_POSTO_AJUDA);
         $user = $security->getUser();
 
-        $centroDistribuicao = new CentroDistribuicao();
-        $form = $this->createForm(CentroDistribuicaoType::class, $centroDistribuicao);
+        $postoAjuda = new PostoAjuda();
+        $form = $this->createForm(PostoAjudaType::class, $postoAjuda);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $centroDistribuicao->setUsuario($user);
-            $entityManager->persist($centroDistribuicao);
+            $postoAjuda->setUsuarioResponsavel($user);
+
+            $tipoPostoAjudaArray = $postoAjuda->getTipoPostoAjuda();
+            foreach($tipoPostoAjudaArray as $tipoPostoAjuda){
+                $role = self::POSTO_AJUDA_TIPO_ROLE[$tipoPostoAjuda->getDescricao()];
+                $user->addRole($role);
+            }
+
+            $entityManager->persist($postoAjuda);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_posto_coleta_index', [], Response::HTTP_SEE_OTHER);
+            return $userAuthenticator->authenticateUser(
+                $user,
+                $formAuthenticator,
+                $request
+            );
         }
 
-        return $this->render('centro_distribuicao/new-user.html.twig', [
-            'centro_distribuicao' => $centroDistribuicao,
+        return $this->render('posto_ajuda/new-user.html.twig', [
+            'posto_ajuda' => $postoAjuda,
             'form' => $form,
         ]);
 
-    }
-
-    #[Route('/admin/register/posto-coleta', name: 'user_register_posto_coleta')]
-    public function registerPostoColeta(Request $request, EntityManagerInterface $entityManager, Security $security): Response
-    {
-        $this->denyAccessUnlessGranted(Usuario::ROLE_POSTO_COLETA);
-
-        $user = $security->getUser();
-
-        $postoColeta = new PostoColeta();
-        $form = $this->createForm(PostoColetaType::class, $postoColeta);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $postoColeta->setUsuario($user);
-            $entityManager->persist($postoColeta);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_posto_coleta_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('posto_coleta/new-user.html.twig', [
-            'posto_coletum' => $postoColeta,
-            'form' => $form,
-        ]);
     }
 
     #[Route('/admin/register/voluntario', name: 'user_register_voluntario')]

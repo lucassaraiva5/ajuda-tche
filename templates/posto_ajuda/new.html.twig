@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New PostoAjuda{% endblock %}
+
+{% block body %}
+    <h1>Create new PostoAjuda</h1>
+
+    {{ include('posto_ajuda/_form.html.twig') }}
+
+    <a href="{{ path('app_posto_ajuda_index') }}">back to list</a>
+{% endblock %}

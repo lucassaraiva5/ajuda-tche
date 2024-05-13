@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New PostoAjuda{% endblock %}
+
+{% block body %}
+    <h1>Create new PostoAjuda</h1>
+
+    {{ include('posto_ajuda/_form.html.twig') }}
+
+    <a href="{{ path('app_posto_ajuda_index') }}">back to list</a>
+
+    <script>
+    $(document).ready(function() {
+        $('#posto_ajuda_estado').select2({
+            theme: 'bootstrap-5'
+        });
+
+        $('#posto_ajuda_cidade').select2({
+            theme: 'bootstrap-5'
+        });
+
+        $('#posto_ajuda_tipoPostoAjuda').select2({
+            theme: 'bootstrap-5'
+        });
+
+        $('#posto_ajuda_cidade')
+        .empty()
+        .append('<option selected="selected" value="">Escolha um estado</option>');
+    });
+
+
+    $('#posto_ajuda_estado').on('select2:select', function (e) {
+        var data = e.params.data;
+        fetch('/cities/' + data.id)
+        .then(response => response.json())
+        .then(data => {
+            var citySelect = document.getElementById('posto_ajuda_cidade');
+            citySelect.innerHTML = '';
+            data.forEach(function(city) {
+                var option = new Option(city.name, city.id);
+                citySelect.add(option);
+            });
+        });
+    });
+</script>
+
+{% endblock %}
+

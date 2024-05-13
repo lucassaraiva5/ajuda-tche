@@ -20,8 +20,7 @@ class RegistrationFormType extends AbstractType
             ->add('email')
             ->add('type', ChoiceType::class, [
                 'choices'  => [
-                    'Posto de coleta' => RegistrationController::TYPE_POSTO_COLETA,
-                    'Abrigo/Centro de distribuição' => RegistrationController::TYPE_CENTRO_DISTRIBUICAO,
+                    'Posto de coleta, Abrigo ou CD' => RegistrationController::TYPE_POSTO_COLETA_OU_CD,
                     'Voluntário' => RegistrationController::TYPE_VOLUNTARIO
                 ],
                 'label' => 'Tipo',

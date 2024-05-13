@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Usuario;
 use App\Repository\CentroDistribuicaoRepository;
+use App\Repository\PostoAjudaRepository;
 use App\Repository\PostoColetaRepository;
 use App\Repository\VoluntarioRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,7 +39,7 @@ class LoginController extends AbstractController
     }
 
     #[Route('/admin', name: 'user_redirect', methods: ['GET'])]
-    public function indexRouteAfterLogin(Security $security, PostoColetaRepository $postoColetaRepository, CentroDistribuicaoRepository $centroDistribuicaoRepository, VoluntarioRepository $voluntarioRepository)
+    public function indexRouteAfterLogin(Security $security, PostoAjudaRepository $postoAjudaRepository, VoluntarioRepository $voluntarioRepository)
     {
         $user = $security->getUser();
         $role = $user->getRoles();
@@ -47,20 +48,12 @@ class LoginController extends AbstractController
             return $this->redirectToRoute("app_produto_necessario_index");
         }
 
-        if($user->hasRole(Usuario::ROLE_POSTO_COLETA)) {
-            $posto = $postoColetaRepository->findOneByUsuario($user);
-            if(empty($posto)) {
-                return $this->redirectToRoute("user_register_posto_coleta");
+        if($user->hasRole(Usuario::ROLE_ADMIN_POSTO_AJUDA)) {
+            $postoAjuda = $postoAjudaRepository->findOneByUsuarioResponsavel($user);
+            if(empty($postoAjuda)) {
+                return $this->redirectToRoute("user_register_posto_ajuda");
             }
             return $this->redirectToRoute("app_produto_posto_index");
-        }
-
-        if($user->hasRole(Usuario::ROLE_CENTRO_DISTRIBUICAO)) {
-            $centroDistribuicao = $centroDistribuicaoRepository->findOneByUsuario($user);
-            if(empty($centroDistribuicao)) {
-                return $this->redirectToRoute("user_register_centro_distribuicao");
-            }
-            return $this->redirectToRoute("app_produto_necessario_index");
         }
 
         if($user->hasRole(Usuario::ROLE_VOLUNTARIO)) {
