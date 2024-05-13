@@ -6,6 +6,10 @@
 parameters:
 
 services:
+    App\EventListener\AccessDeniedListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, priority: 100 }
+
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
@@ -23,3 +27,7 @@ services:
     # please note that last definitions always *replace* previous ones
 
     Symfony\Component\Security\Http\Authenticator\FormLoginAuthenticator: '@security.authenticator.form_login.main'
+    App\Security\AccessDeniedHandler:
+        autowire: true
+        tags:
+            - { name: 'kernel.event_listener', event: 'kernel.exception' }

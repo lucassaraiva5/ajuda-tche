@@ -7,6 +7,7 @@ use App\Entity\Produto;
 use App\Repository\CidadeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 class DefaultController extends AbstractController
@@ -45,5 +46,13 @@ class DefaultController extends AbstractController
             $array[] = ['name' => $unidadeConversao->getDescricao(), 'id' => $unidadeConversao->getId()];
         }
         return new JsonResponse($array);
-    }   
+    }
+
+    #[Route("/acesso-negado", name: 'acesso_negado', methods: ['GET'])]
+    public function accessDenied(): Response
+    {
+        // Renderiza a template de acesso negado
+        return $this->render('erro/acesso_negado.html.twig');
+    }
+
 }
