@@ -132,6 +132,7 @@ class RegistrationController extends AbstractController
             $postoAjuda->setUsuarioResponsavel($user);
 
             $tipoPostoAjudaArray = $postoAjuda->getTipoPostoAjuda();
+            $user->setPostoAjuda($postoAjuda);
             foreach($tipoPostoAjudaArray as $tipoPostoAjuda){
                 $role = self::POSTO_AJUDA_TIPO_ROLE[$tipoPostoAjuda->getDescricao()];
                 $user->addRole($role);

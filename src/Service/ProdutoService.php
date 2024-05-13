@@ -40,20 +40,25 @@ class ProdutoService
         $postoAjuda = $this->postoAjudaRepository->findOneByUsuarioResponsavel($user);
 
         $tipoUnidade = $this->tipoUnidadeRepository->find($data["produto_posto"]["tipoUnidade"]);
-        $unidadeConversao = $this->unidadeConversaoRepository->find($data["produto_posto"]["unidadeConversao"]);
+
+        $unidadeMultiplicador = 1;
+        if(isset($data["produto_posto"]["unidadeConversao"])) {
+            $unidadeConversao = $this->unidadeConversaoRepository->find($data["produto_posto"]["unidadeConversao"]);
+            $unidadeMultiplicador = $unidadeConversao->getValor();
+        }
 
         $produtoPostoExistente = $this->produtoPostoRepository->findOneByProduto($produtoPosto->getProduto());
 
         if($produtoPostoExistente) {
             $valorExistente = $produtoPostoExistente->getQuantidade();
-            $valorAdicionado = intval($produtoPosto->getQuantidade()) * $tipoUnidade->getValor() * $unidadeConversao->getValor();
+            $valorAdicionado = intval($produtoPosto->getQuantidade()) * $tipoUnidade->getValor() * $unidadeMultiplicador;
             $valorTotal = floatval($valorExistente) + ($valorAdicionado);
             $produtoPostoExistente->setQuantidade($valorTotal);
 
             $this->entityManager->persist($produtoPostoExistente);
         }else {
             $produtoPosto->setPosto($postoAjuda);
-            $valorAdicionado = intval($produtoPosto->getQuantidade()) * $tipoUnidade->getValor() * $unidadeConversao->getValor();
+            $valorAdicionado = intval($produtoPosto->getQuantidade()) * $tipoUnidade->getValor() * $unidadeMultiplicador;
             $produtoPosto->setQuantidade($valorAdicionado);
 
             $this->entityManager->persist($produtoPosto);

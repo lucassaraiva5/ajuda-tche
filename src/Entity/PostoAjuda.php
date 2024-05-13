@@ -34,9 +34,16 @@ class PostoAjuda
     #[ORM\ManyToMany(targetEntity: TipoPostoAjuda::class)]
     private Collection $tipoPostoAjuda;
 
+    /**
+     * @var Collection<int, Usuario>
+     */
+    #[ORM\OneToMany(targetEntity: Usuario::class, mappedBy: 'postoAjuda')]
+    private Collection $usuarios;
+
     public function __construct()
     {
         $this->tipoPostoAjuda = new ArrayCollection();
+        $this->usuarios = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -112,6 +119,36 @@ class PostoAjuda
     public function removeTipoPostoAjuda(TipoPostoAjuda $tipoPostoAjuda): static
     {
         $this->tipoPostoAjuda->removeElement($tipoPostoAjuda);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Usuario>
+     */
+    public function getUsuarios(): Collection
+    {
+        return $this->usuarios;
+    }
+
+    public function addUsuario(Usuario $usuario): static
+    {
+        if (!$this->usuarios->contains($usuario)) {
+            $this->usuarios->add($usuario);
+            $usuario->setPostoAjuda($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUsuario(Usuario $usuario): static
+    {
+        if ($this->usuarios->removeElement($usuario)) {
+            // set the owning side to null (unless already changed)
+            if ($usuario->getPostoAjuda() === $this) {
+                $usuario->setPostoAjuda(null);
+            }
+        }
 
         return $this;
     }

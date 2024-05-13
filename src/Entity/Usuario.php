@@ -49,6 +49,9 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private bool $isVerified = false;
 
+    #[ORM\ManyToOne(inversedBy: 'usuarios')]
+    private ?PostoAjuda $postoAjuda = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -145,6 +148,18 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     public function setVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getPostoAjuda(): ?PostoAjuda
+    {
+        return $this->postoAjuda;
+    }
+
+    public function setPostoAjuda(?PostoAjuda $postoAjuda): static
+    {
+        $this->postoAjuda = $postoAjuda;
 
         return $this;
     }
