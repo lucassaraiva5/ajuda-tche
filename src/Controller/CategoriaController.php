@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
-
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/admin/categoria')]
 class CategoriaController extends AbstractController
@@ -45,6 +45,7 @@ class CategoriaController extends AbstractController
     }
 
     #[Route('/new', name: 'app_categoria_new', methods: ['GET', 'POST'])]
+    #[IsGranted('CATEGORIA_ADD')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $categorium = new Categoria();
@@ -73,6 +74,7 @@ class CategoriaController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_categoria_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('CATEGORIA_EDIT')]
     public function edit(Request $request, Categoria $categorium, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(CategoriaType::class, $categorium);
@@ -91,6 +93,7 @@ class CategoriaController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_categoria_delete', methods: ['POST'])]
+    #[IsGranted('CATEGORIA_DELETE')]
     public function delete(Request $request, Categoria $categorium, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$categorium->getId(), $request->getPayload()->get('_token'))) {
