@@ -20,7 +20,7 @@ class ProdutoPosto
     private ?PostoAjuda $posto = null;
 
     #[ORM\Column]
-    private ?int $quantidade = null;
+    private ?float $quantidade = null;
 
     public function getId(): ?int
     {
@@ -51,12 +51,12 @@ class ProdutoPosto
         return $this;
     }
 
-    public function getQuantidade(): ?int
+    public function getQuantidade(): ?float
     {
         return $this->quantidade;
     }
 
-    public function setQuantidade(int $quantidade): static
+    public function setQuantidade(float $quantidade): static
     {
         $this->quantidade = $quantidade;
 

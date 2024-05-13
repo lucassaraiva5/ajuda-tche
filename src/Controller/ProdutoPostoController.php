@@ -7,6 +7,7 @@ use App\Form\ProdutoPostoType;
 use App\Repository\PostoAjudaRepository;
 use App\Repository\PostoColetaRepository;
 use App\Repository\ProdutoPostoRepository;
+use App\Service\ProdutoService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,11 +22,11 @@ use Symfony\Bundle\SecurityBundle\Security;
 class ProdutoPostoController extends AbstractController
 {
     #[Route('/', name: 'app_produto_posto_index', methods: ['GET'])]
-    public function index(ProdutoPostoRepository $produtoPostoRepository, #[MapQueryParameter] ?int $page = 0, #[MapQueryParameter] ?string $search, Security $security, PostoColetaRepository $postoColetaRepository): Response
+    public function index(ProdutoPostoRepository $produtoPostoRepository, #[MapQueryParameter] ?int $page = 0, #[MapQueryParameter] ?string $search, Security $security, PostoAjudaRepository $postoAjudaRepository): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $security->getUser();
-        $posto = $postoColetaRepository->findOneByUsuario($user);
+        $posto = $postoAjudaRepository->findOneByUsuarioResponsavel($user);
 
         $queryBuilder = $produtoPostoRepository->createQueryBuilder('a')
             ->select('a');
@@ -57,22 +58,17 @@ class ProdutoPostoController extends AbstractController
     }
 
     #[Route('/new', name: 'app_produto_posto_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, Security $security, PostoAjudaRepository $postoAjudaRepository): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, PostoAjudaRepository $postoAjudaRepository, ProdutoPostoRepository $produtoPostoRepository, ProdutoService $produtoService): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $user = $security->getUser();
-
-        $posto = $postoAjudaRepository->findOneByUsuario($user);
+        
 
         $produtoPosto = new ProdutoPosto();
         $form = $this->createForm(ProdutoPostoType::class, $produtoPosto);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $produtoPosto->setPosto($posto);
-            $entityManager->persist($produtoPosto);
-            $entityManager->flush();
-
+            $produtoService->adicionaEmProdutoPostoExistente($produtoPosto, $request->request->all());
             return $this->redirectToRoute('app_produto_posto_index', [], Response::HTTP_SEE_OTHER);
         }
 
