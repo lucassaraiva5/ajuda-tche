@@ -25,7 +25,7 @@ class Voluntario
     private ?Usuario $usuario = null;
 
     #[ORM\ManyToOne(inversedBy: 'voluntarios')]
-    private ?PostoColeta $postoColeta = null;
+    private ?PostoAjuda $postoAjuda = null;
 
     /**
      * @var Collection<int, Funcao>
@@ -88,14 +88,14 @@ class Voluntario
         return $this;
     }
 
-    public function getPostoColeta(): ?PostoColeta
+    public function getPostoAjuda(): ?PostoAjuda
     {
-        return $this->postoColeta;
+        return $this->postoAjuda;
     }
 
-    public function setPostoColeta(?PostoColeta $postoColeta): static
+    public function setPostoAjuda(?PostoAjuda $postoAjuda): static
     {
-        $this->postoColeta = $postoColeta;
+        $this->postoAjuda = $postoAjuda;
 
         return $this;
     }

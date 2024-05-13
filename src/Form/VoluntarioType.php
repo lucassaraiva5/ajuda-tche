@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Funcao;
+use App\Entity\PostoAjuda;
 use App\Entity\PostoColeta;
 use App\Entity\Usuario;
 use App\Entity\Voluntario;
@@ -35,9 +36,9 @@ class VoluntarioType extends AbstractType
             ->add('telefone', null, [
                 'label' => 'Telefone'
             ])
-            ->add('postoColeta', EntityType::class, [
+            ->add('postoAjuda', EntityType::class, [
                 'label' => 'Posto de coleta',
-                'class' => PostoColeta::class,
+                'class' => PostoAjuda::class,
                 'choice_label' => 'descricao',
                 'attr' => [
                     'class' => 'select2'
