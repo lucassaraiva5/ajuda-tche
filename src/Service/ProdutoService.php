@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\ProdutoPosto;
+use App\Entity\Usuario;
 use App\Repository\PostoAjudaRepository;
 use App\Repository\ProdutoPostoRepository;
 use App\Repository\ProdutoRepository;
@@ -16,8 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ProdutoService
 {
-
-
     public function __construct(
         private ProdutoPostoRepository $produtoPostoRepository,
         private ProdutoRepository $produtoRepository,
@@ -80,6 +79,35 @@ class ProdutoService
 
                 $queryBuilder->andWhere('a.categoria = :id')
                 ->setParameter('id', $params["produto_search"]["categoria"]);
+            }
+            
+        }
+
+        return $queryBuilder;
+    }
+
+    public function produtoPostoFilter(Request $request, FormInterface $form, QueryBuilder $queryBuilder): QueryBuilder
+    {
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $params = $request->request->all();
+            
+            $queryBuilder
+                ->leftJoin('a.produto', 'produto')
+                ->leftJoin('produto.categoria', 'categoria');
+
+            if(isset($params["produto_search"]["descricao"]) && !empty($params["produto_search"]["descricao"])) {
+                $queryBuilder->andWhere(
+                        $queryBuilder->expr()->like('produto.descricao', ':search')
+                    )
+                    ->setParameter('search', "%{$params["produto_search"]["descricao"]}%");
+            }
+
+            if(isset($params["produto_search"]["categoria"]) && !empty($params["produto_search"]["categoria"])){
+                $queryBuilder
+                    ->andWhere('categoria.id = :id')
+                    ->setParameter('id', $params["produto_search"]["categoria"]);
             }
             
         }

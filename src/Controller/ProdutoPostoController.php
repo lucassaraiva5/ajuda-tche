@@ -23,8 +23,8 @@ use Symfony\Bundle\SecurityBundle\Security;
 #[Route('/admin/produto-posto')]
 class ProdutoPostoController extends AbstractController
 {
-    #[Route('/', name: 'app_produto_posto_index', methods: ['GET'])]
-    public function index(Request $request, ProdutoPostoRepository $produtoPostoRepository, #[MapQueryParameter] ?int $page = 0, Security $security, PostoAjudaRepository $postoAjudaRepository): Response
+    #[Route('/', name: 'app_produto_posto_index', methods: ['GET', 'POST'])]
+    public function index(Request $request, ProdutoPostoRepository $produtoPostoRepository, #[MapQueryParameter] ?int $page = 0, Security $security, PostoAjudaRepository $postoAjudaRepository, ProdutoService $produtoService): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $security->getUser();
@@ -39,18 +39,8 @@ class ProdutoPostoController extends AbstractController
         }
 
         $produto = new Produto();
-        $form = $this->createForm(ProdutoSearchType::class, $produto, [
-            'method' => 'GET',
-        ]);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $search = "agua";
-            $queryBuilder->where(
-                $queryBuilder->expr()->like('a.nome', ':search')
-            )
-            ->setParameter('search', '%' . $search . '%');
-        }
+        $form = $this->createForm(ProdutoSearchType::class, $produto);
+        $queryBuilder = $produtoService->produtoPostoFilter($request, $form, $queryBuilder);
 
         $pagerfanta = new Pagerfanta(
             new QueryAdapter($queryBuilder)
