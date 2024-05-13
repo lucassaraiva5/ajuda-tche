@@ -3,13 +3,14 @@
 namespace App\Repository;
 
 use App\Entity\CentroDistribuicao;
+use App\Repository\Interfaces\AppRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<CentroDistribuicao>
  */
-class CentroDistribuicaoRepository extends ServiceEntityRepository
+class CentroDistribuicaoRepository extends ServiceEntityRepository implements AppRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {

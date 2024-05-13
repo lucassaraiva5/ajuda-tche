@@ -16,32 +16,18 @@ use Pagerfanta\Pagerfanta;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/admin/categoria')]
-class CategoriaController extends AbstractController
+class CategoriaController extends BaseController
 {
-    #[Route('/', name: 'app_categoria_index', methods: ['GET'])]
-    public function index(CategoriaRepository $categoriaRepository, #[MapQueryParameter] ?int $page = 0, #[MapQueryParameter] ?string $search): Response
+    public function __construct()
     {
-        $queryBuilder = $categoriaRepository->createQueryBuilder('a')->select('a');
+        $this->entity = 'categoria';
+    }
 
-        if(!empty($search) && !is_null($search)) {
-            $queryBuilder->where(
-                $queryBuilder->expr()->like('a.nome', ':search')
-            )
-            ->setParameter('search', '%' . $search . '%');
-        }
+    #[Route('/', name: 'app_categoria_index', methods: ['GET'])]
+    public function index(Request $request, CategoriaRepository $categoriaRepository, #[MapQueryParameter] ?int $page = 0, #[MapQueryParameter] ?string $search): Response
+    {
+        return $this->view($categoriaRepository, $page, $request);
 
-        $pagerfanta = new Pagerfanta(
-            new QueryAdapter($queryBuilder)
-        );
-
-        if(is_null($page)) {
-            $page = 1;
-        }
-        $pagerfanta->setCurrentPage($page);
-
-        return $this->render('categoria/index.html.twig', [
-            'pager' => $pagerfanta,
-        ]);
     }
 
     #[Route('/new', name: 'app_categoria_new', methods: ['GET', 'POST'])]

@@ -3,13 +3,14 @@
 namespace App\Repository;
 
 use App\Entity\Motorista;
+use App\Repository\Interfaces\AppRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<Motorista>
  */
-class MotoristaRepository extends ServiceEntityRepository
+class MotoristaRepository extends ServiceEntityRepository implements AppRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {

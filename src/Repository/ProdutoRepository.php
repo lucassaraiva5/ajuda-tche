@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Produto;
+use App\Repository\Interfaces\AppRepositoryInterface;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -10,7 +11,7 @@ use Doctrine\Persistence\ManagerRegistry;
 /**
  * @extends ServiceEntityRepository<Produto>
  */
-class ProdutoRepository extends ServiceEntityRepository
+class ProdutoRepository extends ServiceEntityRepository implements AppRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {

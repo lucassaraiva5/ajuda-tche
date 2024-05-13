@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
+use App\Entity\Interfaces\AppEntityInterface;
 use App\Repository\MotoristaRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: MotoristaRepository::class)]
-class Motorista
+class Motorista implements AppEntityInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

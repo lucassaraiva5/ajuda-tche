@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
+use App\Entity\Interfaces\AppEntityInterface;
 use App\Repository\TipoPostoAjudaRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TipoPostoAjudaRepository::class)]
-class TipoPostoAjuda
+class TipoPostoAjuda implements AppEntityInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

@@ -3,13 +3,14 @@
 namespace App\Repository;
 
 use App\Entity\UnidadeArmazenamento;
+use App\Repository\Interfaces\AppRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<UnidadeArmazenamento>
  */
-class UnidadeArmazenamentoRepository extends ServiceEntityRepository
+class UnidadeArmazenamentoRepository extends ServiceEntityRepository implements AppRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {

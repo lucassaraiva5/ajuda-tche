@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
+use App\Entity\Interfaces\AppEntityInterface;
 use App\Repository\CidadeRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CidadeRepository::class)]
-class Cidade
+class Cidade implements AppEntityInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

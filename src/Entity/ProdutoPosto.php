@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
+use App\Entity\Interfaces\AppEntityInterface;
 use App\Repository\ProdutoPostoRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProdutoPostoRepository::class)]
-class ProdutoPosto
+class ProdutoPosto implements AppEntityInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
+use App\Entity\Interfaces\AppEntityInterface;
 use App\Repository\CentroDistribuicaoRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CentroDistribuicaoRepository::class)]
-class CentroDistribuicao
+class CentroDistribuicao implements AppEntityInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

@@ -3,13 +3,14 @@
 namespace App\Repository;
 
 use App\Entity\UnidadeConversao;
+use App\Repository\Interfaces\AppRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<UnidadeConversao>
  */
-class UnidadeConversaoRepository extends ServiceEntityRepository
+class UnidadeConversaoRepository extends ServiceEntityRepository implements AppRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {

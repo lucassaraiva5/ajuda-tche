@@ -3,13 +3,14 @@
 namespace App\Repository;
 
 use App\Entity\Cidade;
+use App\Repository\Interfaces\AppRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<Cidade>
  */
-class CidadeRepository extends ServiceEntityRepository
+class CidadeRepository extends ServiceEntityRepository implements AppRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {

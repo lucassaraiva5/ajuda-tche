@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
+use App\Entity\Interfaces\AppEntityInterface;
 use App\Repository\UnidadeConversaoRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UnidadeConversaoRepository::class)]
-class UnidadeConversao
+class UnidadeConversao implements AppEntityInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

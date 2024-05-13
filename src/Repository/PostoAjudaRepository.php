@@ -3,13 +3,14 @@
 namespace App\Repository;
 
 use App\Entity\PostoAjuda;
+use App\Repository\Interfaces\AppRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<PostoAjuda>
  */
-class PostoAjudaRepository extends ServiceEntityRepository
+class PostoAjudaRepository extends ServiceEntityRepository implements AppRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {

@@ -3,13 +3,14 @@
 namespace App\Repository;
 
 use App\Entity\ProdutoNecessario;
+use App\Repository\Interfaces\AppRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<ProdutoNecessario>
  */
-class ProdutoNecessarioRepository extends ServiceEntityRepository
+class ProdutoNecessarioRepository extends ServiceEntityRepository implements AppRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {

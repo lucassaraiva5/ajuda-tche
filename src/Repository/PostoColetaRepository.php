@@ -3,13 +3,14 @@
 namespace App\Repository;
 
 use App\Entity\PostoColeta;
+use App\Repository\Interfaces\AppRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<PostoColeta>
  */
-class PostoColetaRepository extends ServiceEntityRepository
+class PostoColetaRepository extends ServiceEntityRepository implements AppRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {

@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
+use App\Entity\Interfaces\AppEntityInterface;
 use App\Repository\FuncaoRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: FuncaoRepository::class)]
-class Funcao
+class Funcao implements AppEntityInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
