@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}UnidadeConversao index{% endblock %}
+
+{% block body %}
+    <h1>UnidadeConversao index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Descricao</th>
+                <th>Valor</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for unidade_conversao in unidade_conversaos %}
+            <tr>
+                <td>{{ unidade_conversao.id }}</td>
+                <td>{{ unidade_conversao.descricao }}</td>
+                <td>{{ unidade_conversao.valor }}</td>
+                <td>
+                    <a href="{{ path('app_unidade_conversao_show', {'id': unidade_conversao.id}) }}">show</a>
+                    <a href="{{ path('app_unidade_conversao_edit', {'id': unidade_conversao.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_unidade_conversao_new') }}">Create new</a>
+{% endblock %}

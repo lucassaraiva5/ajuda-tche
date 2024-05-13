@@ -62,6 +62,19 @@
             Menu
           </a>
           <ul class="dropdown-menu">
+
+            {% if is_granted('VIEW_UNIDADE_ARMAZENAMENTO') %}
+            <li><a class="dropdown-item" href="/admin/unidade-armazenamento/">Unidade de armazenamento</a></li>
+            {% endif %}
+
+            {% if is_granted('VIEW_TIPO_UNIDADE') %}
+            <li><a class="dropdown-item" href="/admin/tipo-unidade/">Tipo Unidade</a></li>
+            {% endif %}
+
+            {% if is_granted('VIEW_UNIDADE_CONVERSAO') %}
+            <li><a class="dropdown-item" href="/admin/unidade-conversao/">Unidade de conversão</a></li>
+            {% endif %}
+
             {% if is_granted('VIEW_CATEGORIAS') %}
             <li><a class="dropdown-item" href="/admin/categoria/">Categorias de produtos</a></li>
             {% endif %}

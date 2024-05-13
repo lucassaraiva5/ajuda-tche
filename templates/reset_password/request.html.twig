@@ -3,20 +3,30 @@
 {% block title %}Redefinir a senha{% endblock %}
 
 {% block body %}
-    {% for flash_error in app.flashes('reset_password_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
-    <h1>Redefinir a senha</h1>
+    <div class="d-flex">
+        <div class="m-auto mt-5">
+            <div class="card border-0 mt-5 p-5 shadow">
+                <div class="card-header bg-transparent text-center">
+                  <h2>Redefinir a senha</h2>
+                </div>
+                <div class="card-body">
+                    {% for flash_error in app.flashes('reset_password_error') %}
+                        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+                    {% endfor %}
+                    {{ form_start(requestForm) }}
+                        {{ form_row(requestForm.email) }}
+                        <div class="form">
+                            <small>
+                                Digite seu endereço de e-mail e lhe enviaremos um
+                                link para redefinir sua senha.
+                            </small>
+                        </div>
 
-    {{ form_start(requestForm) }}
-        {{ form_row(requestForm.email) }}
-        <div>
-            <small>
-                Digite seu endereço de e-mail e lhe enviaremos um
-                link para redefinir sua senha.
-            </small>
+                        <button class="btn btn-primary">Enviar e-mail de redefinição de senha</button>
+                    {{ form_end(requestForm) }}
+                </div>
+            </div>
         </div>
-
-        <button class="btn btn-primary">Enviar e-mail de redefinição de senha</button>
-    {{ form_end(requestForm) }}
+    </div>
+    
 {% endblock %}

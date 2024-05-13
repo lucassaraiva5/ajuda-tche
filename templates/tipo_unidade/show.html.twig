@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TipoUnidade{% endblock %}
+
+{% block body %}
+    <h1>TipoUnidade</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ tipo_unidade.id }}</td>
+            </tr>
+            <tr>
+                <th>Descricao</th>
+                <td>{{ tipo_unidade.descricao }}</td>
+            </tr>
+            <tr>
+                <th>Valor</th>
+                <td>{{ tipo_unidade.valor }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_tipo_unidade_index') }}">back to list</a>
+
+    <a href="{{ path('app_tipo_unidade_edit', {'id': tipo_unidade.id}) }}">edit</a>
+
+    {{ include('tipo_unidade/_delete_form.html.twig') }}
+{% endblock %}

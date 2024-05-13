@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}UnidadeConversao{% endblock %}
+
+{% block body %}
+    <h1>UnidadeConversao</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ unidade_conversao.id }}</td>
+            </tr>
+            <tr>
+                <th>Descricao</th>
+                <td>{{ unidade_conversao.descricao }}</td>
+            </tr>
+            <tr>
+                <th>Valor</th>
+                <td>{{ unidade_conversao.valor }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_unidade_conversao_index') }}">back to list</a>
+
+    <a href="{{ path('app_unidade_conversao_edit', {'id': unidade_conversao.id}) }}">edit</a>
+
+    {{ include('unidade_conversao/_delete_form.html.twig') }}
+{% endblock %}

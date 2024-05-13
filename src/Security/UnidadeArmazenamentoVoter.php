@@ -6,11 +6,11 @@ use App\Entity\Usuario;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
-class ProdutoPostoVoter extends Voter
+class UnidadeArmazenamentoVoter extends Voter
 {
-    const CAN_ADD = 'PRODUTO_POSTO_ADD';
-    const CAN_EDIT = 'PRODUTO_POSTO_EDIT';
-    const CAN_DELETE = 'PRODUTO_POSTO_DELETE';
+    const CAN_ADD = 'UNIDADE_ARMAZENAMENTO_ADD';
+    const CAN_EDIT = 'UNIDADE_ARMAZENAMENTO_EDIT';
+    const CAN_DELETE = 'UNIDADE_ARMAZENAMENTO_DELETE';
 
 
     protected function supports(string $attribute, mixed $subject): bool
@@ -33,10 +33,6 @@ class ProdutoPostoVoter extends Voter
         }
 
         if ($user->hasRole('ROLE_ADMIN')) {
-            return false;
-        }
-
-        if($user->hasRole('ROLE_ADMIN_POSTO_AJUDA')) {
             return true;
         }
 

@@ -18,6 +18,12 @@ class MenuVoter extends Voter
     const VIEW_MENU_POSTO_COLETA = 'VIEW_POSTO_COLETA';
     const VIEW_MENU_CENTRO_DISTRIBUICAO = 'VIEW_CENTRO_DISTRIBUICAO';
 
+    const VIEW_MENU_UNIDADE_ARMAZENAMENTO = 'VIEW_UNIDADE_ARMAZENAMENTO';
+
+    const VIEW_MENU_UNIDADE_CONVERSAO = 'VIEW_UNIDADE_CONVERSAO';
+
+    const VIEW_MENU_TIPO_UNIDADE = 'VIEW_TIPO_UNIDADE';
+
     const VIEW_MENU_FUNCAO = 'VIEW_FUNCAO';
 
 
@@ -25,7 +31,19 @@ class MenuVoter extends Voter
     protected function supports(string $attribute, mixed $subject): bool
     {
         // if the attribute isn't one we support, return false
-        if (in_array($attribute, [self::VIEW_MENU_CATEGORIAS, self::VIEW_MENU_PRODUTOS, self::VIEW_MENU_ENTREGAS, self::VIEW_MENU_MOTORISTAS, self::VIEW_MENU_PRODUTOS_NECESSARIO, self::VIEW_MENU_PRODUTO_POSTO, self::VIEW_MENU_POSTO_COLETA, self::VIEW_MENU_CENTRO_DISTRIBUICAO, self::VIEW_MENU_FUNCAO])) {
+        if (in_array($attribute, [
+            self::VIEW_MENU_CATEGORIAS,
+            self::VIEW_MENU_PRODUTOS,
+            self::VIEW_MENU_ENTREGAS,
+            self::VIEW_MENU_MOTORISTAS,
+            self::VIEW_MENU_PRODUTOS_NECESSARIO,
+            self::VIEW_MENU_PRODUTO_POSTO,
+            self::VIEW_MENU_POSTO_COLETA,
+            self::VIEW_MENU_CENTRO_DISTRIBUICAO,
+            self::VIEW_MENU_FUNCAO,
+            self::VIEW_MENU_UNIDADE_ARMAZENAMENTO,
+            self::VIEW_MENU_UNIDADE_CONVERSAO,
+            self::VIEW_MENU_TIPO_UNIDADE])) {
             return true;
         }
         return false;
