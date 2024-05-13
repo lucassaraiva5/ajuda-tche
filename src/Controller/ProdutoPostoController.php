@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Produto;
 use App\Entity\ProdutoPosto;
 use App\Form\ProdutoPostoType;
+use App\Form\ProdutoSearchType;
 use App\Repository\PostoAjudaRepository;
 use App\Repository\PostoColetaRepository;
 use App\Repository\ProdutoPostoRepository;
@@ -22,11 +24,11 @@ use Symfony\Bundle\SecurityBundle\Security;
 class ProdutoPostoController extends AbstractController
 {
     #[Route('/', name: 'app_produto_posto_index', methods: ['GET'])]
-    public function index(ProdutoPostoRepository $produtoPostoRepository, #[MapQueryParameter] ?int $page = 0, #[MapQueryParameter] ?string $search, Security $security, PostoAjudaRepository $postoAjudaRepository): Response
+    public function index(Request $request, ProdutoPostoRepository $produtoPostoRepository, #[MapQueryParameter] ?int $page = 0, Security $security, PostoAjudaRepository $postoAjudaRepository): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $security->getUser();
-        $posto = $postoAjudaRepository->findOneByUsuarioResponsavel($user);
+        $posto = $user->getPostoAjuda();
 
         $queryBuilder = $produtoPostoRepository->createQueryBuilder('a')
             ->select('a');
@@ -36,7 +38,14 @@ class ProdutoPostoController extends AbstractController
             ->setParameter('posto', $posto);
         }
 
-        if(!empty($search) && !is_null($search)) {
+        $produto = new Produto();
+        $form = $this->createForm(ProdutoSearchType::class, $produto, [
+            'method' => 'GET',
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $search = "agua";
             $queryBuilder->where(
                 $queryBuilder->expr()->like('a.nome', ':search')
             )
@@ -54,6 +63,7 @@ class ProdutoPostoController extends AbstractController
 
         return $this->render('produto_posto/index.html.twig', [
             'pager' => $pagerfanta,
+            'form' => $form,
         ]);
     }
 

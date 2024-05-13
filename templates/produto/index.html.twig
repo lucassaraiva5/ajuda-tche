@@ -5,6 +5,11 @@
 <div class="container mt-5 p-5">
   <h1 class="mb-3 font-weight-bold">Produtos</h1>
 
+  {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-primary">{{ button_label|default('Buscar') }}</button>
+  {{ form_end(form) }}
+
   <div class="table-responsive shadow-lg rounded">
     <table class="table">
       <thead class="thead-dark">
@@ -46,4 +51,13 @@
     <div>{{ pagerfanta(pager) }}</div>
   </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('#produto_search_categoria').select2({
+            theme: 'bootstrap-5'
+        });
+    });
+</script>
 {% endblock %}
+

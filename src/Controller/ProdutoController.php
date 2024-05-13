@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Produto;
+use App\Form\ProdutoSearchType;
 use App\Form\ProdutoType;
 use App\Repository\ProdutoRepository;
+use App\Service\ProdutoService;
 use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
@@ -17,17 +19,15 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/admin/produto')]
 class ProdutoController extends AbstractController
 {
-    #[Route('/', name: 'app_produto_index', methods: ['GET'])]
-    public function index(ProdutoRepository $produtoRepository, #[MapQueryParameter] ?int $page = 0, #[MapQueryParameter] ?string $search): Response
+    #[Route('/', name: 'app_produto_index', methods: ['GET', 'POST'])]
+    public function index(Request $request, ProdutoRepository $produtoRepository, #[MapQueryParameter] ?int $page = 0, #[MapQueryParameter] ?string $search, ProdutoService $produtoService): Response
     {
         $queryBuilder = $produtoRepository->createQueryBuilder('a')->select('a');
 
-        if(!empty($search) && !is_null($search)) {
-            $queryBuilder->where(
-                $queryBuilder->expr()->like('a.descricao', ':search')
-            )
-            ->setParameter('search', '%' . $search . '%');
-        }
+        $produto = new Produto();
+        $form = $this->createForm(ProdutoSearchType::class, $produto);
+
+        $queryBuilder = $produtoService->produtoFilter($request, $form, $queryBuilder);
 
         $pagerfanta = new Pagerfanta(
             new QueryAdapter($queryBuilder)
@@ -40,6 +40,7 @@ class ProdutoController extends AbstractController
 
         return $this->render('produto/index.html.twig', [
             'pager' => $pagerfanta,
+            'form' => $form,
         ]);
     }
 

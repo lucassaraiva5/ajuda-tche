@@ -2,22 +2,17 @@
 
 namespace App\Service;
 
-use App\Entity\PostoAjuda;
 use App\Entity\ProdutoPosto;
-use App\Entity\UnidadeConversao;
-use App\Entity\Usuario;
 use App\Repository\PostoAjudaRepository;
 use App\Repository\ProdutoPostoRepository;
 use App\Repository\ProdutoRepository;
 use App\Repository\TipoUnidadeRepository;
 use App\Repository\UnidadeConversaoRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Mailer\MailerInterface;
-use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
-use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 
 class ProdutoService
 {
@@ -37,7 +32,7 @@ class ProdutoService
     public function adicionaEmProdutoPostoExistente(ProdutoPosto $produtoPosto, array $data)
     {
         $user = $this->security->getUser();
-        $postoAjuda = $this->postoAjudaRepository->findOneByUsuarioResponsavel($user);
+        $postoAjuda = $user->getPostoAjuda();
 
         $tipoUnidade = $this->tipoUnidadeRepository->find($data["produto_posto"]["tipoUnidade"]);
 
@@ -47,7 +42,7 @@ class ProdutoService
             $unidadeMultiplicador = $unidadeConversao->getValor();
         }
 
-        $produtoPostoExistente = $this->produtoPostoRepository->findOneByProduto($produtoPosto->getProduto());
+        $produtoPostoExistente = $this->produtoPostoRepository->findOneBy(['produto' => $produtoPosto->getProduto(), 'posto' => $postoAjuda]);
 
         if($produtoPostoExistente) {
             $valorExistente = $produtoPostoExistente->getQuantidade();
@@ -64,6 +59,32 @@ class ProdutoService
             $this->entityManager->persist($produtoPosto);
         }
         $this->entityManager->flush();
+    }
+
+    public function produtoFilter(Request $request, FormInterface $form, QueryBuilder $queryBuilder): QueryBuilder
+    {
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $params = $request->request->all();
+            
+
+            if(isset($params["produto_search"]["descricao"]) && !empty($params["produto_search"]["descricao"])) {
+                $queryBuilder->where(
+                    $queryBuilder->expr()->like('a.descricao', ':search')
+                )
+                ->setParameter('search', "%{$params["produto_search"]["descricao"]}%");
+            }
+
+            if(isset($params["produto_search"]["categoria"]) && !empty($params["produto_search"]["categoria"])){
+
+                $queryBuilder->andWhere('a.categoria = :id')
+                ->setParameter('id', $params["produto_search"]["categoria"]);
+            }
+            
+        }
+
+        return $queryBuilder;
     }
 
     // public function conversaoParaUnidadeArmazenamento(ProdutoPosto $produtoPosto, ?ProdutoPosto $produtoPostoExistente = null): ProdutoPosto
