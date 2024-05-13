@@ -16,6 +16,40 @@
         $('#produto_posto_unidadeConversao').select2({
             theme: 'bootstrap-5'
         });
+
+        $('#produto_posto_tipoUnidade')
+        .empty()
+        .append('<option selected="selected" value="">Selecione o Tipo de produto</option>');
+        
+        $('#produto_posto_unidadeConversao')
+        .empty()
+        .append('<option selected="selected" value="">Selecione o Tipo de produto</option>');
+
+
+        $('#produto_posto_produto').on('select2:select', function (e) {
+            let data = e.params.data;
+            fetch('/tipoUnidades/' + data.id)
+            .then(response => response.json())
+            .then(data => {
+                let selectElement = document.getElementById('produto_posto_tipoUnidade');
+                selectElement.innerHTML = '';
+                data.forEach(function(obj) {
+                    let option = new Option(obj.name, obj.id);
+                    selectElement.add(option);
+                });
+            });
+
+            fetch('/unidadesConversao/' + data.id)
+            .then(response => response.json())
+            .then(data => {
+                var selectElement = document.getElementById('produto_posto_unidadeConversao');
+                selectElement.innerHTML = '';
+                data.forEach(function(obj) {
+                    var option = new Option(obj.name, obj.id);
+                    selectElement.add(option);
+                });
+            });
+        });
         
     });
 </script>

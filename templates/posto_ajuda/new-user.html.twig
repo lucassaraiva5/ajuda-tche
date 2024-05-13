@@ -1,13 +1,21 @@
-{% extends 'base.html.twig' %}
+{% extends 'raw.html.twig' %}
 
 {% block title %}New PostoAjuda{% endblock %}
 
 {% block body %}
-    <h1>Create new PostoAjuda</h1>
 
-    {{ include('posto_ajuda/_form.html.twig') }}
-
-    <a href="{{ path('app_posto_ajuda_index') }}">back to list</a>
+    <div class="d-flex">
+        <div class="m-auto mt-5">
+            <div class="card border-0 mt-5 p-5 shadow">
+                <div class="card-header bg-transparent text-center">
+                <h2>Cadastro</h2>
+                </div>
+                <div class="card-body">
+                    {{ include('posto_ajuda/_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
     $(document).ready(function() {

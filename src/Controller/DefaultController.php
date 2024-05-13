@@ -2,16 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\Categoria;
 use App\Entity\Estado;
-use App\Form\CategoriaType;
-use App\Repository\CategoriaRepository;
+use App\Entity\Produto;
 use App\Repository\CidadeRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 class DefaultController extends AbstractController
@@ -21,10 +16,34 @@ class DefaultController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $cidades = $cidadeRepository->findByEstado($estado);
-        $arrayCidades = [];
+        $array = [];
         foreach($cidades as $cidade) {
-            $arrayCidades[] = ['name' => $cidade->getNome(), 'id' => $cidade->getId()];
+            $array[] = ['name' => $cidade->getNome(), 'id' => $cidade->getId()];
         }
-        return new JsonResponse($arrayCidades);
-    }    
+        return new JsonResponse($array);
+    }
+
+    #[Route("/tipoUnidades/{id}", name: 'get_tipo_unidade', methods: ['GET'])]
+    public function getTiposUnidade(Produto $produto): JsonResponse
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $tiposUnidade = $produto->getTiposUnidade();
+        $array = [];
+        foreach($tiposUnidade as $tipoUnidade) {
+            $array[] = ['name' => $tipoUnidade->getDescricao(), 'id' => $tipoUnidade->getId()];
+        }
+        return new JsonResponse($array);
+    }
+
+    #[Route("/unidadesConversao/{id}", name: 'get_unidade_conversao', methods: ['GET'])]
+    public function getUnidadesConversao(Produto $produto): JsonResponse
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $unidadesConversao = $produto->getUnidadesConversao();
+        $array = [];
+        foreach($unidadesConversao as $unidadeConversao) {
+            $array[] = ['name' => $unidadeConversao->getDescricao(), 'id' => $unidadeConversao->getId()];
+        }
+        return new JsonResponse($array);
+    }   
 }
