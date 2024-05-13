@@ -62,27 +62,28 @@
             Menu
           </a>
           <ul class="dropdown-menu">
-            {% if is_granted('VIEW_MOTORISTAS') %}
-            <li><a class="dropdown-item" href="/admin/motorista/">Motoristas</a></li>
+            {% if is_granted('VIEW_CATEGORIAS') %}
+            <li><a class="dropdown-item" href="/admin/categoria/">Categorias de produtos</a></li>
             {% endif %}
             {% if is_granted('VIEW_PRODUTOS') %}
             <li><a class="dropdown-item" href="/admin/produto/">Tipos de Produtos</a></li>
             {% endif %}
-            {% if is_granted('VIEW_CATEGORIAS') %}
-            <li><a class="dropdown-item" href="/admin/categoria/">Categorias de produtos</a></li>
+
+            {% if is_granted('VIEW_MOTORISTAS') %}
+            <li><a class="dropdown-item" href="/admin/motorista/">Motoristas</a></li>
             {% endif %}
-            {% if is_granted('VIEW_POSTO_COLETA') %}
+            {# {% if is_granted('VIEW_POSTO_COLETA') %}
             <li><a class="dropdown-item" href="/admin/posto-coleta/">Posto de Coleta</a></li>
-            {% endif %}
+            {% endif %} #}
             {% if is_granted('VIEW_PRODUTO_POSTO') %}
             <li><a class="dropdown-item" href="/admin/produto-posto/">Estoque Posto</a></li>
             {% endif %}
-            {% if is_granted('VIEW_CENTRO_DISTRIBUICAO') %}
+            {# {% if is_granted('VIEW_CENTRO_DISTRIBUICAO') %}
             <li><a class="dropdown-item" href="/admin/centro-distribuicao/">Centro de distribuição</a></li>
             {% endif %}
             {% if is_granted('VIEW_PRODUTOS_NECESSARIOS') %}
             <li><a class="dropdown-item" href="/admin/produto-necessario/">Produto necessário (CD)</a></li>
-            {% endif %}
+            {% endif %} #}
             {% if is_granted('VIEW_ENTREGAS') %}
             <li><a class="dropdown-item" href="/admin/entrega/">Destinar Produtos</a></li>
             {% endif %}

@@ -16,6 +16,9 @@ class Funcao
     #[ORM\Column(length: 150)]
     private ?string $descricao = null;
 
+    #[ORM\ManyToOne(inversedBy: 'funcoes')]
+    private ?PostoAjuda $postoAjuda = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -29,6 +32,18 @@ class Funcao
     public function setDescricao(string $descricao): static
     {
         $this->descricao = $descricao;
+
+        return $this;
+    }
+
+    public function getPostoAjuda(): ?PostoAjuda
+    {
+        return $this->postoAjuda;
+    }
+
+    public function setPostoAjuda(?PostoAjuda $postoAjuda): static
+    {
+        $this->postoAjuda = $postoAjuda;
 
         return $this;
     }

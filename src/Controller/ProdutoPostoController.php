@@ -26,7 +26,6 @@ class ProdutoPostoController extends AbstractController
     #[Route('/', name: 'app_produto_posto_index', methods: ['GET', 'POST'])]
     public function index(Request $request, ProdutoPostoRepository $produtoPostoRepository, #[MapQueryParameter] ?int $page = 0, Security $security, PostoAjudaRepository $postoAjudaRepository, ProdutoService $produtoService): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $security->getUser();
         $posto = $user->getPostoAjuda();
 

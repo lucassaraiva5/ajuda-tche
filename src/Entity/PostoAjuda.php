@@ -40,10 +40,17 @@ class PostoAjuda
     #[ORM\OneToMany(targetEntity: Usuario::class, mappedBy: 'postoAjuda')]
     private Collection $usuarios;
 
+    /**
+     * @var Collection<int, Funcao>
+     */
+    #[ORM\OneToMany(targetEntity: Funcao::class, mappedBy: 'postoAjuda')]
+    private Collection $funcoes;
+
     public function __construct()
     {
         $this->tipoPostoAjuda = new ArrayCollection();
         $this->usuarios = new ArrayCollection();
+        $this->funcoes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -147,6 +154,36 @@ class PostoAjuda
             // set the owning side to null (unless already changed)
             if ($usuario->getPostoAjuda() === $this) {
                 $usuario->setPostoAjuda(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Funcao>
+     */
+    public function getFuncoes(): Collection
+    {
+        return $this->funcoes;
+    }
+
+    public function addFunco(Funcao $funco): static
+    {
+        if (!$this->funcoes->contains($funco)) {
+            $this->funcoes->add($funco);
+            $funco->setPostoAjuda($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFunco(Funcao $funco): static
+    {
+        if ($this->funcoes->removeElement($funco)) {
+            // set the owning side to null (unless already changed)
+            if ($funco->getPostoAjuda() === $this) {
+                $funco->setPostoAjuda(null);
             }
         }
 
