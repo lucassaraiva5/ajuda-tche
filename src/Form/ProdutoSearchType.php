@@ -42,6 +42,7 @@ class ProdutoSearchType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Produto::class,
+            'csrf_protection' => false,
         ]);
     }
 }

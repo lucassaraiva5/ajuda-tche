@@ -65,9 +65,8 @@ class ProdutoService
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $params = $request->request->all();
+            $params = $request->query->all();
             
-
             if(isset($params["produto_search"]["descricao"]) && !empty($params["produto_search"]["descricao"])) {
                 $queryBuilder->where(
                     $queryBuilder->expr()->like('a.descricao', ':search')

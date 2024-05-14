@@ -26,7 +26,7 @@ class ProdutoController extends AbstractController
         $queryBuilder = $produtoRepository->createQueryBuilder('a')->select('a');
 
         $produto = new Produto();
-        $form = $this->createForm(ProdutoSearchType::class, $produto);
+        $form = $this->createForm(ProdutoSearchType::class, $produto, ['method'=>"GET"]);
 
         $queryBuilder = $produtoService->produtoFilter($request, $form, $queryBuilder);
 
