@@ -15,7 +15,7 @@
             </tr>
         </thead>
         <tbody>
-        {% for tipo_unidade in tipo_unidades %}
+        {% for tipo_unidade in pager %}
             <tr>
                 <td>{{ tipo_unidade.id }}</td>
                 <td>{{ tipo_unidade.descricao }}</td>
@@ -33,5 +33,12 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_tipo_unidade_new') }}">Create new</a>
+    <div class="d-flex justify-content-between align-items-center mt-3 mb-5">
+        {% if is_granted('TIPO_UNIDADE_ADD') %}
+        <a href="{{ path('app_tipo_unidade_new') }}" class="btn btn-success shadow-sm">
+            <i class="fas fa-plus"></i> Adicionar
+        </a>
+        {% endif %}
+        <div>{{ pagerfanta(pager) }}</div>
+    </div>
 {% endblock %}

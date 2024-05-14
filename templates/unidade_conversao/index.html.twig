@@ -15,7 +15,7 @@
             </tr>
         </thead>
         <tbody>
-        {% for unidade_conversao in unidade_conversaos %}
+        {% for unidade_conversao in pager %}
             <tr>
                 <td>{{ unidade_conversao.id }}</td>
                 <td>{{ unidade_conversao.descricao }}</td>
@@ -33,5 +33,13 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_unidade_conversao_new') }}">Create new</a>
+    <div class="d-flex justify-content-between align-items-center mt-3 mb-5">
+        {% if is_granted('UNIDADE_CONVERSAO_ADD') %}
+        <a href="{{ path('app_unidade_conversao_new') }}" class="btn btn-success shadow-sm">
+            <i class="fas fa-plus"></i> Adicionar
+        </a>
+        {% endif %}
+        <div>{{ pagerfanta(pager) }}</div>
+    </div>
+
 {% endblock %}

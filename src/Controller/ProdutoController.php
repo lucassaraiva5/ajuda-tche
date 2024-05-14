@@ -83,8 +83,9 @@ class ProdutoController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
+            $this->addFlash('success', 'Registro salvo com sucesso!');
 
-            return $this->redirectToRoute('app_produto_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_produto_edit', ['id'=> $produto->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('produto/edit.html.twig', [

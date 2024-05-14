@@ -12,9 +12,9 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 abstract class BaseController extends AbstractController
 {
-    protected string $entity;
+    protected string $entityView;
     
-    public function view(AppRepositoryInterface $repository, ?string $page = null, Request $request): Response {
+    public function view(AppRepositoryInterface $repository, ?string $page, Request $request): Response {
         $queryBuilder = $repository->createQueryBuilder('a')->select('a');
 
         if(!empty($search) && !is_null($search)) {
@@ -28,12 +28,12 @@ abstract class BaseController extends AbstractController
             new QueryAdapter($queryBuilder)
         );
 
-        if(is_null($page)) {
+        if(!$page || is_null($page) || $page === '0' || $page === 0) {
             $page = 1;
         }
         $pagerfanta->setCurrentPage($page);
 
-        return $this->render("{$this->entity}/index.html.twig", [
+        return $this->render("{$this->entityView}/index.html.twig", [
             'pager' => $pagerfanta,
         ]);
     }

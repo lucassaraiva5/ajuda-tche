@@ -20,11 +20,11 @@ class CategoriaController extends BaseController
 {
     public function __construct()
     {
-        $this->entity = 'categoria';
+        $this->entityView = 'categoria';
     }
 
     #[Route('/', name: 'app_categoria_index', methods: ['GET'])]
-    public function index(Request $request, CategoriaRepository $categoriaRepository, #[MapQueryParameter] ?int $page = 0, #[MapQueryParameter] ?string $search): Response
+    public function index(Request $request, CategoriaRepository $categoriaRepository, #[MapQueryParameter] ?int $page = 0): Response
     {
         return $this->view($categoriaRepository, $page, $request);
 

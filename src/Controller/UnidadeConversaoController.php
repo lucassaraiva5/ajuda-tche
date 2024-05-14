@@ -9,18 +9,22 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/admin/unidade-conversao')]
-class UnidadeConversaoController extends AbstractController
+class UnidadeConversaoController extends BaseController
 {
-    #[Route('/', name: 'app_unidade_conversao_index', methods: ['GET'])]
-    public function index(UnidadeConversaoRepository $unidadeConversaoRepository): Response
+    public function __construct()
     {
-        return $this->render('unidade_conversao/index.html.twig', [
-            'unidade_conversaos' => $unidadeConversaoRepository->findAll(),
-        ]);
+        $this->entityView = 'unidade_conversao';
+    }
+
+    #[Route('/', name: 'app_unidade_conversao_index', methods: ['GET'])]
+    public function index(Request $request, UnidadeConversaoRepository $unidadeConversaoRepository, #[MapQueryParameter] ?int $page = 1): Response
+    {
+        return $this->view($unidadeConversaoRepository, $page, $request);
     }
 
     #[Route('/new', name: 'app_unidade_conversao_new', methods: ['GET', 'POST'])]

@@ -13,14 +13,17 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/admin/tipo-unidade')]
-class TipoUnidadeController extends AbstractController
+class TipoUnidadeController extends BaseController
 {
-    #[Route('/', name: 'app_tipo_unidade_index', methods: ['GET'])]
-    public function index(TipoUnidadeRepository $tipoUnidadeRepository): Response
+    public function __construct()
     {
-        return $this->render('tipo_unidade/index.html.twig', [
-            'tipo_unidades' => $tipoUnidadeRepository->findAll(),
-        ]);
+        $this->entityView = 'tipo_unidade';
+    }
+
+    #[Route('/', name: 'app_tipo_unidade_index', methods: ['GET'])]
+    public function index(Request $request, TipoUnidadeRepository $tipoUnidadeRepository, #[MapQueryParameter] ?int $page = 1): Response
+    {
+        return $this->view($tipoUnidadeRepository, $page, $request);
     }
 
     #[Route('/new', name: 'app_tipo_unidade_new', methods: ['GET', 'POST'])]

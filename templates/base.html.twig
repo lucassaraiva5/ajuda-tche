@@ -125,18 +125,24 @@
 </nav>
 
 <body class="bg-light">
-  {% for message in app.flashes('success') %}
-  <div class="alert alert-success">
-    {{ message }}
-  </div>
+  <div class="container">
+    {% for message in app.flashes('success') %}
+      <br>
+      <br>
+      <br>
+      <div class="alert alert-success">
+        {{ message }}
+      </div>
   {% endfor %}
 
   {% for message in app.flashes('error') %}
-  <div class="alert alert-danger">
-    {{ message }}
-  </div>
+      <br>
+      <br>
+      <br>
+      <div class="alert alert-danger">
+        {{ message }}
+      </div>
   {% endfor %}
-  <div class="container">
     {% block body %}{% endblock %}
   </div>
   <footer class="bg-dark text-white text-center p-2 fixed-bottom">
