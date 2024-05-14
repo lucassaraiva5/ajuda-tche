@@ -20,6 +20,12 @@ class DesalojadoType extends AbstractType
         $builder
             ->add('nome')
             ->add('sobrenome')
+            ->add('cpf', null, [
+                'label' => 'CPF',
+                'attr' => [
+                    'placeholder' => "Opicional"
+                ]
+            ])
             ->add('nomePai', null, [
                 'label' => 'Nome do Pai'
             ])

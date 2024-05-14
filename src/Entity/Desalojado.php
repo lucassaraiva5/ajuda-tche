@@ -56,6 +56,12 @@ class Desalojado
     #[ORM\ManyToOne]
     private ?DesalojadoTipoAbrigo $desalojadoTipoAbrigo = null;
 
+    #[ORM\Column(length: 14, nullable: true)]
+    private ?string $cpf = null;
+
+    #[ORM\Column(length: 11, nullable: true)]
+    private ?string $cpfClean = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -225,6 +231,30 @@ class Desalojado
     public function setDesalojadoTipoAbrigo(?DesalojadoTipoAbrigo $desalojadoTipoAbrigo): static
     {
         $this->desalojadoTipoAbrigo = $desalojadoTipoAbrigo;
+
+        return $this;
+    }
+
+    public function getCpf(): ?string
+    {
+        return $this->cpf;
+    }
+
+    public function setCpf(?string $cpf): static
+    {
+        $this->cpf = $cpf;
+
+        return $this;
+    }
+
+    public function getCpfClean(): ?string
+    {
+        return $this->cpfClean;
+    }
+
+    public function setCpfClean(?string $cpfClean): static
+    {
+        $this->cpfClean = $cpfClean;
 
         return $this;
     }

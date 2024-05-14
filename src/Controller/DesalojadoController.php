@@ -29,6 +29,10 @@ class DesalojadoController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            if(!empty($desalojado->getCpf())) {
+                $desalojado->setCpfClean(str_replace([".", "-"], "", $desalojado->getCpf()));
+            }
             $entityManager->persist($desalojado);
             $entityManager->flush();
 

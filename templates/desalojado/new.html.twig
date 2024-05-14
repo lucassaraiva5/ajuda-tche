@@ -20,6 +20,20 @@
 
 <script>
     $(document).ready(function() {
+        $('#desalojado_cpf').on('input', function() {
+            var value = $(this).val();
+            
+            // Remove caracteres não numéricos
+            value = value.replace(/\D/g, '');
+
+            // Formata o CPF (000.000.000-00)
+            value = value.replace(/(\d{3})(\d)/, '$1.$2');
+            value = value.replace(/(\d{3})(\d)/, '$1.$2');
+            value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+            
+            $(this).val(value);
+        });
+
         $('#desalojado_estado').select2({
             theme: 'bootstrap-5'
         });
@@ -63,18 +77,17 @@
         populateCidadesByEstado(20);
 
         $('#desalojado_celular').on('input', function() {
-            // Aplica a formatação e aceita apenas números
-            var valor = $(this).val();
-            // Remove tudo que não for número
-            valor = valor.replace(/\D/g, '');
-            // Certifica-se de que o formato está correto
-            if (valor.length > 0) {
-                valor = valor.replace(/^(\d{0,3})(\d{0,5})(\d{0,4}).*/, '($1)$2-$3');
-            }
-            // Limita o valor ao formato correto
-            valor = valor.substring(0, 15);
-            // Atualiza o valor do campo com o formato correto
-            $(this).val(valor);
+           // Aplica a formatação e aceita apenas números
+            var value = $(this).val();
+            
+            // Remove caracteres não numéricos
+            value = value.replace(/\D/g, '');
+
+            // Formata o celular (00) 00000-0000
+            value = value.replace(/(\d{2})(\d)/, '($1) $2');
+            value = value.replace(/(\d{5})(\d)/, '$1-$2');
+            
+            $(this).val(value);
         });
 
         $('#desalojado_genero').val(null).trigger('change');
