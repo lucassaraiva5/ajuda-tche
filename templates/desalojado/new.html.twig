@@ -12,7 +12,10 @@
             <h2>Cadastro</h2>
             </div>
             <div class="card-body">
-                {{ include('desalojado/_form.html.twig') }}
+                {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    <button class="btn btn-primary" id="salvar">{{ button_label|default('Salvar') }}</button>
+                {{ form_end(form) }}
             </div>
         </div>
     </div>
@@ -20,20 +23,6 @@
 
 <script>
     $(document).ready(function() {
-        $('#desalojado_cpf').on('input', function() {
-            var value = $(this).val();
-            
-            // Remove caracteres não numéricos
-            value = value.replace(/\D/g, '');
-
-            // Formata o CPF (000.000.000-00)
-            value = value.replace(/(\d{3})(\d)/, '$1.$2');
-            value = value.replace(/(\d{3})(\d)/, '$1.$2');
-            value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
-            
-            $(this).val(value);
-        });
-
         $('#desalojado_estado').select2({
             theme: 'bootstrap-5'
         });
@@ -73,29 +62,58 @@
         });
         
         $('#desalojado_estado').val(20).trigger('change');
-        
         populateCidadesByEstado(20);
-
-        $('#desalojado_celular').on('input', function() {
-           // Aplica a formatação e aceita apenas números
-            var value = $(this).val();
-            
-            // Remove caracteres não numéricos
-            value = value.replace(/\D/g, '');
-
-            // Formata o celular (00) 00000-0000
-            value = value.replace(/(\d{2})(\d)/, '($1) $2');
-            value = value.replace(/(\d{5})(\d)/, '$1-$2');
-            
-            $(this).val(value);
-        });
-
         $('#desalojado_genero').val(null).trigger('change');
         $('#desalojado_corDaPele').val(null).trigger('change');
         $('#desalojado_desalojadoTipoAbrigo').val(null).trigger('change');
 
+        $('#salvar').on('click', function() {
+            var cpf = $('#desalojado_cpf').val();
+
+            if (!$('#desalojado_genero').val()) {
+                $('#desalojado_genero').next('.select2-container').find('.select2-selection').css('border-color', 'red');
+                event.preventDefault(); // Cancela o envio do formulário
+            }
+            
+            if (!empty(cpf) && isValidCPF(cpf)) {
+                $('#desalojado').submit();
+            } else {
+                alert("cpf invalido");
+                event.preventDefault(); // Cancela o envio do formulário
+            }
+        });
     });
 
+    //Formata campo Celular
+    $('#desalojado_celular').on('input', function() {
+        // Aplica a formatação e aceita apenas números
+        var value = $(this).val();
+        
+        // Remove caracteres não numéricos
+        value = value.replace(/\D/g, '');
+
+        // Formata o celular (00) 00000-0000
+        value = value.replace(/(\d{2})(\d)/, '($1) $2');
+        value = value.replace(/(\d{5})(\d)/, '$1-$2');
+        
+        $(this).val(value);
+    });
+
+    //Formata campo CPF
+    $('#desalojado_cpf').on('input', function() {
+        var value = $(this).val();
+        
+        // Remove caracteres não numéricos
+        value = value.replace(/\D/g, '');
+
+        // Formata o CPF (000.000.000-00)
+        value = value.replace(/(\d{3})(\d)/, '$1.$2');
+        value = value.replace(/(\d{3})(\d)/, '$1.$2');
+        value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+        
+        $(this).val(value);
+    });
+    
     function populateCidadesByEstado(id) {
         $('#desalojado_cidade')
             .empty()
@@ -116,8 +134,21 @@
             });
     }
 
-
-    
+    function isValidCPF(cpf){
+        cpf = cpf.replace(/\D/g, '');
+        if(cpf.toString().length != 11 || /^(\d)\1{10}$/.test(cpf)) return false;
+        var result = true;
+        [9,10].forEach(function(j){
+            var soma = 0, r;
+            cpf.split(/(?=)/).splice(0,j).forEach(function(e, i){
+                soma += parseInt(e) * ((j+2)-(i+1));
+            });
+            r = soma % 11;
+            r = (r <2)?0:11-r;
+            if(r != cpf.substring(j, j+1)) result = false;
+        });
+        return result;
+    }    
 </script>
 
 {% endblock %}

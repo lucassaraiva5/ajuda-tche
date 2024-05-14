@@ -68,7 +68,8 @@ class DesalojadoType extends AbstractType
                 'choice_label' => 'descricao',
                 'attr' => [
                     'class' => 'select2'
-                ]
+                ],
+                'required' => true
             ])
             ->add('corDaPele', EntityType::class, [
                 'class' => CorDaPele::class,
