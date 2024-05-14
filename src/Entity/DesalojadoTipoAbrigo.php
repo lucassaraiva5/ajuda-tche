@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
+use App\Entity\Interfaces\AppEntityInterface;
 use App\Repository\DesalojadoTipoAbrigoRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: DesalojadoTipoAbrigoRepository::class)]
-class DesalojadoTipoAbrigo
+class DesalojadoTipoAbrigo implements AppEntityInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

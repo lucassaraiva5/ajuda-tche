@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
+use App\Entity\Interfaces\AppEntityInterface;
 use App\Repository\CorDaPeleRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CorDaPeleRepository::class)]
-class CorDaPele
+class CorDaPele implements AppEntityInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

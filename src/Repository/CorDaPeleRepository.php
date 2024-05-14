@@ -3,13 +3,14 @@
 namespace App\Repository;
 
 use App\Entity\CorDaPele;
+use App\Repository\Interfaces\AppRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<CorDaPele>
  */
-class CorDaPeleRepository extends ServiceEntityRepository
+class CorDaPeleRepository extends ServiceEntityRepository implements AppRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {

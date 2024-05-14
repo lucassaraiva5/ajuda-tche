@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
+use App\Entity\Interfaces\AppEntityInterface;
 use App\Repository\GeneroRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: GeneroRepository::class)]
-class Genero
+class Genero implements AppEntityInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

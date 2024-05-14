@@ -2,11 +2,13 @@
 
 namespace App\Entity;
 
+use App\Entity\Interfaces\AppEntityInterface;
 use App\Repository\DesalojadoRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: DesalojadoRepository::class)]
-class Desalojado
+class Desalojado implements AppEntityInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -61,6 +63,12 @@ class Desalojado
 
     #[ORM\Column(length: 11, nullable: true)]
     private ?string $cpfClean = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $dataNascimento = null;
+
+    #[ORM\Column(type: Types::SMALLINT, nullable: true)]
+    private ?int $idade = null;
 
     public function getId(): ?int
     {
@@ -255,6 +263,30 @@ class Desalojado
     public function setCpfClean(?string $cpfClean): static
     {
         $this->cpfClean = $cpfClean;
+
+        return $this;
+    }
+
+    public function getDataNascimento(): ?\DateTimeInterface
+    {
+        return $this->dataNascimento;
+    }
+
+    public function setDataNascimento(?\DateTimeInterface $dataNascimento): static
+    {
+        $this->dataNascimento = $dataNascimento;
+
+        return $this;
+    }
+
+    public function getIdade(): ?int
+    {
+        return $this->idade;
+    }
+
+    public function setIdade(?int $idade): static
+    {
+        $this->idade = $idade;
 
         return $this;
     }

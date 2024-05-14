@@ -16,6 +16,16 @@
                     {{ form_widget(form) }}
                     <button class="btn btn-primary" id="salvar">{{ button_label|default('Salvar') }}</button>
                 {{ form_end(form) }}
+
+                {% if form.vars.errors|length > 0 %}
+                    <div class="errors">
+                        <ul>
+                            {% for error in form.vars.errors %}
+                                <li>{{ error.message }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -75,12 +85,32 @@
                 event.preventDefault(); // Cancela o envio do formulário
             }
             
-            if (!empty(cpf) && isValidCPF(cpf)) {
+            console.log(cpf.length != 0);
+
+            if (cpf.length != 0 && isValidCPF(cpf)) {
                 $('#desalojado').submit();
-            } else {
+            } else if(cpf.length != 0) {
                 alert("cpf invalido");
                 event.preventDefault(); // Cancela o envio do formulário
             }
+        });
+
+        $('#desalojado_dataNascimento').on('input', function() {
+            var value = $(this).val();
+            
+            // Remove caracteres não numéricos
+            value = value.replace(/\D/g, '');
+            
+            // Adiciona a formatação de data (dd/mm/yyyy)
+            if (value.length > 2) {
+                value = value.slice(0, 2) + '/' + value.slice(2);
+            }
+            if (value.length > 5) {
+                value = value.slice(0, 5) + '/' + value.slice(5, 9);
+            }
+            
+            // Define o valor formatado no campo de entrada
+            $(this).val(value);
         });
     });
 
@@ -148,7 +178,7 @@
             if(r != cpf.substring(j, j+1)) result = false;
         });
         return result;
-    }    
+    }
 </script>
 
 {% endblock %}

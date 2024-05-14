@@ -3,13 +3,14 @@
 namespace App\Repository;
 
 use App\Entity\Genero;
+use App\Repository\Interfaces\AppRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<Genero>
  */
-class GeneroRepository extends ServiceEntityRepository
+class GeneroRepository extends ServiceEntityRepository implements AppRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {

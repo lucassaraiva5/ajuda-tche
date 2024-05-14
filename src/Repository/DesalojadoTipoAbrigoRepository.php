@@ -3,13 +3,14 @@
 namespace App\Repository;
 
 use App\Entity\DesalojadoTipoAbrigo;
+use App\Repository\Interfaces\AppRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<DesalojadoTipoAbrigo>
  */
-class DesalojadoTipoAbrigoRepository extends ServiceEntityRepository
+class DesalojadoTipoAbrigoRepository extends ServiceEntityRepository implements AppRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {

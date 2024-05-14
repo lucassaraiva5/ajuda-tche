@@ -8,22 +8,65 @@ use App\Entity\Desalojado;
 use App\Entity\DesalojadoTipoAbrigo;
 use App\Entity\Estado;
 use App\Entity\Genero;
+use App\Form\DataTransformer\DateStringToDateTimeTransformer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Date;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class DesalojadoType extends AbstractType
 {
+
+    private $transformer;
+
+    public function __construct(DateStringToDateTimeTransformer $transformer)
+    {
+        $this->transformer = $transformer;
+    }
+
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nome')
-            ->add('sobrenome')
+            ->add('nome', null, [
+                'label' => 'Nome *',
+                'attr' => [
+                ]
+            ])
+            ->add('sobrenome', null, [
+                'attr' => [
+                ]
+            ])
             ->add('cpf', null, [
                 'label' => 'CPF',
                 'attr' => [
-                    'placeholder' => "Opicional"
+                ]
+            ])
+            ->add('dataNascimento', TextType::class, [
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '/^\d{2}\/\d{2}\/\d{4}$/',
+                        'message' => 'Por favor, insira uma data no formato dd/mm/yyyy.'
+                    ]),
+                    new Date([
+                        'message' => 'Por favor, insira uma data válida.'
+                    ]),
+                ],
+                'label' => 'Data de Nascimento',
+                'required' => false,
+                'attr' => [
+                    'type' => 'text',
+                ]
+            ])
+            ->add('idade', null, [
+                'label' => 'Idade',
+                'required' => false,
+                'attr' => [
+                    'min' => 0,
+                    'max' => 120
                 ]
             ])
             ->add('nomePai', null, [
@@ -65,9 +108,11 @@ class DesalojadoType extends AbstractType
             ])
             ->add('genero', EntityType::class, [
                 'class' => Genero::class,
+                'label' => 'Genero *',
                 'choice_label' => 'descricao',
                 'attr' => [
-                    'class' => 'select2'
+                    'class' => 'select2',
+                    'required' => true
                 ],
                 'required' => true
             ])
@@ -84,8 +129,10 @@ class DesalojadoType extends AbstractType
                 'attr' => [
                     'class' => 'select2'
                 ]
-            ])
-        ;
+            ]);
+
+        $builder->get('dataNascimento')
+            ->addModelTransformer($this->transformer);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
