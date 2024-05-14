@@ -12,6 +12,14 @@
         <button class="btn btn-primary">{{ button_label|default('Buscar') }}</button>
     {{ form_end(form) }}
 
+    <div class="d-flex justify-content-between align-items-center mt-3 mb-5">
+
+        {% if is_granted('PRODUTO_POSTO_ADD') %}
+        <a href="{{ path('app_produto_posto_new') }}" class="btn btn-success shadow-sm">
+            <i class="fas fa-plus"></i> Adicionar
+        </a>
+        {% endif%}
+    </div>
     <div class="table-responsive rounded shadow-lg">
         <table class="table p-2 ">
             <thead class="thead-dark">
@@ -54,14 +62,10 @@
     </div>
 
     <div class="d-flex justify-content-between align-items-center mt-3 mb-5">
-
-        {% if is_granted('PRODUTO_POSTO_ADD') %}
-        <a href="{{ path('app_produto_posto_new') }}" class="btn btn-success shadow-sm">
-            <i class="fas fa-plus"></i> Adicionar
-        </a>
-        {% endif%}
         <div>{{ pagerfanta(pager) }}</div>
     </div>
+
+    
 <script>
     $(document).ready(function() {
         $('#produto_search_categoria').select2({
