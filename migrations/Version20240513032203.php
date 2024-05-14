@@ -41,7 +41,7 @@ final class Version20240513032203 extends AbstractMigration
         $this->addSql("INSERT INTO unidade_conversao (descricao, valor, unidade_armazenamento_id) VALUES
             ('500ml', 0.5, (select id from unidade_armazenamento where descricao = 'Litro')),
             ('1L', 1, (select id from unidade_armazenamento where descricao = 'Litro')),
-            ('1,5L', 1.5, (select from id unidade_armazenamento where descricao = 'Litro')),
+            ('1,5L', 1.5, (select id from unidade_armazenamento where descricao = 'Litro')),
             ('2L', 2, (select id from unidade_armazenamento where descricao = 'Litro')),
             ('5L', 5, (select id from unidade_armazenamento where descricao = 'Litro')),
             ('10L', 10, (select id from unidade_armazenamento where descricao = 'Litro')),
