@@ -6,8 +6,11 @@
 <script>
     $(document).ready(function() {
         $('#produto_posto_produto').select2({
-            theme: 'bootstrap-5'
+            theme: 'bootstrap-5',
+            placeholder: 'Selecione',
         });
+
+        $('#produto_posto_produto').val(null).trigger('change');
 
         $('#produto_posto_tipoUnidade').select2({
             theme: 'bootstrap-5'
