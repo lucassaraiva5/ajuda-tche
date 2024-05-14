@@ -1,0 +1,110 @@
+{% extends 'raw.html.twig' %}
+
+{% block title %}New Desalojado{% endblock %}
+
+{% block body %}
+ 
+
+<div class="d-flex">
+    <div class="m-auto mt-5">
+        <div class="card border-0 mt-5 p-5 shadow">
+            <div class="card-header bg-transparent text-center">
+            <h2>Cadastro</h2>
+            </div>
+            <div class="card-body">
+                {{ include('desalojado/_form.html.twig') }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#desalojado_estado').select2({
+            theme: 'bootstrap-5'
+        });
+
+        $('#desalojado_cidade').select2({
+            theme: 'bootstrap-5',
+            placeholder: 'Selecione',
+        });
+
+        $('#desalojado_genero').select2({
+            theme: 'bootstrap-5',
+            placeholder: 'Selecione',
+        });
+
+        $('#desalojado_corDaPele').select2({
+            theme: 'bootstrap-5',
+            placeholder: 'Selecione',
+        });
+
+        $('#desalojado_desalojadoTipoAbrigo').select2({
+            theme: 'bootstrap-5',
+            placeholder: 'Selecione',
+        });
+
+        $('#desalojado_estado').on('select2:select', function (e) {
+            var data = e.params.data;
+            fetch('/cities/' + data.id)
+            .then(response => response.json())
+            .then(data => {
+                var citySelect = document.getElementById('desalojado_cidade');
+                citySelect.innerHTML = '';
+                data.forEach(function(city) {
+                    var option = new Option(city.name, city.id);
+                    citySelect.add(option);
+                });
+            });
+        });
+        
+        $('#desalojado_estado').val(20).trigger('change');
+        
+        populateCidadesByEstado(20);
+
+        $('#desalojado_celular').on('input', function() {
+            // Aplica a formatação e aceita apenas números
+            var valor = $(this).val();
+            // Remove tudo que não for número
+            valor = valor.replace(/\D/g, '');
+            // Certifica-se de que o formato está correto
+            if (valor.length > 0) {
+                valor = valor.replace(/^(\d{0,3})(\d{0,5})(\d{0,4}).*/, '($1)$2-$3');
+            }
+            // Limita o valor ao formato correto
+            valor = valor.substring(0, 15);
+            // Atualiza o valor do campo com o formato correto
+            $(this).val(valor);
+        });
+
+        $('#desalojado_genero').val(null).trigger('change');
+        $('#desalojado_corDaPele').val(null).trigger('change');
+        $('#desalojado_desalojadoTipoAbrigo').val(null).trigger('change');
+
+    });
+
+    function populateCidadesByEstado(id) {
+        $('#desalojado_cidade')
+            .empty()
+            .append('<option selected="selected" value="">Escolha um estado</option>');
+        
+        fetch('/cities/' + id)
+            .then(response => response.json())
+            .then(data => {
+                var citySelect = document.getElementById('desalojado_cidade');
+                citySelect.innerHTML = '';
+                data.forEach(function(city) {
+                    var option = new Option(city.name, city.id);
+                    citySelect.add(option);
+                });
+            })
+            .then(function() {
+                $('#desalojado_cidade').val(null).trigger('change');
+            });
+    }
+
+
+    
+</script>
+
+{% endblock %}

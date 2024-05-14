@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Desalojado{% endblock %}
+
+{% block body %}
+    <h1>Desalojado</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ desalojado.id }}</td>
+            </tr>
+            <tr>
+                <th>Nome</th>
+                <td>{{ desalojado.nome }}</td>
+            </tr>
+            <tr>
+                <th>Sobrenome</th>
+                <td>{{ desalojado.sobrenome }}</td>
+            </tr>
+            <tr>
+                <th>NomePai</th>
+                <td>{{ desalojado.nomePai }}</td>
+            </tr>
+            <tr>
+                <th>NomeMae</th>
+                <td>{{ desalojado.nomeMae }}</td>
+            </tr>
+            <tr>
+                <th>Celular</th>
+                <td>{{ desalojado.celular }}</td>
+            </tr>
+            <tr>
+                <th>ProprietarioCelular</th>
+                <td>{{ desalojado.proprietarioCelular }}</td>
+            </tr>
+            <tr>
+                <th>Logradouro</th>
+                <td>{{ desalojado.logradouro }}</td>
+            </tr>
+            <tr>
+                <th>Numero</th>
+                <td>{{ desalojado.numero }}</td>
+            </tr>
+            <tr>
+                <th>Bairro</th>
+                <td>{{ desalojado.bairro }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_desalojado_index') }}">back to list</a>
+
+    <a href="{{ path('app_desalojado_edit', {'id': desalojado.id}) }}">edit</a>
+
+    {{ include('desalojado/_delete_form.html.twig') }}
+{% endblock %}

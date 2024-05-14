@@ -15,7 +15,7 @@ class DefaultController extends AbstractController
     #[Route("/cities/{id}", name: 'get_cities', methods: ['GET'])]
     public function getCities(CidadeRepository $cidadeRepository, Estado $estado): JsonResponse
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        //$this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $cidades = $cidadeRepository->findByEstado($estado);
         $array = [];
         foreach($cidades as $cidade) {
