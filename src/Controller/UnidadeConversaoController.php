@@ -3,10 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\UnidadeConversao;
+use App\Form\UnidadeConversaoSearchType;
 use App\Form\UnidadeConversaoType;
 use App\Repository\UnidadeConversaoRepository;
+use App\Service\UnidadeConversaoService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
@@ -16,15 +19,25 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route('/admin/unidade-conversao')]
 class UnidadeConversaoController extends BaseController
 {
-    public function __construct()
+    public function __construct(Security $security)
     {
         $this->entityView = 'unidade_conversao';
+        $this->user = $security->getUser();
+        $this->searchTypeClass = UnidadeConversaoSearchType::class;
+        $this->entitySearch = new UnidadeConversao();
     }
 
     #[Route('/', name: 'app_unidade_conversao_index', methods: ['GET'])]
-    public function index(Request $request, UnidadeConversaoRepository $unidadeConversaoRepository, #[MapQueryParameter] ?int $page = 1): Response
+    public function index(Request $request, UnidadeConversaoRepository $unidadeConversaoRepository, #[MapQueryParameter] ?int $page = 1, UnidadeConversaoService $unidadeConversaoService): Response
     {
-        return $this->view($unidadeConversaoRepository, $page, $request);
+        return $this->view(
+            repository: $unidadeConversaoRepository,
+            page: $page,
+            request: $request,
+            filterPostoAdmin: false,
+            usuario: $this->user,
+            service: $unidadeConversaoService,
+            filterMethod: 'unidadeConversaoFilter');
     }
 
     #[Route('/new', name: 'app_unidade_conversao_new', methods: ['GET', 'POST'])]

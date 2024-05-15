@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\TipoUnidade;
+use App\Form\TipoUnidadeSearchType;
 use App\Form\TipoUnidadeType;
 use App\Repository\TipoUnidadeRepository;
+use App\Service\CategoriaService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
@@ -16,15 +18,26 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route('/admin/tipo-unidade')]
 class TipoUnidadeController extends BaseController
 {
-    public function __construct()
+    public function __construct(Security $security)
     {
         $this->entityView = 'tipo_unidade';
+        $this->user = $security->getUser();
+        $this->searchTypeClass = TipoUnidadeSearchType::class;
+        $this->entitySearch = new TipoUnidade();
+
     }
 
     #[Route('/', name: 'app_tipo_unidade_index', methods: ['GET'])]
-    public function index(Request $request, TipoUnidadeRepository $tipoUnidadeRepository, #[MapQueryParameter] ?int $page = 1): Response
+    public function index(Request $request, TipoUnidadeRepository $tipoUnidadeRepository, #[MapQueryParameter] ?int $page = 1, CategoriaService $categoriaService): Response
     {
-        return $this->view($tipoUnidadeRepository, $page, $request);
+        return $this->view(
+            repository: $tipoUnidadeRepository,
+            page: $page,
+            request: $request,
+            filterPostoAdmin: false,
+            usuario: $this->user,
+            service: $categoriaService,
+            filterMethod: 'tipoUnidadeFilter');
     }
 
     #[Route('/new', name: 'app_tipo_unidade_new', methods: ['GET', 'POST'])]
