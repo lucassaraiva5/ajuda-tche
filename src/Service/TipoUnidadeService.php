@@ -20,11 +20,16 @@ class TipoUnidadeService implements AppServiceInterface
         if ($form->isSubmitted() && $form->isValid()) {
             $params = $request->query->all();
             
-            if(isset($params["tipo_unidade"]["descricao"]) && !empty($params["tipo_unidade"]["descricao"])) {
+            if(isset($params["tipo_unidade_search"]["descricao"]) && !empty($params["tipo_unidade_search"]["descricao"])) {
                 $queryBuilder->where(
                     $queryBuilder->expr()->like('a.descricao', ':search')
                 )
-                ->setParameter('search', "%{$params["tipo_unidade"]["descricao"]}%");
+                ->setParameter('search', "%{$params["tipo_unidade_search"]["descricao"]}%");
+            }
+
+            if(isset($params["tipo_unidade_search"]["valor"]) && !empty($params["tipo_unidade_search"]["valor"])) {
+                $queryBuilder->where('a.valor = :valor')
+                ->setParameter('valor', $params["tipo_unidade_search"]["valor"]);
             }
             
         }
