@@ -9,13 +9,14 @@ use App\Repository\ProdutoPostoRepository;
 use App\Repository\ProdutoRepository;
 use App\Repository\TipoUnidadeRepository;
 use App\Repository\UnidadeConversaoRepository;
+use App\Service\Interfaces\AppServiceInterface;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class ProdutoService
+class ProdutoService implements AppServiceInterface
 {
     public function __construct(
         private ProdutoPostoRepository $produtoPostoRepository,
@@ -90,7 +91,7 @@ class ProdutoService
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $params = $request->request->all();
+            $params = $request->query->all();
             
             $queryBuilder
                 ->leftJoin('a.produto', 'produto')

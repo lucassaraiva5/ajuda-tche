@@ -11,6 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
@@ -18,31 +19,28 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/admin/produto')]
-class ProdutoController extends AbstractController
+class ProdutoController extends BaseController
 {
-    #[Route('/', name: 'app_produto_index', methods: ['GET', 'POST'])]
-    public function index(Request $request, ProdutoRepository $produtoRepository, #[MapQueryParameter] ?int $page = 0, #[MapQueryParameter] ?string $search, ProdutoService $produtoService): Response
+    public function __construct(Security $security)
     {
-        $queryBuilder = $produtoRepository->createQueryBuilder('a')->select('a');
+        $this->user = $security->getUser();
+        $this->searchTypeClass = ProdutoSearchType::class;
+        $this->entitySearch = new Produto();
+        $this->entityView = "produto";
 
-        $produto = new Produto();
-        $form = $this->createForm(ProdutoSearchType::class, $produto, ['method'=>"GET"]);
+    }
 
-        $queryBuilder = $produtoService->produtoFilter($request, $form, $queryBuilder);
-
-        $pagerfanta = new Pagerfanta(
-            new QueryAdapter($queryBuilder)
-        );
-
-        if(is_null($page)) {
-            $page = 1;
-        }
-        $pagerfanta->setCurrentPage($page);
-
-        return $this->render('produto/index.html.twig', [
-            'pager' => $pagerfanta,
-            'form' => $form,
-        ]);
+    #[Route('/', name: 'app_produto_index', methods: ['GET', 'POST'])]
+    public function index(Request $request, ProdutoRepository $produtoRepository, #[MapQueryParameter] ?int $page = 0, ProdutoService $produtoService): Response
+    {
+        return $this->view(
+            repository: $produtoRepository,
+            page: $page,
+            request: $request,
+            filterPostoAdmin: false,
+            usuario: $this->user,
+            service: $produtoService,
+            filterMethod: 'produtoFilter');
     }
 
     #[Route('/new', name: 'app_produto_new', methods: ['GET', 'POST'])]

@@ -6,6 +6,12 @@
 <div class="container mt-5 p-5">
 
     <h2 class="mb-3">Categorias de produtos</h2>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn btn-primary">{{ button_label|default('Buscar') }}</button>
+    {{ form_end(form) }}
+
     <div class="table-responsive rounded shadow">
         <table class="table">
             <thead>

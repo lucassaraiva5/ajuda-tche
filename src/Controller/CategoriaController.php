@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Categoria;
+use App\Form\CategoriaSearchType;
 use App\Form\CategoriaType;
 use App\Repository\CategoriaRepository;
+use App\Service\CategoriaService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,20 +15,31 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/admin/categoria')]
 class CategoriaController extends BaseController
 {
-    public function __construct()
+    public function __construct(Security $security)
     {
+        $this->user = $security->getUser();
+        $this->searchTypeClass = CategoriaSearchType::class;
         $this->entityView = 'categoria';
+        $this->entitySearch = new Categoria();
     }
 
     #[Route('/', name: 'app_categoria_index', methods: ['GET'])]
-    public function index(Request $request, CategoriaRepository $categoriaRepository, #[MapQueryParameter] ?int $page = 0): Response
+    public function index(Request $request, CategoriaRepository $categoriaRepository, #[MapQueryParameter] ?int $page = 0, CategoriaService $categoriaService): Response
     {
-        return $this->view($categoriaRepository, $page, $request);
+        return $this->view(
+            repository: $categoriaRepository,
+            page: $page,
+            request: $request,
+            filterPostoAdmin: false,
+            usuario: $this->user,
+            service: $categoriaService,
+            filterMethod: 'categoriaFilter');
 
     }
 

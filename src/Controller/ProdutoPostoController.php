@@ -2,16 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Interfaces\AppEntityInterface;
 use App\Entity\Produto;
 use App\Entity\ProdutoPosto;
 use App\Form\ProdutoPostoType;
 use App\Form\ProdutoSearchType;
 use App\Repository\PostoAjudaRepository;
-use App\Repository\PostoColetaRepository;
 use App\Repository\ProdutoPostoRepository;
 use App\Service\ProdutoService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -21,39 +20,30 @@ use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\SecurityBundle\Security;
 
 #[Route('/admin/produto-posto')]
-class ProdutoPostoController extends AbstractController
+class ProdutoPostoController extends BaseController
 {
-    #[Route('/', name: 'app_produto_posto_index', methods: ['GET', 'POST'])]
-    public function index(Request $request, ProdutoPostoRepository $produtoPostoRepository, #[MapQueryParameter] ?int $page = 0, Security $security, PostoAjudaRepository $postoAjudaRepository, ProdutoService $produtoService): Response
+    public function __construct(Security $security)
     {
-        $user = $security->getUser();
-        $posto = $user->getPostoAjuda();
+        $this->user = $security->getUser();
+        $this->searchTypeClass = ProdutoSearchType::class;
+        $this->entitySearch = new Produto();
+        $this->entityView = "produto_posto";
 
-        $queryBuilder = $produtoPostoRepository->createQueryBuilder('a')
-            ->select('a');
+    }
 
-        if(!$user->hasRole('ROLE_ADMIN')) {
-            $queryBuilder->where('a.posto = :posto')
-            ->setParameter('posto', $posto);
-        }
+    #[Route('/', name: 'app_produto_posto_index', methods: ['GET', 'POST'])]
+    public function index(Request $request, ProdutoPostoRepository $produtoPostoRepository, #[MapQueryParameter] ?int $page = 0, PostoAjudaRepository $postoAjudaRepository, ProdutoService $produtoService): Response
+    {
+        
 
-        $produto = new Produto();
-        $form = $this->createForm(ProdutoSearchType::class, $produto);
-        $queryBuilder = $produtoService->produtoPostoFilter($request, $form, $queryBuilder);
-
-        $pagerfanta = new Pagerfanta(
-            new QueryAdapter($queryBuilder)
-        );
-
-        if(is_null($page)) {
-            $page = 1;
-        }
-        $pagerfanta->setCurrentPage($page);
-
-        return $this->render('produto_posto/index.html.twig', [
-            'pager' => $pagerfanta,
-            'form' => $form,
-        ]);
+        return $this->view(
+                    repository: $produtoPostoRepository,
+                    page: $page,
+                    request: $request,
+                    filterPostoAdmin: true,
+                    usuario: $this->user,
+                    service: $produtoService,
+                    filterMethod: 'produtoPostoFilter');
     }
 
     #[Route('/new', name: 'app_produto_posto_new', methods: ['GET', 'POST'])]
