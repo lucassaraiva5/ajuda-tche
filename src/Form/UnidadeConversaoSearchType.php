@@ -21,11 +21,11 @@ class UnidadeConversaoSearchType extends AbstractType
             ->add('valor', null, [
                 'required' => false
             ])
-            ->add('unidadeArmazenamento', EntityType::class, [
-                'class' => UnidadeArmazenamento::class,
-                'choice_label' => 'descricao',
-                'required' => false
-            ])
+            // ->add('unidadeArmazenamento', EntityType::class, [
+            //     'class' => UnidadeArmazenamento::class,
+            //     'choice_label' => 'descricao',
+            //     'required' => false
+            // ])
         ;
     }
 

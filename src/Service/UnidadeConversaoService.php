@@ -20,11 +20,16 @@ class UnidadeConversaoService implements AppServiceInterface
         if ($form->isSubmitted() && $form->isValid()) {
             $params = $request->query->all();
             
-            if(isset($params["unidade_conversao"]["descricao"]) && !empty($params["unidade_conversao"]["descricao"])) {
+            if(isset($params["unidade_conversao_search"]["descricao"]) && !empty($params["unidade_conversao_search"]["descricao"])) {
                 $queryBuilder->where(
                     $queryBuilder->expr()->like('a.descricao', ':search')
                 )
-                ->setParameter('search', "%{$params["unidade_conversao"]["descricao"]}%");
+                ->setParameter('search', "%{$params["unidade_conversao_search"]["descricao"]}%");
+            }
+
+            if(isset($params["unidade_conversao_search"]["valor"]) && !empty($params["unidade_conversao_search"]["valor"])) {
+                $queryBuilder->where('a.valor = :valor')
+                ->setParameter('valor', "%{$params["unidade_conversao_search"]["valor"]}%");
             }
             
         }

@@ -7,6 +7,7 @@ use App\Form\TipoUnidadeSearchType;
 use App\Form\TipoUnidadeType;
 use App\Repository\TipoUnidadeRepository;
 use App\Service\CategoriaService;
+use App\Service\TipoUnidadeService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,7 +29,7 @@ class TipoUnidadeController extends BaseController
     }
 
     #[Route('/', name: 'app_tipo_unidade_index', methods: ['GET'])]
-    public function index(Request $request, TipoUnidadeRepository $tipoUnidadeRepository, #[MapQueryParameter] ?int $page = 1, CategoriaService $categoriaService): Response
+    public function index(Request $request, TipoUnidadeRepository $tipoUnidadeRepository, #[MapQueryParameter] ?int $page = 1, TipoUnidadeService $categoriaService): Response
     {
         return $this->view(
             repository: $tipoUnidadeRepository,
