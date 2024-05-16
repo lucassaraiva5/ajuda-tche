@@ -16,7 +16,10 @@ class ProdutoEntrega implements AppEntityInterface
     private ?int $id = null;
 
     #[ORM\ManyToOne]
-    private ?ProdutoNecessario $ProdutoNecessario = null;
+    private ?Produto $produto = null;
+
+    #[ORM\Column]
+    private ?float $quantidade = null;
 
     #[ORM\ManyToOne(inversedBy: 'produtoEntrega')]
     private ?Entrega $entrega = null;
@@ -26,14 +29,14 @@ class ProdutoEntrega implements AppEntityInterface
         return $this->id;
     }
 
-    public function getProdutoNecessario(): ?ProdutoNecessario
+    public function getProduto(): ?Produto
     {
-        return $this->ProdutoNecessario;
+        return $this->produto;
     }
 
-    public function setProdutoNecessario(?ProdutoNecessario $ProdutoNecessario): static
+    public function setProduto(?Produto $produto): static
     {
-        $this->ProdutoNecessario = $ProdutoNecessario;
+        $this->produto = $produto;
 
         return $this;
     }
@@ -46,6 +49,18 @@ class ProdutoEntrega implements AppEntityInterface
     public function setEntrega(?Entrega $entrega): static
     {
         $this->entrega = $entrega;
+
+        return $this;
+    }
+
+    public function getQuantidade(): ?float
+    {
+        return $this->quantidade;
+    }
+
+    public function setQuantidade(float $quantidade): static
+    {
+        $this->quantidade = $quantidade;
 
         return $this;
     }

@@ -1,4 +1,128 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-<button class="btn btn-primary">{{ button_label|default('Salvar') }}</button>
+
+    {{ form_errors(form) }}
+    {{ form_row(form.motorista) }}
+    {{ form_row(form.postoAjudaDestino) }}
+    {{ form_row(form.observacaoDestino) }}
+
+    Produtos entregues:<br>
+    <br>
+
+    <button type="button" class="add_item_link btn btn-success" data-collection-holder-class="produtoEntregas">Adicionar Produto</button>
+
+    <ul class="produtoEntregas"
+        data-index="{{ form.produtoEntregas|length > 0 ? form.produtoEntregas|last.vars.name + 1 : 0 }}"
+        data-prototype="{{ form_widget(form.produtoEntregas.vars.prototype)|e('html_attr') }}"
+    ></ul>
+    
+
+    <button class="btn btn-primary">{{ button_label|default('Salvar') }}</button>
 {{ form_end(form) }}
+
+<script>
+    document
+        .querySelectorAll('.add_item_link')
+        .forEach(btn => {
+            btn.addEventListener("click", addFormToCollection)
+        });
+
+    function addFormToCollection(e) {
+        const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);
+
+        const item = document.createElement('li');
+
+        item.innerHTML = collectionHolder
+            .dataset
+            .prototype
+            .replace(
+            /__name__/g,
+            collectionHolder.dataset.index
+            );
+
+            // Adicionar o botão de remoção
+            const removeButton = document.createElement('button');
+            removeButton.type = 'button';
+            removeButton.innerText = 'Excluir Produto';
+            removeButton.className = 'btn btn-danger';
+            removeButton.onclick = function() {
+                item.remove();
+            };
+
+            item.appendChild(removeButton);
+
+            if (collectionHolder.firstChild) {
+                collectionHolder.insertBefore(item, collectionHolder.firstChild);
+            } else {
+                collectionHolder.appendChild(item);
+            }
+
+
+        var id = "entrega_produtoEntregas_"+ collectionHolder.dataset.index + "_produto";
+        $('#' + id).select2({
+            theme: 'bootstrap-5'
+        });
+
+        var id = "entrega_produtoEntregas_"+ collectionHolder.dataset.index + "_tipoUnidade";
+        $('#' + id).select2({
+            theme: 'bootstrap-5'
+        });
+
+        $('#' + id)
+        .empty()
+        .append('<option selected="selected" value="">Selecione o Tipo de produto</option>');
+
+        var id = "entrega_produtoEntregas_"+ collectionHolder.dataset.index + "_unidadeConversao";
+        $('#' + id).select2({
+            theme: 'bootstrap-5'
+        });
+
+        $('#' + id)
+        .empty()
+        .append('<option selected="selected" value="">Selecione o Tipo de produto</option>');
+
+        collectionHolder.dataset.index++;
+    }
+
+    $(document).ready(function() {
+        $('#entrega_motorista').select2({
+            theme: 'bootstrap-5'
+        }).val(null).change();
+
+        $('#entrega_postoAjudaDestino').select2({
+            theme: 'bootstrap-5'
+        }).val(null).change();
+
+        $(document).on('select2:select', '.select2', function (e) {
+            var data = e.params.data;
+
+            const regex = /entrega_produtoEntregas_(\d+)_produto/;
+            const match = this.id.match(regex);
+
+            if(match) {
+                var id = match[1];
+
+                fetch('/tipoUnidades/' + data.id)
+                .then(response => response.json())
+                .then(data => {
+                    let selectElement = document.getElementById('entrega_produtoEntregas_'+id+'_tipoUnidade');
+                    selectElement.innerHTML = '';
+                    data.forEach(function(obj) {
+                        let option = new Option(obj.name, obj.id);
+                        selectElement.add(option);
+                    });
+                });
+
+                fetch('/unidadesConversao/' + data.id)
+                .then(response => response.json())
+                .then(data => {
+                    var selectElement = document.getElementById('entrega_produtoEntregas_'+id+'_unidadeConversao');
+                    selectElement.innerHTML = '';
+                    data.forEach(function(obj) {
+                        var option = new Option(obj.name, obj.id);
+                        selectElement.add(option);
+                    });
+                });
+            }
+        });
+    });
+</script>

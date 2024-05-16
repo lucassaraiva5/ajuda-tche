@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class EntregaType extends AbstractType
+class EntregaSearchType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -26,16 +26,9 @@ class EntregaType extends AbstractType
                 'choice_label' => 'descricao',
                 'required' => false
             ])
-            ->add('produtoEntregas', CollectionType::class, [
-                'label' => false,
-                'entry_type' => ProdutoEntregaItemType::class,
-                'allow_add' => true,
-                'entry_options' => ['label' => false],
-                'by_reference' => false,
-            ])
             ->add('observacaoDestino', null, [
                 'label' => 'Descrição do destino',
-                'required' => true
+                'required' => false
             ])
         ;
     }
