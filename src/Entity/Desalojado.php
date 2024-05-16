@@ -70,6 +70,15 @@ class Desalojado implements AppEntityInterface
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
     private ?int $idade = null;
 
+    #[ORM\Column]
+    private ?bool $estaEmSuaCasa = null;
+
+    #[ORM\Column(length: 10, nullable: true)]
+    private ?string $cepResidencia = null;
+
+    #[ORM\Column(length: 300, nullable: true)]
+    private ?string $enderecoAtual = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -287,6 +296,42 @@ class Desalojado implements AppEntityInterface
     public function setIdade(?int $idade): static
     {
         $this->idade = $idade;
+
+        return $this;
+    }
+
+    public function isEstaEmSuaCasa(): ?bool
+    {
+        return $this->estaEmSuaCasa;
+    }
+
+    public function setEstaEmSuaCasa(bool $estaEmSuaCasa): static
+    {
+        $this->estaEmSuaCasa = $estaEmSuaCasa;
+
+        return $this;
+    }
+
+    public function getCepResidencia(): ?string
+    {
+        return $this->cepResidencia;
+    }
+
+    public function setCepResidencia(?string $cepResidencia): static
+    {
+        $this->cepResidencia = $cepResidencia;
+
+        return $this;
+    }
+
+    public function getEnderecoAtual(): ?string
+    {
+        return $this->enderecoAtual;
+    }
+
+    public function setEnderecoAtual(?string $enderecoAtual): static
+    {
+        $this->enderecoAtual = $enderecoAtual;
 
         return $this;
     }

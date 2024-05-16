@@ -95,6 +95,26 @@
             }
         });
 
+        const cepRegex = /^[0-9]{5}-[0-9]{3}$/;
+
+        $('#desalojado_cepResidencia').on('input', function() {
+            let cep = $(this).val();
+
+            // Remove qualquer caractere que não seja número
+            cep = cep.replace(/\D/g, '');
+
+            if (cep.length > 8) {
+                cep = cep.substring(0, 8);
+            }
+
+            // Adiciona a máscara (#####-###)
+            if (cep.length > 5) {
+                cep = cep.replace(/^(\d{5})(\d)/, '$1-$2');
+            }
+
+            $(this).val(cep);
+        });
+
         $('#desalojado_dataNascimento').on('input', function() {
             var value = $(this).val();
             
