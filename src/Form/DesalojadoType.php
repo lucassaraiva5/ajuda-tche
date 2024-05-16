@@ -11,6 +11,7 @@ use App\Entity\Genero;
 use App\Form\DataTransformer\DateStringToDateTimeTransformer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -129,6 +130,17 @@ class DesalojadoType extends AbstractType
                 'attr' => [
                     'class' => 'select2'
                 ]
+            ])
+            ->add('estaEmSuaCasa', null, [
+                'label' => 'Está em sua Casa?'
+            ])
+            ->add('cepResidencia', null, [
+                'label' => 'CEP da sua residência',
+                'required' => false
+            ])
+            ->add('enderecoAtual', TextareaType::class, [
+                'label' => 'Endereço Atual *',
+                'required' => true
             ]);
 
         $builder->get('dataNascimento')
