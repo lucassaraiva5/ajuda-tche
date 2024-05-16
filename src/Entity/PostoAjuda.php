@@ -47,11 +47,18 @@ class PostoAjuda implements AppEntityInterface
     #[ORM\OneToMany(targetEntity: Funcao::class, mappedBy: 'postoAjuda')]
     private Collection $funcoes;
 
+    /**
+     * @var Collection<int, Entrega>
+     */
+    #[ORM\OneToMany(targetEntity: Entrega::class, mappedBy: 'postoAjuda')]
+    private Collection $entregas;
+
     public function __construct()
     {
         $this->tipoPostoAjuda = new ArrayCollection();
         $this->usuarios = new ArrayCollection();
         $this->funcoes = new ArrayCollection();
+        $this->entregas = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -185,6 +192,36 @@ class PostoAjuda implements AppEntityInterface
             // set the owning side to null (unless already changed)
             if ($funco->getPostoAjuda() === $this) {
                 $funco->setPostoAjuda(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Entrega>
+     */
+    public function getEntregas(): Collection
+    {
+        return $this->entregas;
+    }
+
+    public function addEntrega(Entrega $entrega): static
+    {
+        if (!$this->entregas->contains($entrega)) {
+            $this->entregas->add($entrega);
+            $entrega->setPostoAjuda($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEntrega(Entrega $entrega): static
+    {
+        if ($this->entregas->removeElement($entrega)) {
+            // set the owning side to null (unless already changed)
+            if ($entrega->getPostoAjuda() === $this) {
+                $entrega->setPostoAjuda(null);
             }
         }
 

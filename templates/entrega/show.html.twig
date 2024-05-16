@@ -27,9 +27,50 @@
                             <th>Id</th>
                             <td>{{ entrega.id }}</td>
                         </tr>
+                        <tr>
+                            <th>Motorista</th>
+                            {% if entrega.motorista is not null %}
+                                <td>{{ entrega.motorista.nome }}</td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <th>Posto Destino</th>
+                            {% if entrega.postoAjudaDestino is not null %}
+                                <td>{{ entrega.postoAjudaDestino.descricao }}</td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+                        </tr>
                     </tbody>
                 </table>
             </div>
         </div>
+        <br>
+        <h2>Produtos</h2>
+
+        <div class="card shadow-lg">
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <th>Produto</th>
+                        <th>Quantidade</th>
+                        <th>Tipo Unidade</th>
+                    </thead>
+                    <tbody>
+                        {% for produtoEntrega in entrega.produtoEntregas %}
+                            <tr>
+                                <th>{{ produtoEntrega.produto.descricao }}</th>
+                                <th>{{ produtoEntrega.quantidade }}</th>
+                                <th>{{ produtoEntrega.produto.unidadeArmazenamento.descricao }}</th>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
     </div>
 {% endblock %}
