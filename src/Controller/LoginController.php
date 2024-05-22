@@ -39,10 +39,14 @@ class LoginController extends AbstractController
     }
 
     #[Route('/admin', name: 'user_redirect', methods: ['GET'])]
-    public function indexRouteAfterLogin(Security $security, PostoAjudaRepository $postoAjudaRepository, VoluntarioRepository $voluntarioRepository)
+    public function indexRouteAfterLogin(Security $security, PostoAjudaRepository $postoAjudaRepository, VoluntarioRepository $voluntarioRepository) : Response
     {
         $user = $security->getUser();
         $role = $user->getRoles();
+
+        if (!$user instanceof Usuario) {
+            throw new \LogicException('User is not an instance of Usuario.');
+        }
 
         if($user->hasRole(Usuario::ROLE_ADMIN)){
             return $this->redirectToRoute("app_produto_necessario_index");

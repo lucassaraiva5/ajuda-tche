@@ -43,6 +43,9 @@ class Voluntario implements AppEntityInterface
     #[ORM\Column(length: 2)]
     private ?string $codigoArea = null;
 
+    #[ORM\ManyToOne(targetEntity: PostoColeta::class, inversedBy: 'voluntarios')]
+    private ?PostoColeta $postoColeta = null;
+
     public function __construct()
     {
         $this->funcoes = new ArrayCollection();
@@ -157,6 +160,18 @@ class Voluntario implements AppEntityInterface
     public function setCodigoArea(string $codigoArea): static
     {
         $this->codigoArea = $codigoArea;
+
+        return $this;
+    }
+
+    public function getPostoColeta(): ?PostoColeta
+    {
+        return $this->postoColeta;
+    }
+
+    public function setPostoColeta(?PostoColeta $postoColeta): static
+    {
+        $this->postoColeta = $postoColeta;
 
         return $this;
     }
