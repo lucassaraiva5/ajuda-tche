@@ -10,7 +10,7 @@
         <button class="btn btn-primary">{{ button_label|default('Buscar') }}</button>
     {{ form_end(form) }}
 
-    <table class="table">
+    <table class="table mt-5 align-items-center">
         <thead>
             <tr>
                 <th>Id</th>
@@ -26,8 +26,8 @@
                 <td>{{ tipo_unidade.descricao }}</td>
                 <td>{{ tipo_unidade.valor }}</td>
                 <td>
-                    <a href="{{ path('app_tipo_unidade_show', {'id': tipo_unidade.id}) }}">show</a>
-                    <a href="{{ path('app_tipo_unidade_edit', {'id': tipo_unidade.id}) }}">edit</a>
+                    <a href="{{ path('app_tipo_unidade_show', {'id': tipo_unidade.id}) }} " class="btn btn-primary">mostrar</a>
+                    <a href="{{ path('app_tipo_unidade_edit', {'id': tipo_unidade.id}) }}" class="btn btn-success">editar</a>
                 </td>
             </tr>
         {% else %}
